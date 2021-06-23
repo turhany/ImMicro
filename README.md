@@ -8,7 +8,7 @@ This is a simple/reusable microservice template/playgorund project.
 
 #### Structure
 - **API:** Endpoint project for client usage  
-- **Business:** Project business logic like convert website link to deep link    
+- **Business:** Project for business logic        
 - **Common:** Cross cuttimg consern items (like cache, lock...)   
 - **Container:** DI configuration project   
 - **Contract:** Dtos, layer transfer and api response - request objects   
