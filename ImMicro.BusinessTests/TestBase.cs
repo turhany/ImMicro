@@ -1,0 +1,43 @@
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Autofac;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
+using Moq;
+using ImMicro.Common.Lock.Abstract;
+using ImMicro.Container.Modules;
+using ImMicro.Data;
+
+namespace ImMicro.BusinessTests
+{
+    public class TestBase
+    {
+        protected IContainer Container { get; }
+        
+        public TestBase()
+        {
+            //Autofac DI configuration
+            var builder = new ContainerBuilder();
+
+            var mockDistributedCache = new Mock<IDistributedCache>();
+            mockDistributedCache.Setup(p => p.GetAsync(It.IsAny<string>(), default(CancellationToken))).ReturnsAsync(()=> null);
+            
+            builder.RegisterInstance(mockDistributedCache.Object).As<IDistributedCache>();
+            
+            builder.Register(c =>
+            {
+                var opt = new DbContextOptionsBuilder<DataContext>().UseInMemoryDatabase("ImMicro_unit_testdb").Options;
+                return new DataContext(opt);
+            }).InstancePerLifetimeScope();
+            
+            builder.RegisterModule(new ApplicationModule());
+            builder.RegisterModule(new RepositoryModule());
+            builder.RegisterModule(new ServiceModule());
+            
+            var mockLock = new Mock<ILockService>();
+            builder.RegisterInstance(mockLock.Object).As<ILockService>();
+            
+            Container = builder.Build();
+        }
+    }
+}

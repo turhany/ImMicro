@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Autofac" Version="6.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ImMicro.Business\ImMicro.Business.csproj" />
+      <ProjectReference Include="..\ImMicro.Common\ImMicro.Common.csproj" />
+      <ProjectReference Include="..\ImMicro.Data\ImMicro.Data.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,44 @@
+version: '3.4'
+
+networks:
+  bridge-network:
+    driver: bridge
+
+services:
+  ImMicro.api:
+    image: ${DOCKER_REGISTRY-}ImMicroapi
+    restart : always
+    depends_on:
+      - "database_postgres"
+      - "database_redis"
+    build:
+      context: .
+      dockerfile: ImMicro.Api/Dockerfile
+    ports:
+      - "5000:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=DockerCompose
+    networks:
+      - bridge-network
+
+  database_postgres:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    restart: always
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "123456789.tY"
+      POSTGRES_DB: "TYDB"
+    networks:
+      - bridge-network
+
+  database_redis:
+    image: "redis:alpine"
+    command: redis-server --requirepass 123456789.tY
+    ports:
+      - "6379:6379"
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    networks:
+      - bridge-network

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ImMicro.Contract\ImMicro.Contract.csproj" />
+      <ProjectReference Include="..\ImMicro.Data\ImMicro.Data.csproj" />
+      <ProjectReference Include="..\ImMicro.Model\ImMicro.Model.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,190 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ImMicro.Api</name>
+    </assembly>
+    <members>
+        <member name="T:ImMicro.Api.Configurations.Startup.ConfigureDbContext">
+            <summary>
+            Database configuration extension
+            </summary>
+        </member>
+        <member name="M:ImMicro.Api.Configurations.Startup.ConfigureDbContext.AddDatabaseContext(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Add DataBase configurations
+            </summary>
+            <param name="services">ServiceCollection</param>
+            <param name="configuration">Configuration</param>
+            <returns></returns>
+        </member>
+        <member name="T:ImMicro.Api.Configurations.Startup.ConfigureDistributedCache">
+            <summary>
+            Distributed cache configuration extension
+            </summary>
+        </member>
+        <member name="M:ImMicro.Api.Configurations.Startup.ConfigureDistributedCache.AddDistributedCacheConfiguration(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Add Distributed cache configuration
+            </summary>
+            <param name="services">ServiceCollection</param>
+            <param name="configuration">Configuration</param>
+            <returns></returns>
+        </member>
+        <member name="T:ImMicro.Api.Configurations.Startup.ConfigureHealthCheck">
+            <summary>
+            Health check configuration extension
+            </summary>
+        </member>
+        <member name="M:ImMicro.Api.Configurations.Startup.ConfigureHealthCheck.AddHealthCheckConfiguration(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Add Health check configuration extension
+            </summary>
+            <param name="services">ServiceCollection</param>
+            <param name="configuration">Configuration</param>
+            <returns></returns>
+        </member>
+        <member name="M:ImMicro.Api.Configurations.Startup.ConfigureHealthCheck.UseHealthCheckConfiguration(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Use Health check configuration
+            </summary>
+            <param name="app">Application builder</param>
+            <returns></returns>
+        </member>
+        <member name="T:ImMicro.Api.Configurations.Startup.ConfigureSecuritySettings">
+            <summary>
+            Security setting configuration extension
+            </summary>
+        </member>
+        <member name="M:ImMicro.Api.Configurations.Startup.ConfigureSecuritySettings.UseSecuritySettings(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Use Security setting configuration
+            </summary>
+            <param name="app">Application builder</param>
+            <returns></returns>
+        </member>
+        <member name="T:ImMicro.Api.Configurations.Startup.ConfigureSwagger">
+            <summary>
+            Add Swagger configuration extension
+            </summary>
+        </member>
+        <member name="M:ImMicro.Api.Configurations.Startup.ConfigureSwagger.AddSwaggerConfiguration(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Add Swagger configuration extension
+            </summary>
+            <param name="services">ServiceCollection</param>
+            <returns></returns>
+        </member>
+        <member name="M:ImMicro.Api.Configurations.Startup.ConfigureSwagger.UseSwaggerConfiguration(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Use Swagger configuration
+            </summary>
+            <param name="app">Application builder</param>
+            <returns></returns>
+        </member>
+        <member name="T:ImMicro.Api.Controllers.BaseController">
+            <summary>
+            Api base controller
+            </summary>
+        </member>
+        <member name="T:ImMicro.Api.Controllers.HomeController">
+            <summary>
+            Api Home controller
+            </summary>
+        </member>
+        <member name="M:ImMicro.Api.Controllers.HomeController.Home">
+            <summary>
+            Home Controller
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ImMicro.Api.Middlewares.ExceptionHandlerMiddleware">
+            <summary>
+            Global Exception handler middleware
+            </summary>
+        </member>
+        <member name="M:ImMicro.Api.Middlewares.ExceptionHandlerMiddleware.#ctor(Microsoft.Extensions.Logging.ILogger{ImMicro.Api.Middlewares.ExceptionHandlerMiddleware},Microsoft.AspNetCore.Http.RequestDelegate)">
+            <summary>
+            Global Exception handler middleware constructor
+            </summary>
+            <param name="logger">Logger</param>
+            <param name="next">Next middleware</param>
+        </member>
+        <member name="M:ImMicro.Api.Middlewares.ExceptionHandlerMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Middleware invoke method
+            </summary>
+            <param name="httpContext">Http Context</param>
+        </member>
+        <member name="T:ImMicro.Api.Middlewares.RequestLogMiddleware">
+            <summary>
+            Global request - response log middleware
+            </summary>
+        </member>
+        <member name="M:ImMicro.Api.Middlewares.RequestLogMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.Extensions.DependencyInjection.IServiceScopeFactory)">
+            <summary>
+            Global request - response log middleware constructor
+            </summary>
+            <param name="next">Next middleware</param>
+            <param name="serviceScopeFactory">Service Scope Factory</param>
+        </member>
+        <member name="M:ImMicro.Api.Middlewares.RequestLogMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Middleware invoke method
+            </summary>
+            <param name="httpContext">Http Context</param>
+        </member>
+        <member name="T:ImMicro.Api.Program">
+            <summary>
+            Program
+            </summary>
+        </member>
+        <member name="M:ImMicro.Api.Program.Main(System.String[])">
+            <summary>
+            Main method
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:ImMicro.Api.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            Create Application Host
+            </summary>
+            <param name="args">Args</param>
+            <returns>HostBuilder</returns>
+        </member>
+        <member name="T:ImMicro.Api.Startup">
+            <summary>
+            Startup
+            </summary>
+        </member>
+        <member name="M:ImMicro.Api.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Startup
+            </summary>
+            <param name="configuration">Configuration</param>
+        </member>
+        <member name="P:ImMicro.Api.Startup.Configuration">
+            <summary>
+            Configuration
+            </summary>
+        </member>
+        <member name="M:ImMicro.Api.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Add Application Services
+            </summary>
+            <param name="services">ServiceCollection</param>
+        </member>
+        <member name="M:ImMicro.Api.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            Configure Application Services
+            </summary>
+            <param name="app">Application Builder</param>
+            <param name="env">Web Host Environment</param>
+        </member>
+        <member name="M:ImMicro.Api.Startup.ConfigureContainer(Autofac.ContainerBuilder)">
+            <summary>
+            Autofac DI Configuration
+            </summary>
+            <param name="builder"></param>
+        </member>
+    </members>
+</doc>
