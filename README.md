@@ -9,7 +9,7 @@ This is a simple/reusable microservice template/playgorund project.
 #### Structure
 - **API:** Endpoint project for client usage  
 - **Business:** Project for business logic        
-- **Common:** Cross cuttimg consern items (like cache, lock...)   
+- **Common:** Cross cutting consern items (like cache, lock...)   
 - **Container:** DI configuration project   
 - **Contract:** Dtos, layer transfer and api response - request objects   
 - **Data:** Database layer files (EfCore implementations and repositories)    
