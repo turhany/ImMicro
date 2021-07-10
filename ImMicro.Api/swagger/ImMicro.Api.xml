@@ -17,51 +17,6 @@
             <param name="configuration">Configuration</param>
             <returns></returns>
         </member>
-        <member name="T:ImMicro.Api.Configurations.Startup.ConfigureDistributedCache">
-            <summary>
-            Distributed cache configuration extension
-            </summary>
-        </member>
-        <member name="M:ImMicro.Api.Configurations.Startup.ConfigureDistributedCache.AddDistributedCacheConfiguration(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
-            <summary>
-            Add Distributed cache configuration
-            </summary>
-            <param name="services">ServiceCollection</param>
-            <param name="configuration">Configuration</param>
-            <returns></returns>
-        </member>
-        <member name="T:ImMicro.Api.Configurations.Startup.ConfigureHealthCheck">
-            <summary>
-            Health check configuration extension
-            </summary>
-        </member>
-        <member name="M:ImMicro.Api.Configurations.Startup.ConfigureHealthCheck.AddHealthCheckConfiguration(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
-            <summary>
-            Add Health check configuration extension
-            </summary>
-            <param name="services">ServiceCollection</param>
-            <param name="configuration">Configuration</param>
-            <returns></returns>
-        </member>
-        <member name="M:ImMicro.Api.Configurations.Startup.ConfigureHealthCheck.UseHealthCheckConfiguration(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
-            <summary>
-            Use Health check configuration
-            </summary>
-            <param name="app">Application builder</param>
-            <returns></returns>
-        </member>
-        <member name="T:ImMicro.Api.Configurations.Startup.ConfigureSecuritySettings">
-            <summary>
-            Security setting configuration extension
-            </summary>
-        </member>
-        <member name="M:ImMicro.Api.Configurations.Startup.ConfigureSecuritySettings.UseSecuritySettings(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
-            <summary>
-            Use Security setting configuration
-            </summary>
-            <param name="app">Application builder</param>
-            <returns></returns>
-        </member>
         <member name="T:ImMicro.Api.Configurations.Startup.ConfigureSwagger">
             <summary>
             Add Swagger configuration extension

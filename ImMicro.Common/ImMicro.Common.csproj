@@ -5,10 +5,19 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="5.0.2" />
+      <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="5.0.2" />
+      <PackageReference Include="AspNetCore.HealthChecks.UI" Version="5.0.1" />
+      <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="5.0.1" />
+      <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="5.0.1" />
       <PackageReference Include="FluentValidation" Version="10.1.0" />
       <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="6.0.0-preview.3.21201.4" />
+      <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0-preview.3.21201.4" />
+      <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="5.0.0" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+      <PackageReference Include="NWebsec.AspNetCore.Core" Version="3.0.1" />
+      <PackageReference Include="NWebsec.AspNetCore.Middleware" Version="3.0.0" />
       <PackageReference Include="RedLock.net" Version="2.2.0" />
     </ItemGroup>
 

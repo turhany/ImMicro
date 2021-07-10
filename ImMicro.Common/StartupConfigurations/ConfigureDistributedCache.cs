@@ -1,8 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using ImMicro.Common.Constans;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ImMicro.Common.Constans;
 
-namespace ImMicro.Api.Configurations.Startup
+namespace ImMicro.Common.StartupConfigurations
 {
     /// <summary>
     /// Distributed cache configuration extension

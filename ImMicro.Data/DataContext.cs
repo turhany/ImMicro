@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +19,7 @@ namespace ImMicro.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            RegisterConfigurationFiles(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(modelBuilder);
         }
 
@@ -67,23 +66,6 @@ namespace ImMicro.Data
                         entry.Entity.SetPropertyValue(UpdatedByFieldName, currentUserId.Value);
                 }
             }
-        }
-
-        public static void RegisterConfigurationFiles(ModelBuilder modelBuilder)
-        {
-            var typesToRegister = Assembly.GetExecutingAssembly()
-                .GetTypes()
-                .Where(t =>
-                    t != typeof(IEntityTypeConfiguration<>) &&
-                    t.GetInterfaces().Any(gi =>
-                        gi.IsGenericType && gi.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>)))
-                .ToList();
-
-            foreach (var type in typesToRegister)
-            {
-                dynamic configurationInstance = Activator.CreateInstance(type);
-                modelBuilder.ApplyConfiguration(configurationInstance);
-            }
-        }
+        } 
     }
 }

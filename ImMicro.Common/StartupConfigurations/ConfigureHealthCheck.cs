@@ -1,11 +1,11 @@
 ﻿using HealthChecks.UI.Client;
+using ImMicro.Common.Constans;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ImMicro.Common.Constans;
 
-namespace ImMicro.Api.Configurations.Startup
+namespace ImMicro.Common.StartupConfigurations
 {
     /// <summary>
     /// Health check configuration extension
@@ -23,7 +23,7 @@ namespace ImMicro.Api.Configurations.Startup
         {
             services
                 .AddHealthChecks()
-                .AddNpgSql(configuration.GetConnectionString(AppConstants.DbConnectionString))
+                .AddNpgSql(configuration.GetConnectionString(AppConstants.PostgreSqlConnectionString))
                 .AddRedis(configuration.GetConnectionString(AppConstants.RedisConnectionString));
 
             services.AddHealthChecksUI()

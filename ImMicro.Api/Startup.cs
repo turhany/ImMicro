@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection; 
 using ImMicro.Api.Configurations.Startup;
 using ImMicro.Api.Middlewares;
+using ImMicro.Common.StartupConfigurations;
 using ImMicro.Container.Modules;
 
 // ReSharper disable MemberCanBePrivate.Global
@@ -36,6 +37,7 @@ namespace ImMicro.Api
         /// <param name="services">ServiceCollection</param>
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptionConfiguration(Configuration);
             services.AddDatabaseContext(Configuration);
             services.AddDistributedCacheConfiguration(Configuration);
             services.AddControllers();

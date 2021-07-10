@@ -23,7 +23,7 @@ namespace ImMicro.Api.Configurations.Startup
         {
             services.AddDbContext<DataContext>(options =>
             {
-                options.UseNpgsql(configuration.GetConnectionString(AppConstants.DbConnectionString))
+                options.UseNpgsql(configuration.GetConnectionString(AppConstants.PostgreSqlConnectionString))
                     .EnableSensitiveDataLogging();
                 options.UseLazyLoadingProxies();
             });

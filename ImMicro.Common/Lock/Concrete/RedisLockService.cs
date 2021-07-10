@@ -8,6 +8,8 @@ using RedLockNet.SERedis;
 using RedLockNet.SERedis.Configuration;
 using ImMicro.Common.Constans;
 using ImMicro.Common.Lock.Abstract;
+using ImMicro.Common.Options;
+using Microsoft.Extensions.Options;
 // ReSharper disable InconsistentNaming
 // ReSharper disable IdentifierTypo
 // ReSharper disable ConvertToNullCoalescingCompoundAssignment
@@ -17,18 +19,18 @@ namespace ImMicro.Common.Lock.Concrete
 {
     public class RedisLockService : ILockService
     { 
-        static readonly Object RedLockFactory = new Object();
+        static readonly Object RedLockFactory = new();
         private static RedLockEndPoint PasswordedServer { get; set; }
         readonly TimeSpan _expiry = TimeSpan.FromSeconds(15);
         private static RedLockFactory _redisLockFactory { get; set; }
 
-        public RedisLockService(IConfiguration configuration)
+        public RedisLockService(IConfiguration configuration, IOptions<RedLockOption> redLockConfig)
         { 
             PasswordedServer = new RedLockEndPoint
             {
-                EndPoint = new DnsEndPoint(configuration[AppConstants.RedLockHostAddress], int.Parse(configuration[AppConstants.RedLockHostPort])),
-                Password = configuration[AppConstants.RedLockHostPassword],
-                Ssl =  Boolean.Parse(configuration[AppConstants.RedLockHostSsl])
+                EndPoint = new DnsEndPoint(configuration[redLockConfig.Value.HostAddress], int.Parse(configuration[redLockConfig.Value.HostPort])),
+                Password = configuration[redLockConfig.Value.HostPassword],
+                Ssl =  redLockConfig.Value.HostSsl
             };
         }
 

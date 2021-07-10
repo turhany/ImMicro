@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 
-namespace ImMicro.Api.Configurations.Startup
+namespace ImMicro.Common.StartupConfigurations
 {
     /// <summary>
     /// Security setting configuration extension
