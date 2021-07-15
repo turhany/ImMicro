@@ -11,13 +11,46 @@ services:
     depends_on:
       - "database_postgres"
       - "database_redis"
+      - "message_rabbitmq"
     build:
       context: .
       dockerfile: ImMicro.Api/Dockerfile
     ports:
       - "5000:80"
     environment:
-      - ASPNETCORE_ENVIRONMENT=DockerCompose
+      ASPNETCORE_ENVIRONMENT: "DockerCompose"
+    networks:
+      - bridge-network
+
+  ImMicro.scheduleService:
+    image: ${DOCKER_REGISTRY-}immicroscheduleservice
+    restart: always
+    depends_on:
+      - "database_postgres"
+      - "database_redis"
+      - "message_rabbitmq"
+    build:
+      context: .
+      dockerfile: ImMicro.ScheduleService/Dockerfile
+    ports:
+      - "5001:80"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "DockerCompose"
+    networks:
+      - bridge-network
+
+  ImMicro.consumer:
+    image: ${DOCKER_REGISTRY-}immicroconsumer
+    restart: always
+    depends_on:
+      - "database_postgres"
+      - "database_redis"
+      - "message_rabbitmq"
+    build:
+      context: .
+      dockerfile: ImMicro.Consumer/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: "DockerCompose"
     networks:
       - bridge-network
 
@@ -40,5 +73,18 @@ services:
       - "6379:6379"
     environment:
       - REDIS_REPLICATION_MODE=master
+    networks:
+      - bridge-network
+
+  message_rabbitmq:
+    image: "rabbitmq:3.8.3-management"
+    #    container_name: rabbitmq_docker
+    #    hostname: rabbitmq
+    ports:
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: "turhany"
+      RABBITMQ_DEFAULT_PASS: "turhany"
+      RABBITMQ_DEFAULT_VHOST: "immicro"
     networks:
       - bridge-network

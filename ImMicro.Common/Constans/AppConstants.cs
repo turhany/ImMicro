@@ -13,6 +13,9 @@
         
         public const string HashKey = "turhany";
         
+        public const string Json = "json";
+        
+        public const string RabbitMqSettingsOptionName = "RabbitMqSettings";
         public const string RedLockSettingsOptionName = "RedLockSettings";
     }
 }

@@ -1,10 +1,12 @@
 using Autofac;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection; 
 using ImMicro.Api.Configurations.Startup;
 using ImMicro.Api.Middlewares;
+using ImMicro.Business.Validators;
 using ImMicro.Common.StartupConfigurations;
 using ImMicro.Container.Modules;
 
@@ -40,7 +42,8 @@ namespace ImMicro.Api
             services.AddOptionConfiguration(Configuration);
             services.AddDatabaseContext(Configuration);
             services.AddDistributedCacheConfiguration(Configuration);
-            services.AddControllers();
+            services.AddControllers()
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<FileContractValidator>());
             services.AddSwaggerConfiguration();
             services.AddHttpContextAccessor();
             services.AddHealthCheckConfiguration(Configuration);

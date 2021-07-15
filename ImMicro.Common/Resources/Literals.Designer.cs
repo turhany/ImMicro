@@ -61,6 +61,15 @@ namespace ImMicro.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Json file is not valid..
+        /// </summary>
+        public static string InvalidJsonFile {
+            get {
+                return ResourceManager.GetString("InvalidJsonFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Internal Server Error..
         /// </summary>
         public static string ServerError_Message {

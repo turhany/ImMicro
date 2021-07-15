@@ -27,4 +27,7 @@
     <data name="UrlValidateError_Message" xml:space="preserve">
         <value>Request is not valid Uri.</value>
     </data>
+    <data name="InvalidJsonFile" xml:space="preserve">
+        <value>Json file is not valid.</value>
+    </data>
 </root>

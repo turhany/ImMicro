@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ImMicro.Common.Data;
 using ImMicro.Common.Data.Abstract;
+using Npgsql.Bulk;
 
 namespace ImMicro.Data.Repositories
 {
@@ -43,6 +45,18 @@ namespace ImMicro.Data.Repositories
             var entityEntry = _entities.Remove(entity);
             await _context.SaveEntitiesAsync();
             return entityEntry.Entity;
+        }
+        
+        public async Task BulkInsertAsync(IEnumerable<TEntity> entities)
+        {
+            var bulkUploader = new NpgsqlBulkUploader(_context);
+            await bulkUploader.InsertAsync(entities);
+        }
+        
+        public void BulkInsert(IEnumerable<TEntity> entities)
+        {
+            var bulkUploader = new NpgsqlBulkUploader(_context);
+            bulkUploader.Insert(entities);
         }
         
         public TEntity CreateProxy() => _entities.CreateProxy();
