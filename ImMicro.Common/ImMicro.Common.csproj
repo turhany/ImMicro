@@ -10,17 +10,17 @@
       <PackageReference Include="AspNetCore.HealthChecks.UI" Version="5.0.1" />
       <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="5.0.1" />
       <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="5.0.1" />
-      <PackageReference Include="FluentValidation" Version="10.3.0" />
-      <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="7.2.1" />
-      <PackageReference Include="MassTransit.RabbitMQ" Version="7.2.1" />
+      <PackageReference Include="FluentValidation" Version="10.3.3" />
+      <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="7.2.2" />
+      <PackageReference Include="MassTransit.RabbitMQ" Version="7.2.2" />
       <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="6.0.0-preview.3.21201.4" />
       <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0-preview.3.21201.4" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
       <PackageReference Include="NWebsec.AspNetCore.Core" Version="3.0.1" />
       <PackageReference Include="NWebsec.AspNetCore.Middleware" Version="3.0.0" />
-      <PackageReference Include="RedLock.net" Version="2.2.0" />
-      <PackageReference Include="RestSharp" Version="106.11.7" />
+      <PackageReference Include="RedLock.net" Version="2.3.1" />
+      <PackageReference Include="RestSharp" Version="106.12.0" />
     </ItemGroup>
 
     <ItemGroup>

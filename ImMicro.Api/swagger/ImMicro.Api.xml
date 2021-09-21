@@ -60,7 +60,7 @@
         </member>
         <member name="M:ImMicro.Api.Controllers.UserController.Init(ImMicro.Contract.Dtos.FileContract,System.Threading.CancellationToken)">
             <summary>
-            Import payment json file
+            Import user json file
             </summary>
             <returns></returns>
         </member>

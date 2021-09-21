@@ -36,7 +36,8 @@ namespace ImMicro.ScheduleService.Configurations
                 config.UsePostgreSqlStorage(hangfireConnectionString, option).WithJobExpirationTimeout(TimeSpan.FromHours(6));
             });
 
-
+            services.AddHangfireServer();
+        
             return services;
         }
 
@@ -54,7 +55,6 @@ namespace ImMicro.ScheduleService.Configurations
                 IgnoreAntiforgeryToken = true,
                 Authorization = new []{ new DashboardNoAuthorizationFilter() }
             });
-            app.UseHangfireServer();
 
             return app;
         }
