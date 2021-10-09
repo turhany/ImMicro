@@ -1,6 +1,5 @@
 #   **ImMicro(UnderDevelopment)**
-------------------------------
-
+    
 This is a simple/reusable microservice template/playgorund project.  
 
 #### Features
