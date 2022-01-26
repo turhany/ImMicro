@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
+using HelpersToolbox.Extensions;
+using ImMicro.Common.Application;
 using Microsoft.EntityFrameworkCore;
 using ImMicro.Common.Extensions;
+using ImMicro.Model.User;
 
 // ReSharper disable ConditionIsAlwaysTrueOrFalse
 // ReSharper disable AssignNullToNotNullAttribute
@@ -21,6 +25,23 @@ namespace ImMicro.Data
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<User>().HasData(new List<User>()
+            {
+                new User()
+                {
+                    Id = Guid.NewGuid(),
+                    FirstName = "User",
+                    LastName = "ImMicro",
+                    Email = "user@immicro.com",
+                    Password = BCrypt.Net.BCrypt.HashPassword("123456789.tY"),
+                    Type = UserType.Root,
+                    CreatedOn = DateTime.UtcNow,
+                    IsActive = true,
+                    ResreshTokenExpireDate = DateTime.UtcNow,
+                    EmailVerificationTokenIsUsed = true
+                }
+            });
         }
 
         public async Task<int> SaveEntitiesAsync()
@@ -39,7 +60,7 @@ namespace ImMicro.Data
             Guid? currentUserId = null;
             try
             {
-                ///INFO: get user some where implement it
+                currentUserId = ApplicationContext.Instance.CurrentUser.Id;
             }
             catch
             {

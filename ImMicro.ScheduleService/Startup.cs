@@ -1,7 +1,10 @@
-using Autofac;
-using ImMicro.Api.Configurations.Startup;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using Autofac; 
+using ImMicro.Common.Application;
 using ImMicro.Common.StartupConfigurations;
 using ImMicro.Container.Modules;
+using ImMicro.Contract.Mappings.AutoMapper;
 using ImMicro.ScheduleService.Configurations;
 using ImMicro.ScheduleService.Schedules;
 using Microsoft.AspNetCore.Builder;
@@ -12,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace ImMicro.ScheduleService
 {
+    [SuppressMessage("Design", "ASP0000:Do not call \'IServiceCollection.BuildServiceProvider\' in \'ConfigureServices\'")]
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -31,7 +35,9 @@ namespace ImMicro.ScheduleService
             services.AddControllers();
             services.AddHttpContextAccessor();
             services.AddMassTransitConfiguration(Configuration);
-            //services.AddAutoMapper(typeof(PaymentProfile));
+            services.AddAutoMapper(typeof(UserMapping));
+            
+            ApplicationContext.ConfigureWorkerServiceProvider(services.BuildServiceProvider());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,7 +52,10 @@ namespace ImMicro.ScheduleService
             app.UseHangfireConfiguration();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
             
-            RecurringJobs.UserInitJob(Configuration);
+            RecurringJobs.SampleJob();
+            
+            ApplicationContext.ConfigureWorkerServiceUser(Guid.Parse(Configuration["Application:ServiceUserId"]));
+            ApplicationContext.ConfigureThreadPool(Configuration);
         }
         
         /// <summary>

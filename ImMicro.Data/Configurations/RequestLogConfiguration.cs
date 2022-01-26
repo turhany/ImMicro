@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ImMicro.Model;
+using ImMicro.Model.RequestLog;
 
 namespace ImMicro.Data.Configurations
 {

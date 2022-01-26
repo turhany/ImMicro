@@ -1,18 +1,13 @@
-﻿using System;
-using Hangfire;
-using ImMicro.Business.Services.Concrete;
-using Microsoft.Extensions.Configuration;
+﻿using Hangfire; 
 
 namespace ImMicro.ScheduleService.Schedules
 {
     public static class RecurringJobs
     {
-        public static void UserInitJob(IConfiguration configuration)
+        public static void SampleJob()
         {
-            var itemLimit = int.Parse(configuration["QueueItemLimit"]);
-            
-            RecurringJob.RemoveIfExists(nameof(UserInitJob));
-            RecurringJob.AddOrUpdate<UserService>(nameof(UserInitJob), job => job.SendQueueForInit(itemLimit), "*/1 * * * *", TimeZoneInfo.Local);
+            RecurringJob.RemoveIfExists(nameof(SampleJob));
+            //RecurringJob.AddOrUpdate<SampleService>(nameof(SampleJob), job => job.SampleJob(), "*/1 * * * *", TimeZoneInfo.Local);
         }
     }
 }

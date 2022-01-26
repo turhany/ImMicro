@@ -23,16 +23,17 @@ namespace ImMicro.Api.Configurations.Startup
         {
             services.AddDbContext<DataContext>(options =>
             {
-                options.UseNpgsql(configuration.GetConnectionString(AppConstants.PostgreSqlConnectionString))
-                    .EnableSensitiveDataLogging();
                 options.UseLazyLoadingProxies();
+                options.UseNpgsql(configuration.GetConnectionString(AppConstants.PostgreSqlConnectionString));
             });
 
             using (var serviceScope = services.BuildServiceProvider().GetService<IServiceScopeFactory>().CreateScope())
             {
                 var dataBaseService = serviceScope.ServiceProvider.GetRequiredService<DataContext>();
-                dataBaseService.Database.EnsureCreated();
-                dataBaseService.Database.Migrate();
+                if (dataBaseService != null && dataBaseService.Database != null)
+                {
+                    dataBaseService.Database.Migrate();
+                }
             }
 
             return services;

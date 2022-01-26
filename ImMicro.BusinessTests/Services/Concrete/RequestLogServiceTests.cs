@@ -1,8 +1,7 @@
 ﻿using Autofac;
+using ImMicro.Business.RequestLog.Abstract;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ImMicro.Business.Services.Abstract;
 using ImMicro.BusinessTests;
-using ImMicro.Model;
 
 // ReSharper disable CheckNamespace
 
@@ -22,7 +21,7 @@ namespace ImMicro.Business.Services.Concrete.Tests
         public void SaveTest()
         {
             //arrange
-            var entity = new RequestLog
+            var entity = new Model.RequestLog.RequestLog
             {
                 Request = "Request",
                 Response = "Response",

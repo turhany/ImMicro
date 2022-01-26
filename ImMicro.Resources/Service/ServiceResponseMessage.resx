@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="FAILED" xml:space="preserve">
+        <value>Failed</value>
+    </data>
+    <data name="INVALID_REQUEST" xml:space="preserve">
+        <value>Invalid request</value>
+    </data>
+    <data name="INVALID_INPUT_ERROR" xml:space="preserve">
+        <value>Invalid input error</value>
+    </data>
+    <data name="RESOURCE_CREATED" xml:space="preserve">
+        <value>New {0} has been created</value>
+    </data>
+    <data name="RESOURCE_CREATED_WITH_NAME" xml:space="preserve">
+        <value>New {0} {1} has been created.</value>
+    </data>
+    <data name="RESOURCE_NOT_FOUND" xml:space="preserve">
+        <value>{0} not found</value>
+    </data>
+    <data name="RESOURCE_UPDATED_WITH_NAME" xml:space="preserve">
+        <value>{0} {1} has been updated</value>
+    </data>
+    <data name="DUPLICATE_DATA" xml:space="preserve">
+        <value>'{0}' data already exist</value>
+    </data>
+    <data name="RESOURCE_RETRIEVED" xml:space="preserve">
+        <value>Resource retrieved</value>
+    </data>
+    <data name="PROPERTY_REQUIRED" xml:space="preserve">
+        <value>{0} is required</value>
+    </data>
+    <data name="PROPERTY_MAX_LENGTH_ERROR" xml:space="preserve">
+        <value>The property {0} can not be more than {1} characters</value>
+    </data>
+    <data name="PROPERTY_INVALID" xml:space="preserve">
+        <value>{0} is invalid</value>
+    </data>
+    <data name="RESOURCE_DELETED_WITH_NAME" xml:space="preserve">
+        <value>{0} {1} has been deleted</value>
+    </data>
+    <data name="CANNOT_DELETE_ACTIVE_USER" xml:space="preserve">
+        <value>Can not delete request own user.</value>
+    </data>
+</root>

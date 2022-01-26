@@ -1,14 +1,15 @@
 using Autofac;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection; 
 using ImMicro.Api.Configurations.Startup;
 using ImMicro.Api.Middlewares;
-using ImMicro.Business.Validators;
+using ImMicro.Common.Application;
 using ImMicro.Common.StartupConfigurations;
 using ImMicro.Container.Modules;
+using ImMicro.Contract.Mappings.AutoMapper;
+using Microsoft.AspNetCore.Http;
 
 // ReSharper disable MemberCanBePrivate.Global
 
@@ -41,12 +42,16 @@ namespace ImMicro.Api
         {
             services.AddOptionConfiguration(Configuration);
             services.AddDatabaseContext(Configuration);
+            services.AddIdentityConfigurations(Configuration);
+            services.AddLocalizationsConfigurations();
             services.AddDistributedCacheConfiguration(Configuration);
-            services.AddControllers()
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<FileContractValidator>());
+            services.AddCorsConfigurations();
+            services.AddControllers().AddNewtonsoftJson();
+            services.AddApiVersioningConfigurations();
             services.AddSwaggerConfiguration();
             services.AddHttpContextAccessor();
             services.AddHealthCheckConfiguration(Configuration);
+            services.AddAutoMapper(typeof(UserMapping));
         }
 
         /// <summary>
@@ -57,13 +62,20 @@ namespace ImMicro.Api
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseMiddleware<RequestLogMiddleware>();
+            app.UseLocalizationConfiguration();
             app.UseSwaggerConfiguration();
             app.UseHealthCheckConfiguration();
             app.UseSecuritySettings(); 
             app.UseRouting();
+            app.UseStaticFiles();
+            app.UseCorsConfiguration();
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            
+            ApplicationContext.Configure(app.ApplicationServices.GetRequiredService<IHttpContextAccessor>());
+            ApplicationContext.ConfigureThreadPool(Configuration);
         }
 
         /// <summary>

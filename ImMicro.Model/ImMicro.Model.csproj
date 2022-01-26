@@ -1,11 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
+        <LangVersion>10</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\ImMicro.Common\ImMicro.Common.csproj" />
+      <ProjectReference Include="..\ImMicro.Resources\ImMicro.Resources.csproj" />
     </ItemGroup>
 
 </Project>

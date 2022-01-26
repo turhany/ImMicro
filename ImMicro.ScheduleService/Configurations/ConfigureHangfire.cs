@@ -1,7 +1,7 @@
 ﻿using System;
 using Hangfire;
 using Hangfire.PostgreSql;
-using ImMicro.Common.Constans; 
+using ImMicro.Common.Constans;
 using ImMicro.ScheduleService.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -9,9 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ImMicro.ScheduleService.Configurations
 {
-    /// <summary>
-    /// Health check configuration extension
-    /// </summary>
     public static class ConfigureHangfire
     {
         /// <summary>
@@ -36,8 +33,7 @@ namespace ImMicro.ScheduleService.Configurations
                 config.UsePostgreSqlStorage(hangfireConnectionString, option).WithJobExpirationTimeout(TimeSpan.FromHours(6));
             });
 
-            services.AddHangfireServer();
-        
+
             return services;
         }
 

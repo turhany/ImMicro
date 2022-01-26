@@ -1,19 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using FluentValidation;
+using Filtery.Exceptions;
+using ImMicro.Common.BaseModels.Api;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using ImMicro.Common.Constans; 
-using ImMicro.Common.Resources;
-using ImMicro.Contract.Dtos;
+using ImMicro.Common.Constans;  
+using ImMicro.Resources.App;
 
 namespace ImMicro.Api.Middlewares
 {
-    /// <summary>
+  /// <summary>
     /// Global Exception handler middleware
     /// </summary>
     public class ExceptionHandlerMiddleware
@@ -38,19 +36,17 @@ namespace ImMicro.Api.Middlewares
         /// <param name="httpContext">Http Context</param>
         public async Task InvokeAsync(HttpContext httpContext)
         {
-            var response = new BaseModel();
+            var response = new BaseResponse();
             try
             {
                 await _next(httpContext);
             }
-            catch (ValidationException ex)
+            catch (FilteryBaseException ex)
             {
                 _logger.LogError(ex, ex.Message);
-                response.HasError = true;
-                response.ErrorCode = ((int)HttpStatusCode.BadRequest).ToString();
-                response.ErrorMessages = ex.Errors.Select(p => p.ErrorMessage).ToList();
-                response.Message = Literals.ValidationError_Message;
-                
+                response.Status = ServiceResponseStatus.FAILED;
+                response.Message = ex.Message;
+
                 httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 httpContext.Response.ContentType = AppConstants.JsonContentType;
                 await httpContext.Response.WriteAsync(JsonConvert.SerializeObject(response));
@@ -58,10 +54,8 @@ namespace ImMicro.Api.Middlewares
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
-                response.HasError = true;
-                response.ErrorCode = ((int)HttpStatusCode.InternalServerError).ToString();
-                response.ErrorMessages.Add(Literals.ServerError_Message);
-                response.Message = Literals.ServerError_Message;
+                response.Status = ServiceResponseStatus.INTERNAL_SERVER_ERROR;
+                response.Message = ServiceResponseStatus.INTERNAL_SERVER_ERROR;
 
                 httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 httpContext.Response.ContentType = AppConstants.JsonContentType;

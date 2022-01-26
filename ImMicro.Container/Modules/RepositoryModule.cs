@@ -1,6 +1,8 @@
 ﻿using System.Reflection;
 using Autofac;
 using ImMicro.Common.Data.Abstract;
+using ImMicro.Data.Repositories;
+using ImMicro.Data.Repositories.Abstract;
 using ImMicro.Data.Repositories.Concrete;
 using Module = Autofac.Module;
 
@@ -10,8 +12,13 @@ namespace ImMicro.Container.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            TypeInfo assemblyType = typeof(RequestLogRepository).GetTypeInfo();
-
+            builder.RegisterGeneric(typeof(EfGenericRepository<>))
+                .As(typeof(IGenericRepository<>))
+                .InstancePerLifetimeScope(); 
+            
+            
+            TypeInfo assemblyType = typeof(ISampleRepository).GetTypeInfo();
+            
             builder.RegisterAssemblyTypes(assemblyType.Assembly)
                 .Where(x => typeof(IRepository).IsAssignableFrom(x))
                 .AsImplementedInterfaces()

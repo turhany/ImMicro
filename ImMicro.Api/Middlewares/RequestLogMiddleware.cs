@@ -4,10 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ImMicro.Business.RequestLog.Abstract;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
-using ImMicro.Business.Services.Abstract;
-using ImMicro.Model;
+using Microsoft.Extensions.DependencyInjection; 
+using ImMicro.Model.RequestLog;
 
 namespace ImMicro.Api.Middlewares
 {

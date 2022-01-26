@@ -4,6 +4,44 @@
         <name>ImMicro.Api</name>
     </assembly>
     <members>
+        <member name="T:ImMicro.Api.Configurations.Startup.ConfigureApiVersioning">
+            <summary>
+            Configure Api Versioning
+            </summary>
+        </member>
+        <member name="M:ImMicro.Api.Configurations.Startup.ConfigureApiVersioning.AddApiVersioningConfigurations(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Add Api Versioning Configurations
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ImMicro.Api.Configurations.Startup.ConfigureApiVersioning.UseApiVersioningConfiguration(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Use Api Versioning Configuration
+            </summary>
+            <param name="app"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ImMicro.Api.Configurations.Startup.ConfigureCORS">
+            <summary>
+            Configure CORS
+            </summary>
+        </member>
+        <member name="M:ImMicro.Api.Configurations.Startup.ConfigureCORS.AddCorsConfigurations(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Add CORS Configurations
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ImMicro.Api.Configurations.Startup.ConfigureCORS.UseCorsConfiguration(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Use CORS Configuration
+            </summary>
+            <param name="app"></param>
+            <returns></returns>
+        </member>
         <member name="T:ImMicro.Api.Configurations.Startup.ConfigureDbContext">
             <summary>
             Database configuration extension
@@ -15,6 +53,38 @@
             </summary>
             <param name="services">ServiceCollection</param>
             <param name="configuration">Configuration</param>
+            <returns></returns>
+        </member>
+        <member name="T:ImMicro.Api.Configurations.Startup.ConfigureIdentityServer">
+            <summary>
+            Configure Identity Server
+            </summary>
+        </member>
+        <member name="M:ImMicro.Api.Configurations.Startup.ConfigureIdentityServer.AddIdentityConfigurations(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Add Identity Configurations
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ImMicro.Api.Configurations.Startup.ConfigureLocalization">
+            <summary>
+            Configure Localization
+            </summary>
+        </member>
+        <member name="M:ImMicro.Api.Configurations.Startup.ConfigureLocalization.AddLocalizationsConfigurations(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Add Localizations Configurations
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ImMicro.Api.Configurations.Startup.ConfigureLocalization.UseLocalizationConfiguration(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Use Localization Configuration
+            </summary>
+            <param name="app"></param>
             <returns></returns>
         </member>
         <member name="T:ImMicro.Api.Configurations.Startup.ConfigureSwagger">
@@ -36,9 +106,86 @@
             <param name="app">Application builder</param>
             <returns></returns>
         </member>
+        <member name="T:ImMicro.Api.Configurations.Swagger.ConfigureSwaggerOptions">
+            <summary>
+            Configures the Swagger generation options.
+            </summary>
+            <remarks>This allows API versioning to define a Swagger document per API version after the
+            <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider"/> service has been resolved from the service container.</remarks>
+        </member>
+        <member name="M:ImMicro.Api.Configurations.Swagger.ConfigureSwaggerOptions.#ctor(Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ImMicro.Api.Configurations.Swagger.ConfigureSwaggerOptions"/> class.
+            </summary>
+            <param name="provider">The <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider">provider</see> used to generate Swagger documents.</param>
+        </member>
+        <member name="M:ImMicro.Api.Configurations.Swagger.ConfigureSwaggerOptions.Configure(Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions)">
+            <inheritdoc />
+        </member>
+        <member name="M:ImMicro.Api.Configurations.Swagger.ConfigureSwaggerOptions.CreateInfoForApiVersion(Microsoft.AspNetCore.Mvc.ApiExplorer.ApiVersionDescription)">
+            <summary>
+            Gets the open api information.
+            </summary>
+            <param name="description">The <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.ApiVersionDescription"/></param>
+            <returns></returns>
+        </member>
+        <member name="M:ImMicro.Api.Configurations.Swagger.ConfigureSwaggerOptions.Configure(Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIOptions)">
+            <summary>
+            Configure the swagger ui configurations.
+            </summary>
+            <param name="options">The swagger ui options.</param>
+        </member>
+        <member name="T:ImMicro.Api.Configurations.Swagger.EnumSchemaFilter">
+            <summary>
+            Enum Schema Filter
+            </summary>
+        </member>
+        <member name="M:ImMicro.Api.Configurations.Swagger.EnumSchemaFilter.Apply(Microsoft.OpenApi.Models.OpenApiSchema,Swashbuckle.AspNetCore.SwaggerGen.SchemaFilterContext)">
+            <summary>
+            Apply
+            </summary>
+            <param name="model"></param>
+            <param name="context"></param>
+        </member>
+        <member name="T:ImMicro.Api.Configurations.Swagger.SwaggerDefaultValues">
+            <summary>
+            Represents the Swagger/Swashbuckle operation filter used to document the implicit API version parameter.
+            </summary>
+            <remarks>This <see cref="T:Swashbuckle.AspNetCore.SwaggerGen.IOperationFilter"/> is only required due to bugs in the <see cref="T:Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator"/>.
+            Once they are fixed and published, this class can be removed.</remarks>
+        </member>
+        <member name="M:ImMicro.Api.Configurations.Swagger.SwaggerDefaultValues.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+            Applies the filter to the specified operation using the given context.
+            </summary>
+            <param name="operation">The operation to apply the filter to.</param>
+            <param name="context">The current operation filter context.</param>
+        </member>
+        <member name="T:ImMicro.Api.Configurations.Swagger.SwaggerHttpHeaderFilter">
+            <summary>
+            <see cref="T:ImMicro.Api.Configurations.Swagger.SwaggerHttpHeaderFilter"/>
+            </summary>
+        </member>
+        <member name="M:ImMicro.Api.Configurations.Swagger.SwaggerHttpHeaderFilter.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+            Apply http header operation.
+            </summary>
+            <param name="operation">The <see cref="T:Microsoft.OpenApi.Models.OpenApiOperation"/> instance.</param>
+            <param name="context">The <see cref="T:Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext"/> instance.</param>
+        </member>
         <member name="T:ImMicro.Api.Controllers.BaseController">
             <summary>
             Api base controller
+            </summary>
+        </member>
+        <member name="P:ImMicro.Api.Controllers.BaseController.Mapper">
+            <summary>
+            Auto Mapper
+            </summary>
+        </member>
+        <member name="M:ImMicro.Api.Controllers.BaseController.#ctor">
+            <summary>
+            Base Controller
             </summary>
         </member>
         <member name="T:ImMicro.Api.Controllers.HomeController">
@@ -52,15 +199,106 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="T:ImMicro.Api.Controllers.UserController">
-            <inheritdoc />
-        </member>
-        <member name="M:ImMicro.Api.Controllers.UserController.#ctor(ImMicro.Business.Services.Abstract.IUserService)">
-            <inheritdoc />
-        </member>
-        <member name="M:ImMicro.Api.Controllers.UserController.Init(ImMicro.Contract.Dtos.FileContract,System.Threading.CancellationToken)">
+        <member name="T:ImMicro.Api.Controllers.V1.LoginController">
             <summary>
-            Import user json file
+            Login Controller
+            </summary>
+        </member>
+        <member name="M:ImMicro.Api.Controllers.V1.LoginController.#ctor(ImMicro.Business.User.Abstract.IUserService)">
+            <summary>
+            The constructor of <see cref="T:ImMicro.Api.Controllers.V1.LoginController"/>.
+            </summary>
+            <param name="userService">The user service.</param>
+        </member>
+        <member name="M:ImMicro.Api.Controllers.V1.LoginController.Token(ImMicro.Contract.App.User.GetTokenContract)">
+            <summary>
+            Get Token
+            </summary>
+            <returns>Returns user jwt token.</returns>
+        </member>
+        <member name="M:ImMicro.Api.Controllers.V1.LoginController.RefreshToken(ImMicro.Contract.App.User.RefreshTokenContract)">
+            <summary>
+            Refresh Token
+            </summary>
+            <returns>Returns user jwt refresh token.</returns>
+        </member>
+        <member name="M:ImMicro.Api.Controllers.V1.LoginController.ForgotPassword(ImMicro.Contract.App.User.ForgotPasswordRequest)">
+            <summary>
+            Forgot Password
+            </summary>
+            <returns>Returns if user exist on database will be send to email for forgot password.</returns>
+        </member>
+        <member name="M:ImMicro.Api.Controllers.V1.LoginController.ResetPassword(System.Guid)">
+            <summary>
+            Reset the password with the token if still is valid and not used.
+            </summary>
+            <returns>Returns if user reset password token is not used.</returns>
+        </member>
+        <member name="M:ImMicro.Api.Controllers.V1.LoginController.ResetPassword(System.Guid,ImMicro.Contract.App.User.ResetPasswordRequest)">
+            <summary>
+            Reset the password using the token, new password, and new password confirmation.The token is in the mail link.
+            </summary>
+            <param name="id">The forgot password token.</param>
+            <param name="request">The request <see cref="T:ImMicro.Contract.App.User.ResetPasswordRequest"/> model.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ImMicro.Api.Controllers.V1.LoginController.ChangePassword(System.Guid,ImMicro.Contract.App.User.ChangePasswordRequest)">
+            <summary>
+            Change password with using old password, new password and new password confirm.
+            </summary>
+            <param name="id">The user identifier.</param>
+            <param name="request">The request <see cref="T:ImMicro.Contract.App.User.ChangePasswordRequest"/> model.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ImMicro.Api.Controllers.V1.LoginController.ConfirmEmail(System.Guid)">
+            <summary>
+            Confirm email.The confirm token is in the mail link.
+            </summary>
+            <param name="id">The confirm email token.</param>
+            <returns>JWT Token for login.</returns>
+        </member>
+        <member name="M:ImMicro.Api.Controllers.V1.LoginController.ResendConfirmEmail(ImMicro.Contract.App.User.ResendConfirmEmailRequest)">
+            <summary>
+            Resend confirm email.When user not access the account confirm mail he can be request a new confirm mail.
+            </summary>
+        </member>
+        <member name="T:ImMicro.Api.Controllers.V1.UsersController">
+            <summary>
+            Users Controller
+            </summary>
+        </member>
+        <member name="M:ImMicro.Api.Controllers.V1.UsersController.#ctor(ImMicro.Business.User.Abstract.IUserService)">
+            <summary>
+            User Controller
+            </summary>
+            <param name="userService"></param>
+        </member>
+        <member name="M:ImMicro.Api.Controllers.V1.UsersController.Get(System.Guid)">
+            <summary>
+            Get User
+            </summary>
+        </member>
+        <member name="M:ImMicro.Api.Controllers.V1.UsersController.CreateUser(ImMicro.Contract.App.User.CreateUserRequest)">
+            <summary>
+            Create User
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ImMicro.Api.Controllers.V1.UsersController.UpdateUser(ImMicro.Contract.App.User.UpdateUserRequest,System.Guid)">
+            <summary>
+            Update User
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ImMicro.Api.Controllers.V1.UsersController.DeleteUser(System.Guid)">
+            <summary>
+            Delete User
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ImMicro.Api.Controllers.V1.UsersController.Search(Filtery.Models.FilteryRequest)">
+            <summary>
+            User Search
             </summary>
             <returns></returns>
         </member>

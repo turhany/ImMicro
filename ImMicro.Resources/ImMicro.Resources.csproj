@@ -1,0 +1,63 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>10</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Update="App\Literals.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>Literals.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="App\Literals.tr-TR.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Model\Entities.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>Entities.Designer.cs</LastGenOutput>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Model\Entities.tr-TR.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Service\ServiceResponseMessage.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>ServiceResponseMessage.Designer.cs</LastGenOutput>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Service\ServiceResponseMessage.tr-TR.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Service\ServiceResponseStatus.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>ServiceResponseStatus.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="App\Literals.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Literals.resx</DependentUpon>
+        </Compile>        
+        <Compile Update="Model\Entities.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Entities.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Service\ServiceResponseMessage.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ServiceResponseMessage.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Service\ServiceResponseStatus.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ServiceResponseStatus.resx</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
+</Project>

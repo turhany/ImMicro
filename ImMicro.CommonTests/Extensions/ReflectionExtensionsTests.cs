@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HelpersToolbox.Extensions;
 using ImMicro.Model;
+using ImMicro.Model.RequestLog;
 
 namespace ImMicro.Common.Extensions.Tests
 {
