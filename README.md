@@ -3,7 +3,8 @@
 This is a simple/reusable microservice template/playgorund project.  
 
 #### Features
-- Will be added
+- Full Login flow
+- Full User CRUD flow
 
 #### Structure
 - **API:** Endpoint project for client usage  
