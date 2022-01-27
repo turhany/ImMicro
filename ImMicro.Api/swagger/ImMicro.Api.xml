@@ -199,6 +199,28 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:ImMicro.Api.Controllers.V1.AuditLogController">
+            <summary>
+            Audit Log Controller
+            </summary>
+        </member>
+        <member name="M:ImMicro.Api.Controllers.V1.AuditLogController.#ctor(ImMicro.Business.Audit.Abstract.IAuditLogService)">
+            <summary>
+            Audit Log Controller
+            </summary>
+            <param name="auditLogService"></param>
+        </member>
+        <member name="M:ImMicro.Api.Controllers.V1.AuditLogController.Search(Filtery.Models.FilteryRequest)">
+            <summary>
+            Search Audit Log
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ImMicro.Api.Controllers.V1.AuditLogController.Get(System.Guid)">
+            <summary>
+            Get Audit Log
+            </summary>
+        </member>
         <member name="T:ImMicro.Api.Controllers.V1.LoginController">
             <summary>
             Login Controller
