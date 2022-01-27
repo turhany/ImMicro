@@ -17,7 +17,7 @@ namespace ImMicro.Common.Extensions.Tests
         public void ComputeHashShaTest()
         {
             //arrange
-            var expected = "94c36ff77cb9c37e52b0eb45b8885a78f429168c";
+            var expected = "39b8d37fc187c87933353c57275090239c70f9ac";
             
             //act
             var hash = "ImMicro".ComputeHashSha(AppConstants.HashKey);

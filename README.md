@@ -1,10 +1,11 @@
-#   **ImMicro(UnderDevelopment)**
+#   **ImMicro**
     
 This is a simple/reusable microservice template/playgorund project.  
 
 #### Features
 - Full Login flow
 - Full User CRUD flow
+- Full AuditLog List,Get flow
 
 #### Structure
 - **API:** Endpoint project for client usage  
@@ -59,6 +60,22 @@ This is a simple/reusable microservice template/playgorund project.
 * **Redis >** docker run --name redis -p 6379:6379 -d redis --requirepass 123456789.tY
 * **RabbitMQ >** docker run -d --hostname rabbitmq --name rabbitmq -p 15672:15672 -p 5672:5672 rabbitmq:3.8.3-management 
 
+#### SonarQube Test Preperation
+* docker run -d --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonarqube:latest
+* SonarQube need java install it before continue https://www.oracle.com/java/technologies/downloads/
+* SonarQube Url: http://localhost:9000 
+    * Username: admin
+    * Password: admin
+* Open SonarQube and login the system
+* Select "Manually" project type
+* Fill the "Display Name" and "Key" area for example "ImMicro" and clik setup
+* Select "Locally" option
+* Fill "Token Name" for example "ImMicroToken" and click generate
+* Then you will see you token copy it and click continue
+* Select ".Net" after that select ".Net Core" build tool then you will see you SonarQube run commands like this ss
+* Open command propt in your app foler and run them step by step
+![alt tag](Files/sonarqubeflow.jpg)  
+
 #### EF Migration Codes
 * update-database -context ImMicro.Data.DataContext
 * add-migration migrationName -context ImMicro.Data.DataContext
@@ -82,7 +99,10 @@ This is a simple/reusable microservice template/playgorund project.
 * http://localhost:5000/health-check-ui > Dashboard for see application services health (Redis, NpgSql)    
 
 #### Code Coverage
-* will be added
+* I know its bad but soon i will add more tests, just little bit time :)
+
+![alt tag](Files/testcovarage.jpg)  
 
 #### SonarQube Test Results
-* will be added
+![alt tag](Files/sonarquberesult.jpg)  
+
