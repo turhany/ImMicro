@@ -3,8 +3,6 @@
     public static class AppConstants
     {
         public const string ProductName = "ImMicro";
-        
-        public const string SolutionName = "ImMicro";
         public const string JsonContentType = "application/json";
         
         public const string PostgreSqlConnectionString = "PostgreSqlConnectionString";
@@ -14,9 +12,7 @@
         public const int DefaultCacheDuration = 10;
         
         public const string HashKey = "turhany";
-        
-        public const string Json = "json";
-        
+         
         public const string RabbitMqSettingsOptionName = "RabbitMqSettings";
         public const string RedLockSettingsOptionName = "RedLockSettings";
         

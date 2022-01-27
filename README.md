@@ -46,11 +46,16 @@ This is a simple/reusable microservice template/playgorund project.
 * If you want to use local environment, you need to update Redis and PostgreSql connection strings in API project  (appsettings.json)    
     * **DBConnectionString** field for PostgreSql
     * **RedisConnectionString** field for DistributedCache
-    * **Distributed Lock Settings**
+    * **Distributed Lock Settings (RedLockSettings)**
         * RedLockHostAddress
         * RedLockHostPort
         * RedLockHostPassword > if you dont have pass you need to set it null
-        * RedLockHostSsl
+        * RedLockHostSsl  
+    * **Message Queue Settings (RabbitMqSettings)**
+        * HostAddress
+        * UserName
+        * Password
+        * Also need to add your queue names here like "SampleQueue" and in C# "RedLockOption" class for option mapping
 * Also project has ready to run **Docker support**
     * **docker-compose file store in solution directory**
     * All connection string stores in appsettings.DockerCompose.json environment file
