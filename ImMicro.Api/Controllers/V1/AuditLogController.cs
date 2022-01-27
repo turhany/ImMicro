@@ -32,7 +32,7 @@ namespace ImMicro.Api.Controllers.V1
         /// </summary>
         /// <returns></returns>
         [HttpPost("search")]
-        //[Authorize(Roles = "Root")]
+        [Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedList<AuditLogView>))]
         public async Task<ActionResult> Search([FromBody] FilteryRequest request)
         {
