@@ -57,7 +57,7 @@ namespace ImMicro.Api.Controllers.V1
         /// </summary>
         /// <returns></returns>
         [HttpPut("{id:guid}")]
-        //[Authorize(Roles = "Root")] 
+        [Authorize(Roles = "Root")] 
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult> UpdateUser([FromBody] UpdateUserRequest request, Guid id)
         {
