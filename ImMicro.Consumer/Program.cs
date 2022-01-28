@@ -22,6 +22,7 @@ namespace ImMicro.Consumer
 
         public static IHostBuilder CreateHostBuilder()
         {
+            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var hostBuilder = Host.CreateDefaultBuilder()
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .UseSerilog((context, conf) => conf.ReadFrom.Configuration(context.Configuration))
@@ -38,8 +39,7 @@ namespace ImMicro.Consumer
                 })
                 .ConfigureContainer<ContainerBuilder>(ConfigureContainer)
                 .ConfigureAppConfiguration((hostingContext, config) =>
-                {
-                    var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+                { 
                     if (string.IsNullOrWhiteSpace(env))
                     {
                         env = hostingContext.HostingEnvironment.EnvironmentName;
@@ -47,10 +47,8 @@ namespace ImMicro.Consumer
                     
                     config.AddJsonFile($"appsettings.{env}.json", true, true);
                     config.AddEnvironmentVariables();
-                    
-                    ApplicationContext.ConfigureWorkerServiceUser(Guid.Parse(hostingContext.Configuration["Application:ServiceUserId"]));
-                    ApplicationContext.ConfigureThreadPool(hostingContext.Configuration);
                 });
+             
 
             hostBuilder.UseConsoleLifetime();
 
@@ -58,6 +56,13 @@ namespace ImMicro.Consumer
                 hostBuilder.UseSystemd();
             else
                 hostBuilder.UseWindowsService(); 
+            
+            var configFile = new ConfigurationBuilder()
+                .AddJsonFile($"appsettings.{env}.json", optional: false)
+                .Build();
+            
+            ApplicationContext.ConfigureWorkerServiceUser(Guid.Parse(configFile["Application:ServiceUserId"]));
+            ApplicationContext.ConfigureThreadPool(configFile);
             
             return hostBuilder;
         }
