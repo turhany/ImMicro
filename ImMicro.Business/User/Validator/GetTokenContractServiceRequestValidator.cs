@@ -17,10 +17,10 @@ namespace ImMicro.Business.User.Validator
                 .NotEmpty()
                 .WithMessage(string.Format(ServiceResponseMessage.PROPERTY_REQUIRED, "Password"))
                 .MinimumLength(8)
-                .Matches("[A-Z]").WithMessage("'{PropertyName}' must contain one or more capital letters.")
-                .Matches("[a-z]").WithMessage("'{PropertyName}' must contain one or more lowercase letters.")
-                .Matches(@"\d").WithMessage("'{PropertyName}' must contain one or more digits.")
-                .Matches(@"[][""!@$%^&*(){}:;<>,.?/+_=|'~\\-]").WithMessage("'{ PropertyName}' must contain one or more special characters.");
+                .Matches("[A-Z]").WithMessage("'Password' must contain one or more capital letters.")
+                .Matches("[a-z]").WithMessage("'Password' must contain one or more lowercase letters.")
+                .Matches(@"\d").WithMessage("'Password' must contain one or more digits.")
+                .Matches(@"[][""!@$%^&*(){}:;<>,.?/+_=|'~\\-]").WithMessage("'Password' must contain one or more special characters.");
         }
     }
 }

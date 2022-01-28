@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Dynamic;
 using System.Threading.Tasks;
 using Filtery.Extensions;
@@ -43,37 +44,30 @@ namespace ImMicro.Business.User.Concrete
 
         #region CRUD Operations
 
-        public async Task<ServiceResult<UserSearchView>> GetAsync(Guid id)
+        public async Task<ServiceResult<UserView>> GetAsync(Guid id)
         {
             var cacheKey = string.Format(CacheKeyConstants.UserCacheKey, id);
 
             var user = await _cacheService.GetOrSetObjectAsync(cacheKey,
                 async () => await _userRepository.FindOneAsync(p => p.Id == id && p.IsDeleted == false));
 
-            var (notFoundUserResult, notFoundUserCondition) =
-                ServiceResultHelper.CreateNotFoundResult<UserSearchView>(user, Resource.NotFound(Entities.User));
-
-            return notFoundUserCondition
-                ? notFoundUserResult
-                : ServiceResultHelper.CreateSuccessResult<UserSearchView>(user, Mapper);
+            if (user == null)
+            {
+                return new ServiceResult<UserView>
+                {
+                    Status = ResultStatus.ResourceNotFound,
+                    Message = Resource.NotFound(Entities.User)
+                };
+            }
+            
+            return new ServiceResult<UserView>
+            {
+                Status = ResultStatus.Successful,
+                Message = Resource.Retrieved(),
+                Data = Mapper.Map<UserView>(user)
+            };
         }
-
-        public async Task<ServiceResult<UserSearchView>> GetAsync(string email)
-        {
-            //TODO: email validator eklenecek
-
-            var cacheKey = string.Format(CacheKeyConstants.UserCacheKey, email);
-
-            var user = await _cacheService.GetOrSetObjectAsync(cacheKey, async () => 
-                await _userRepository.FindOneAsync(p => p.Email == email.ToLowerInvariant() && p.IsDeleted == false));
-
-            var (notFoundUserResult, notFoundUserCondition) = ServiceResultHelper.CreateNotFoundResult<UserSearchView>(user, Resource.NotFound(Entities.User));
-
-            return notFoundUserCondition
-                ? notFoundUserResult
-                : ServiceResultHelper.CreateSuccessResult<UserSearchView>(user, Mapper);
-        }
-
+ 
         public async Task<ServiceResult<ExpandoObject>> CreateAsync(CreateUserRequestServiceRequest request)
         {
             var validationResponse = ValidationService.Validate(typeof(CreateUserRequestValidator), request);
@@ -90,7 +84,11 @@ namespace ImMicro.Business.User.Concrete
 
             if (await _userRepository.AnyAsync(p => p.Email.ToLower().Equals(request.Email.ToLower()) && p.IsDeleted == false))
             {
-                return ServiceResultHelper.CreateResult<ExpandoObject>(ResultStatus.BadRequest, Literals.SignUp_Check_Request_Message);
+                return new ServiceResult<ExpandoObject>
+                {
+                    Status = ResultStatus.InvalidInput,
+                    Message = Resource.Duplicate(request.Email)
+                };
             }
 
             var entity = new Model.User.User
@@ -136,7 +134,7 @@ namespace ImMicro.Business.User.Concrete
                 return new ServiceResult<ExpandoObject>
                 {
                     Status = ResultStatus.ResourceNotFound,
-                    Message = Resource.NotFound(request.Email)
+                    Message = Resource.NotFound(Entities.User)
                 };
             }
 
@@ -150,7 +148,8 @@ namespace ImMicro.Business.User.Concrete
             }
 
             var lockKey = string.Format(LockKeyConstants.UserLockKey, entity.Id);
-
+            var cacheKey = string.Format(CacheKeyConstants.UserCacheKey, entity.Id);
+            
             using (await _lockService.CreateLockAsync(lockKey))
             {
                 entity.FirstName = request.FirstName.Trim();
@@ -159,6 +158,8 @@ namespace ImMicro.Business.User.Concrete
                 entity.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
                 entity = await _userRepository.UpdateAsync(entity);
+
+                await _cacheService.RemoveAsync(cacheKey);
             }
             
 
@@ -195,10 +196,13 @@ namespace ImMicro.Business.User.Concrete
                 };
             }
             var lockKey = string.Format(LockKeyConstants.UserLockKey, entity.Id);
-
+            var cacheKey = string.Format(CacheKeyConstants.UserCacheKey, entity.Id);
+            
             using (await _lockService.CreateLockAsync(lockKey))
             {
-                await _userRepository.DeleteAsync(entity);    
+                await _userRepository.DeleteAsync(entity); 
+                
+                await _cacheService.RemoveAsync(cacheKey);   
             }
 
             return new ServiceResult<ExpandoObject>
@@ -208,15 +212,26 @@ namespace ImMicro.Business.User.Concrete
             };
         }
 
-        public async Task<ServiceResult<PagedList<UserSearchView>>> Search(FilteryRequest request)
+        public async Task<ServiceResult<PagedList<UserView>>> Search(FilteryRequest request)
         {
-            var filteryResponse =
-                await _userRepository.Find(p => true).BuildFilteryAsync(new UserFilteryMapping(), request);
+            var filteryResponse = await _userRepository.Find(p => true).BuildFilteryAsync(new UserFilteryMapping(), request);
 
-            var response =
-                ServiceResultHelper.CreatePagedListResponse<UserSearchView, Model.User.User>(filteryResponse, Mapper);
-
-            return ServiceResultHelper.CreateSuccessResult<PagedList<UserSearchView>>(response, Mapper);
+            var response = new PagedList<UserView>
+            {
+                Data = Mapper.Map<List<UserView>>(filteryResponse.Data),
+                PageInfo = new Page
+                {
+                    PageNumber = filteryResponse.PageNumber,
+                    PageSize = filteryResponse.PageSize,
+                    TotalItemCount = filteryResponse.TotalItemCount
+                }
+            };
+            
+            return new ServiceResult<PagedList<UserView>>
+            {
+                Data = response,
+                Status = ResultStatus.Successful
+            };
         }
 
         #endregion

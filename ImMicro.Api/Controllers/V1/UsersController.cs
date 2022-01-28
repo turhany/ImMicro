@@ -30,7 +30,7 @@ namespace ImMicro.Api.Controllers.V1
         /// </summary>
         [HttpGet("{id:guid}")]
         [Authorize(Roles = "Root")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserSearchView))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserView))]
         public async Task<ActionResult> Get(Guid id)
         {
             var result = await _userService.GetAsync(id);

@@ -123,4 +123,7 @@
   <data name="AuditLog" xml:space="preserve">
     <value>AuditLog</value>
   </data>
+  <data name="RequestLog" xml:space="preserve">
+    <value>RequestLog</value>
+  </data>
 </root>

@@ -13,9 +13,8 @@ namespace ImMicro.Business.User.Abstract
 {
     public interface IUserService : IService
     {
-        Task<ServiceResult<UserSearchView>> GetAsync(Guid id);
-        Task<ServiceResult<UserSearchView>> GetAsync(string email);
-        Task<ServiceResult<PagedList<UserSearchView>>> Search(FilteryRequest request);
+        Task<ServiceResult<UserView>> GetAsync(Guid id); 
+        Task<ServiceResult<PagedList<UserView>>> Search(FilteryRequest request);
         Task<ServiceResult<ExpandoObject>> CreateAsync(CreateUserRequestServiceRequest request);
         Task<ServiceResult<ExpandoObject>> UpdateAsync(UpdateUserRequestServiceRequest request);
         Task<ServiceResult<ExpandoObject>> DeleteAsync(Guid id);

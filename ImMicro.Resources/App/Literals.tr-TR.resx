@@ -120,7 +120,4 @@
   <data name="UserType_Root" xml:space="preserve">
     <value>Root</value>
   </data>
-  <data name="SignUp_Check_Request_Message" xml:space="preserve">
-    <value>Lütfen bilgilerinizi kontrol ediniz.</value>
-  </data>
 </root>

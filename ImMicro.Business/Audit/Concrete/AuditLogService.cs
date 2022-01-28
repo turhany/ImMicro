@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Filtery.Extensions;
 using Filtery.Models;
@@ -32,9 +33,22 @@ namespace ImMicro.Business.Audit.Concrete
         {
             var filteryResponse = await _auditLogRepository.Find(p => true).BuildFilteryAsync(new AuditLogFilteryMapping(), request);
            
-            var response = ServiceResultHelper.CreatePagedListResponse<AuditLogView, Model.AuditLog.AuditLog>(filteryResponse, Mapper);
-
-            return ServiceResultHelper.CreateSuccessResult<PagedList<AuditLogView>>(response, Mapper);
+            var response = new PagedList<AuditLogView>
+            {
+                Data = Mapper.Map<List<AuditLogView>>(filteryResponse.Data),
+                PageInfo = new Page
+                {
+                    PageNumber = filteryResponse.PageNumber,
+                    PageSize = filteryResponse.PageSize,
+                    TotalItemCount = filteryResponse.TotalItemCount
+                }
+            };
+            
+            return new ServiceResult<PagedList<AuditLogView>>
+            {
+                Data = response,
+                Status = ResultStatus.Successful
+            };
         }
         
         public async Task<ServiceResult<AuditLogView>> GetAsync(Guid id)
@@ -43,9 +57,21 @@ namespace ImMicro.Business.Audit.Concrete
             
             var auditLog = await _cacheService.GetOrSetObjectAsync(cacheKey,  async () => await _auditLogRepository.FindOneAsync(p => p.Id == id && p.IsDeleted == false));
 
-            var (notFoundAuditLogResult, notFoundAuditLogCondition) = ServiceResultHelper.CreateNotFoundResult<AuditLogView>(auditLog, Resource.NotFound(Entities.AuditLog));
-
-            return notFoundAuditLogCondition ? notFoundAuditLogResult : ServiceResultHelper.CreateSuccessResult<AuditLogView>(auditLog, Mapper);
+            if (auditLog == null)
+            {
+                return new ServiceResult<AuditLogView>
+                {
+                    Status = ResultStatus.ResourceNotFound,
+                    Message = Resource.NotFound(Entities.AuditLog)
+                };
+            }
+            
+            return new ServiceResult<AuditLogView>
+            {
+                Status = ResultStatus.Successful,
+                Message = Resource.Retrieved(),
+                Data = Mapper.Map<AuditLogView>(auditLog)
+            };
         }
     }
 }

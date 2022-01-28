@@ -14,7 +14,7 @@ namespace ImMicro.Contract.Mappings.AutoMapper
             CreateMap<UpdateUserRequest, UpdateUserRequestServiceRequest>();
             CreateMap<RefreshTokenContract, RefreshTokenContractServiceRequest>();
             CreateMap<GetTokenContract, GetTokenContractServiceRequest>();
-            CreateMap<User, UserSearchView>().ForMember(p => p.Type, b => b.MapFrom(p => p.Type.GetDisplayName()));
+            CreateMap<User, UserView>().ForMember(p => p.Type, b => b.MapFrom(p => p.Type.GetDisplayName()));
         }
     }
 }

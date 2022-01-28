@@ -61,15 +61,6 @@ namespace ImMicro.Resources.App {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please, check your request..
-        /// </summary>
-        public static string SignUp_Check_Request_Message {
-            get {
-                return ResourceManager.GetString("SignUp_Check_Request_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Root.
         /// </summary>
         public static string UserType_Root {

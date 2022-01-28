@@ -70,65 +70,11 @@ namespace ImMicro.Resources.Model {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Brand.
+        ///   Looks up a localized string similar to RequestLog.
         /// </summary>
-        public static string Brand {
+        public static string RequestLog {
             get {
-                return ResourceManager.GetString("Brand", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Campaign.
-        /// </summary>
-        public static string Campaign {
-            get {
-                return ResourceManager.GetString("Campaign", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Country.
-        /// </summary>
-        public static string Country {
-            get {
-                return ResourceManager.GetString("Country", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Influencer.
-        /// </summary>
-        public static string Influencer {
-            get {
-                return ResourceManager.GetString("Influencer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Billing Detail.
-        /// </summary>
-        public static string InfluencerBillingDetail {
-            get {
-                return ResourceManager.GetString("InfluencerBillingDetail", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sector.
-        /// </summary>
-        public static string Sector {
-            get {
-                return ResourceManager.GetString("Sector", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Service Agreement.
-        /// </summary>
-        public static string ServiceAgreement {
-            get {
-                return ResourceManager.GetString("ServiceAgreement", resourceCulture);
+                return ResourceManager.GetString("RequestLog", resourceCulture);
             }
         }
         

@@ -2,7 +2,7 @@
 
 namespace ImMicro.Contract.App.User
 {
-    public class UserSearchView
+    public class UserView
     {
         public Guid Id { get; set; }
         public string FirstName { get; set; }
