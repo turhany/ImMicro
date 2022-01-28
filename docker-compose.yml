@@ -6,7 +6,7 @@ networks:
 
 services:
   ImMicro.api:
-    image: ${DOCKER_REGISTRY-}ImMicroapi
+    image: ${DOCKER_REGISTRY-}immicroapi
     restart : always
     depends_on:
       - "database_postgres"
