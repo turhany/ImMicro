@@ -11,11 +11,7 @@ namespace ImMicro.Model.User
         public string Password { get; set; }
         public bool IsActive { get; set; }
         public UserType Type { get; set; }
-        public string EmailVerificationToken { get; set; }
-        public bool EmailVerificationTokenIsUsed { get; set; }
-        public string ForgotPasswordToken { get; set; }
-        public bool ForgotPasswordTokenIsUsed { get; set; }
-        public string ResreshToken { get; set; }
-        public DateTime ResreshTokenExpireDate { get; set; }
+        public string RefreshToken { get; set; }
+        public DateTime RefreshTokenExpireDate { get; set; }
     }
 }

@@ -3,7 +3,7 @@
 This is a simple/reusable microservice template/playgorund project.  
 
 #### Features
-- Full Login flow
+- Simple Login flow
 - Full User CRUD flow
 - Full AuditLog List,Get flow
 

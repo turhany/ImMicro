@@ -128,20 +128,8 @@ namespace ImMicro.Data.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
-                    b.Property<string>("EmailVerificationToken")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("EmailVerificationTokenIsUsed")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
-
-                    b.Property<string>("ForgotPasswordToken")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("ForgotPasswordTokenIsUsed")
-                        .HasColumnType("boolean");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
@@ -155,10 +143,10 @@ namespace ImMicro.Data.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("text");
 
-                    b.Property<string>("ResreshToken")
+                    b.Property<string>("RefreshToken")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("ResreshTokenExpireDate")
+                    b.Property<DateTime>("RefreshTokenExpireDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("Type")
@@ -177,17 +165,15 @@ namespace ImMicro.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("995330c2-972b-4ffe-929c-c5cdf82b0f3a"),
-                            CreatedOn = new DateTime(2022, 1, 26, 20, 19, 50, 205, DateTimeKind.Utc).AddTicks(1200),
+                            Id = new Guid("2c01c7f2-ef16-4cfb-abea-32a9ce1b4127"),
+                            CreatedOn = new DateTime(2022, 1, 28, 21, 22, 53, 913, DateTimeKind.Utc).AddTicks(4662),
                             Email = "user@immicro.com",
-                            EmailVerificationTokenIsUsed = true,
                             FirstName = "User",
-                            ForgotPasswordTokenIsUsed = false,
                             IsActive = true,
                             IsDeleted = false,
                             LastName = "ImMicro",
-                            Password = "$2a$11$8TDSfvC48XmkHNSdjAUvz.iMoNkl2znIi7i23kQMweo3WvyBFhYLO",
-                            ResreshTokenExpireDate = new DateTime(2022, 1, 26, 20, 19, 50, 205, DateTimeKind.Utc).AddTicks(1202),
+                            Password = "$2a$11$HOgAb0hKrnX82LZwwd3A3uzqY837V54vyELEOh11BC/GjKtEPOv9.",
+                            RefreshTokenExpireDate = new DateTime(2022, 1, 28, 21, 22, 53, 913, DateTimeKind.Utc).AddTicks(4665),
                             Type = 1
                         });
                 });

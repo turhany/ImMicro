@@ -244,46 +244,6 @@
             </summary>
             <returns>Returns user jwt refresh token.</returns>
         </member>
-        <member name="M:ImMicro.Api.Controllers.V1.LoginController.ForgotPassword(ImMicro.Contract.App.User.ForgotPasswordRequest)">
-            <summary>
-            Forgot Password
-            </summary>
-            <returns>Returns if user exist on database will be send to email for forgot password.</returns>
-        </member>
-        <member name="M:ImMicro.Api.Controllers.V1.LoginController.ResetPassword(System.Guid)">
-            <summary>
-            Reset the password with the token if still is valid and not used.
-            </summary>
-            <returns>Returns if user reset password token is not used.</returns>
-        </member>
-        <member name="M:ImMicro.Api.Controllers.V1.LoginController.ResetPassword(System.Guid,ImMicro.Contract.App.User.ResetPasswordRequest)">
-            <summary>
-            Reset the password using the token, new password, and new password confirmation.The token is in the mail link.
-            </summary>
-            <param name="id">The forgot password token.</param>
-            <param name="request">The request <see cref="T:ImMicro.Contract.App.User.ResetPasswordRequest"/> model.</param>
-            <returns></returns>
-        </member>
-        <member name="M:ImMicro.Api.Controllers.V1.LoginController.ChangePassword(System.Guid,ImMicro.Contract.App.User.ChangePasswordRequest)">
-            <summary>
-            Change password with using old password, new password and new password confirm.
-            </summary>
-            <param name="id">The user identifier.</param>
-            <param name="request">The request <see cref="T:ImMicro.Contract.App.User.ChangePasswordRequest"/> model.</param>
-            <returns></returns>
-        </member>
-        <member name="M:ImMicro.Api.Controllers.V1.LoginController.ConfirmEmail(System.Guid)">
-            <summary>
-            Confirm email.The confirm token is in the mail link.
-            </summary>
-            <param name="id">The confirm email token.</param>
-            <returns>JWT Token for login.</returns>
-        </member>
-        <member name="M:ImMicro.Api.Controllers.V1.LoginController.ResendConfirmEmail(ImMicro.Contract.App.User.ResendConfirmEmailRequest)">
-            <summary>
-            Resend confirm email.When user not access the account confirm mail he can be request a new confirm mail.
-            </summary>
-        </member>
         <member name="T:ImMicro.Api.Controllers.V1.UsersController">
             <summary>
             Users Controller

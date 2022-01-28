@@ -63,12 +63,8 @@ namespace ImMicro.Data.Migrations
                     Password = table.Column<string>(type: "text", nullable: true),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     Type = table.Column<int>(type: "integer", nullable: false),
-                    EmailVerificationToken = table.Column<string>(type: "text", nullable: true),
-                    EmailVerificationTokenIsUsed = table.Column<bool>(type: "boolean", nullable: false),
-                    ForgotPasswordToken = table.Column<string>(type: "text", nullable: true),
-                    ForgotPasswordTokenIsUsed = table.Column<bool>(type: "boolean", nullable: false),
-                    ResreshToken = table.Column<string>(type: "text", nullable: true),
-                    ResreshTokenExpireDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    RefreshToken = table.Column<string>(type: "text", nullable: true),
+                    RefreshTokenExpireDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -84,8 +80,8 @@ namespace ImMicro.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "User",
-                columns: new[] { "Id", "CreatedBy", "CreatedOn", "DeletedBy", "DeletedOn", "Email", "EmailVerificationToken", "EmailVerificationTokenIsUsed", "FirstName", "ForgotPasswordToken", "ForgotPasswordTokenIsUsed", "IsActive", "IsDeleted", "LastName", "Password", "ResreshToken", "ResreshTokenExpireDate", "Type", "UpdatedBy", "UpdatedOn" },
-                values: new object[] { new Guid("995330c2-972b-4ffe-929c-c5cdf82b0f3a"), null, new DateTime(2022, 1, 26, 20, 19, 50, 205, DateTimeKind.Utc).AddTicks(1200), null, null, "user@immicro.com", null, true, "User", null, false, true, false, "ImMicro", "$2a$11$8TDSfvC48XmkHNSdjAUvz.iMoNkl2znIi7i23kQMweo3WvyBFhYLO", null, new DateTime(2022, 1, 26, 20, 19, 50, 205, DateTimeKind.Utc).AddTicks(1202), 1, null, null });
+                columns: new[] { "Id", "CreatedBy", "CreatedOn", "DeletedBy", "DeletedOn", "Email", "FirstName", "IsActive", "IsDeleted", "LastName", "Password", "RefreshToken", "RefreshTokenExpireDate", "Type", "UpdatedBy", "UpdatedOn" },
+                values: new object[] { new Guid("2c01c7f2-ef16-4cfb-abea-32a9ce1b4127"), null, new DateTime(2022, 1, 28, 21, 22, 53, 913, DateTimeKind.Utc).AddTicks(4662), null, null, "user@immicro.com", "User", true, false, "ImMicro", "$2a$11$HOgAb0hKrnX82LZwwd3A3uzqY837V54vyELEOh11BC/GjKtEPOv9.", null, new DateTime(2022, 1, 28, 21, 22, 53, 913, DateTimeKind.Utc).AddTicks(4665), 1, null, null });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

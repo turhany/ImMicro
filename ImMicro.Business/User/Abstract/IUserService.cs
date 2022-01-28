@@ -23,11 +23,5 @@ namespace ImMicro.Business.User.Abstract
 
         Task<ServiceResult<AccessTokenContract>> GetTokenAsync(GetTokenContractServiceRequest request);
         Task<ServiceResult<AccessTokenContract>> RefreshTokenAsync(RefreshTokenContractServiceRequest request);
-        Task<ServiceResult<string>> CreateForgotPasswordTokenAsync(ForgotPasswordServiceRequest request);
-        Task<ServiceResult<ExpandoObject>> GetForgotPasswordTokenAsync(Guid id);
-        Task<ServiceResult<ExpandoObject>> ResetPasswordAsync(Guid id, ResetPasswordServiceRequest request);
-        Task<ServiceResult<ExpandoObject>> ChangePasswordAsync(Guid id, ChangePasswordServiceRequest request);
-        Task<ServiceResult<AccessTokenContract>> ConfirmEmailAsync(Guid id);
-        Task<ServiceResult<ExpandoObject>> ResendConfirmEmailAsync(ResendConfirmEmailServiceRequest request);
     }
 }

@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using HelpersToolbox.Extensions;
 using ImMicro.Common.Application;
 using Microsoft.EntityFrameworkCore;
-using ImMicro.Common.Extensions;
 using ImMicro.Model.User;
 
 // ReSharper disable ConditionIsAlwaysTrueOrFalse
@@ -38,8 +37,7 @@ namespace ImMicro.Data
                     Type = UserType.Root,
                     CreatedOn = DateTime.UtcNow,
                     IsActive = true,
-                    ResreshTokenExpireDate = DateTime.UtcNow,
-                    EmailVerificationTokenIsUsed = true
+                    RefreshTokenExpireDate = DateTime.UtcNow
                 }
             });
         }

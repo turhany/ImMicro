@@ -117,38 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Forgot_Password_Message" xml:space="preserve">
-    <value>If your email exists on our system then you will receive an email shortly with instructions on how to reset your password.</value>
-  </data>
-  <data name="Forgot_Password_Mail_Subject" xml:space="preserve">
-    <value>Forgot Password</value>
-  </data>
-  <data name="Forgot_Password_Token_Used_Message" xml:space="preserve">
-    <value>Forgot password token was used. Please request new one.</value>
-  </data>
-  <data name="Forgot_Password_Token_Not_Found" xml:space="preserve">
-    <value>Forgot password token not found.</value>
-  </data>
   <data name="UserType_Root" xml:space="preserve">
     <value>Root</value>
-  </data>
-  <data name="Verify_Email_Message_Success" xml:space="preserve">
-    <value>Please check your email for account verification.</value>
-  </data>
-  <data name="Verify_Email_Message_Fail" xml:space="preserve">
-    <value>Email was not sent.</value>
-  </data>
-  <data name="Verify_Email_Token_Not_Found" xml:space="preserve">
-    <value>Verify email token not found.</value>
-  </data>
-  <data name="GetToken_Not_Found_Message" xml:space="preserve">
-    <value>Token not found.</value>
-  </data>
-  <data name="Verify_Email_Message_Already_Confirmed" xml:space="preserve">
-    <value>We were unable to confirm your account email address. Please resend the confirmation email and try again.</value>
-  </data>
-  <data name="Verify_Email_Message_Resend_Confirmation" xml:space="preserve">
-    <value>If your email exists on our system then you will soon receive an e-mail with instructions on confirming your account.</value>
   </data>
   <data name="SignUp_Check_Request_Message" xml:space="preserve">
     <value>Please, check your request.</value>

@@ -89,8 +89,7 @@ namespace ImMicro.Common.BaseModels.Service
         /// <param name="entity">The entity</param>
         /// <param name="message">The message</param>
         /// <returns></returns>
-        public static (ServiceResult<TResponse>, bool) CreateNotFoundResult<TResponse>(object entity, string message)
-            where TResponse : class
+        public static (ServiceResult<TResponse>, bool) CreateNotFoundResult<TResponse>(object entity, string message) where TResponse : class
         {
             if (entity == null)
             {

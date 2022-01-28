@@ -24,12 +24,12 @@ namespace ImMicro.Common.Lock.Concrete
         readonly TimeSpan _expiry = TimeSpan.FromSeconds(15);
         private static RedLockFactory _redisLockFactory { get; set; }
 
-        public RedisLockService(IConfiguration configuration, IOptions<RedLockOption> redLockConfig)
+        public RedisLockService(IOptions<RedLockOption> redLockConfig)
         { 
             PasswordedServer = new RedLockEndPoint
             {
-                EndPoint = new DnsEndPoint(configuration[redLockConfig.Value.HostAddress], int.Parse(configuration[redLockConfig.Value.HostPort])),
-                Password = configuration[redLockConfig.Value.HostPassword],
+                EndPoint = new DnsEndPoint(redLockConfig.Value.HostAddress, int.Parse(redLockConfig.Value.HostPort)),
+                Password = redLockConfig.Value.HostPassword,
                 Ssl =  redLockConfig.Value.HostSsl
             };
         }

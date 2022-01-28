@@ -4,6 +4,8 @@ using Filtery.Extensions;
 using Filtery.Models;
 using ImMicro.Business.Audit.Abstract;
 using ImMicro.Common.BaseModels.Service;
+using ImMicro.Common.Cache.Abstract;
+using ImMicro.Common.Constans;
 using ImMicro.Common.Data.Abstract;
 using ImMicro.Common.Pager;
 using ImMicro.Common.Service;
@@ -18,10 +20,12 @@ namespace ImMicro.Business.Audit.Concrete
     public class AuditLogService : BaseApplicationService, IAuditLogService
     {
         private readonly IGenericRepository<Model.AuditLog.AuditLog> _auditLogRepository;
+        private readonly ICacheService _cacheService;
 
-        public AuditLogService(IGenericRepository<AuditLog> auditLogRepository)
+        public AuditLogService(IGenericRepository<AuditLog> auditLogRepository, ICacheService cacheService)
         {
             _auditLogRepository = auditLogRepository;
+            _cacheService = cacheService;
         }
 
         public async Task<ServiceResult<PagedList<AuditLogView>>> Search(FilteryRequest request)
@@ -35,11 +39,13 @@ namespace ImMicro.Business.Audit.Concrete
         
         public async Task<ServiceResult<AuditLogView>> GetAsync(Guid id)
         {
-            var user = await _auditLogRepository.FindOneAsync(p => p.Id == id && p.IsDeleted == false);
+            var cacheKey = string.Format(CacheKeyConstants.AuditLogCacheKey, id);
+            
+            var auditLog = await _cacheService.GetOrSetObjectAsync(cacheKey,  async () => await _auditLogRepository.FindOneAsync(p => p.Id == id && p.IsDeleted == false));
 
-            var (notFoundUserResult, notFoundUserCondition) = ServiceResultHelper.CreateNotFoundResult<AuditLogView>(user, Resource.NotFound(Entities.AuditLog));
+            var (notFoundAuditLogResult, notFoundAuditLogCondition) = ServiceResultHelper.CreateNotFoundResult<AuditLogView>(auditLog, Resource.NotFound(Entities.AuditLog));
 
-            return notFoundUserCondition ? notFoundUserResult : ServiceResultHelper.CreateSuccessResult<AuditLogView>(user, Mapper);
+            return notFoundAuditLogCondition ? notFoundAuditLogResult : ServiceResultHelper.CreateSuccessResult<AuditLogView>(auditLog, Mapper);
         }
     }
 }

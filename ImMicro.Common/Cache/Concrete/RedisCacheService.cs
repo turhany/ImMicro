@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using HelpersToolbox.Extensions;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 using ImMicro.Common.Cache.Abstract;
@@ -31,13 +29,24 @@ namespace ImMicro.Common.Cache.Concrete
             await SetObjectAsync(key, result, durationAsMinute);
             return result;
         }
+        
+        public async  Task<T> GetOrSetObjectAsync<T>(string key, Func<Task<T>> code, int durationAsMinute = AppConstants.DefaultCacheDuration)
+        {
+            if (await ExistObjectAsync<T>(key))
+            {
+                return await GetObjectAsync<T>(key);
+            }
+
+            var result = await code.Invoke();
+
+            await SetObjectAsync(key, result, durationAsMinute);
+            return result;
+        }
 
         public async Task SetObjectAsync<T>(string key, T value, int durationAsMinute = AppConstants.DefaultCacheDuration)
         {
             key = $"{key}_{Thread.CurrentThread.CurrentUICulture.Name}";
-            var messagePackSerializedObject = MessagePackExtensions.Serialize<T>(value);
-            var messagePackSerializedObjectString = Encoding.UTF8.GetString(messagePackSerializedObject);
-            await _distributedCache.SetStringAsync(key, messagePackSerializedObjectString, new DistributedCacheEntryOptions
+            await _distributedCache.SetStringAsync(key, JsonConvert.SerializeObject(value), new DistributedCacheEntryOptions
             {
                 AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(durationAsMinute)
             });
@@ -47,14 +56,7 @@ namespace ImMicro.Common.Cache.Concrete
         {
             key = $"{key}_{Thread.CurrentThread.CurrentUICulture.Name}";
             var value = await _distributedCache.GetStringAsync(key);
-
-            if (value == null)
-            {
-                return default(T);
-            }
-            
-            var messagePackSerializedObjectBytes = Encoding.UTF8.GetBytes(value);
-            return MessagePackExtensions.Deserialize<T>(messagePackSerializedObjectBytes);
+            return value == null ? default(T) : JsonConvert.DeserializeObject<T>(value);
         }
 
         public async Task<bool> ExistObjectAsync<T>(string key)

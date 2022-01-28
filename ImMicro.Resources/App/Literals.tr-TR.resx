@@ -117,38 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Forgot_Password_Message" xml:space="preserve">
-    <value>E-postanız sistemimizde mevcutsa, kısa süre içinde şifrenizi nasıl sıfırlayacağınızla ilgili talimatları içeren bir e-posta alacaksınız.</value>
-  </data>
-  <data name="Forgot_Password_Mail_Subject" xml:space="preserve">
-    <value>Parola Sıfırlama</value>
-  </data>
-  <data name="Forgot_Password_Token_Used_Message" xml:space="preserve">
-    <value>Şifremi unuttum belirteci kullanıldı. Lütfen yenisini isteyin.</value>
-  </data>
-  <data name="Forgot_Password_Token_Not_Found" xml:space="preserve">
-    <value>Parolamı unuttum isteği bulunamadı.</value>
-  </data>
   <data name="UserType_Root" xml:space="preserve">
     <value>Root</value>
-  </data>
-  <data name="Verify_Email_Message_Fail" xml:space="preserve">
-    <value>Doğrulama maili gönderilirken hata oluştu.</value>
-  </data>
-  <data name="Verify_Email_Message_Success" xml:space="preserve">
-    <value>Lütfen hesabınızı doğrulamak için mailinizi kontrol ediniz.</value>
-  </data>
-  <data name="Verify_Email_Token_Not_Found" xml:space="preserve">
-    <value>Email doğrulama isteği bulumadı.</value>
-  </data>
-  <data name="GetToken_Not_Found_Message" xml:space="preserve">
-    <value>Token bulunamadı.</value>
-  </data>
-  <data name="Verify_Email_Message_Already_Confirmed" xml:space="preserve">
-    <value>Hesap e-posta adresinizi onaylayamadık. Lütfen onay e-postasını tekrar gönderin ve tekrar deneyin.</value>
-  </data>
-  <data name="Verify_Email_Message_Resend_Confirmation" xml:space="preserve">
-    <value>E-postanız sistemimizde mevcutsa, kısa süre içinde hesabınızı onaylamak ile ilgili talimatları içeren bir e-posta alacaksınız.</value>
   </data>
   <data name="SignUp_Check_Request_Message" xml:space="preserve">
     <value>Lütfen bilgilerinizi kontrol ediniz.</value>
