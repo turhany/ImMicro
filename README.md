@@ -65,6 +65,10 @@ This is a simple/reusable microservice template/playgorund project.
 * **Redis >** docker run --name redis -p 6379:6379 -d redis --requirepass 123456789.tY
 * **RabbitMQ >** docker run -d --hostname rabbitmq --name rabbitmq -p 15672:15672 -p 5672:5672 rabbitmq:3.8.3-management 
 
+#### GUI's
+* For DB > https://dbeaver.io
+* For Redis > https://github.com/qishibo/AnotherRedisDesktopManager
+
 #### SonarQube Test Preperation
 * docker run -d --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonarqube:latest
 * SonarQube need java install it before continue https://www.oracle.com/java/technologies/downloads/
