@@ -10,7 +10,7 @@ namespace ImMicro.Business.Audit.Abstract
 {
     public interface IAuditLogService : IService
     {
-        Task<ServiceResult<PagedList<AuditLogView>>> Search(FilteryRequest request);
+        Task<ServiceResult<PagedList<AuditLogView>>> SearchAsync(FilteryRequest request);
         Task<ServiceResult<AuditLogView>> GetAsync(Guid id);
     }
 }

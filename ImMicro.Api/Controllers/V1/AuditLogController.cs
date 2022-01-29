@@ -36,7 +36,7 @@ namespace ImMicro.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedList<AuditLogView>))]
         public async Task<ActionResult> Search([FromBody] FilteryRequest request)
         {
-            var result = await _auditLogService.Search(request);
+            var result = await _auditLogService.SearchAsync(request);
             return ApiResponse.CreateResult(result);
         }
         

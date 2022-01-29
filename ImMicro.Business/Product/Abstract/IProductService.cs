@@ -13,7 +13,7 @@ namespace ImMicro.Business.Product.Abstract;
 public interface IProductService: IService
 {
     Task<ServiceResult<ProductView>> GetAsync(Guid id); 
-    Task<ServiceResult<PagedList<ProductView>>> Search(FilteryRequest request);
+    Task<ServiceResult<PagedList<ProductView>>> SearchAsync(FilteryRequest request);
     Task<ServiceResult<ExpandoObject>> CreateAsync(CreateProductRequestServiceRequest request);
     Task<ServiceResult<ExpandoObject>> UpdateAsync(UpdateProductRequestServiceRequest request);
     Task<ServiceResult<ExpandoObject>> DeleteAsync(Guid id);

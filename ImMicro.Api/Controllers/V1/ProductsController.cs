@@ -97,7 +97,7 @@ public class ProductsController : BaseController
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult> Search([FromBody] FilteryRequest request)
     {
-        var result = await _productService.Search(request);
+        var result = await _productService.SearchAsync(request);
         return ApiResponse.CreateResult(result);
     }
 }

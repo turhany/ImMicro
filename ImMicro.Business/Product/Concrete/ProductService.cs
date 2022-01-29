@@ -211,7 +211,7 @@ public class ProductService : IProductService
         };
     }
     
-    public async Task<ServiceResult<PagedList<ProductView>>> Search(FilteryRequest request)
+    public async Task<ServiceResult<PagedList<ProductView>>> SearchAsync(FilteryRequest request)
     {
         var filteryResponse = await _productRepository
             .Find(p => p.IsActive == true)

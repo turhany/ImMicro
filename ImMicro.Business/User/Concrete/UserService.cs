@@ -219,7 +219,7 @@ namespace ImMicro.Business.User.Concrete
             };
         }
 
-        public async Task<ServiceResult<PagedList<UserView>>> Search(FilteryRequest request)
+        public async Task<ServiceResult<PagedList<UserView>>> SearchAsync(FilteryRequest request)
         {
             var filteryResponse = await _userRepository.Find(p => true).BuildFilteryAsync(new UserFilteryMapping(), request);
 

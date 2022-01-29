@@ -111,8 +111,6 @@ This is a simple/reusable micro/macro service template/playgorund project.
 * http://localhost:5000/health-check-ui > Dashboard for see application services health (Redis, NpgSql)    
 
 #### Code Coverage
-* I know its bad but soon i will add more tests, just little bit time :)
-
 ![alt tag](Files/testcovarage.jpg)  
 
 #### SonarQube Test Results

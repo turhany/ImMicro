@@ -35,7 +35,7 @@ namespace ImMicro.Business.Audit.Concrete
             _mapper = mapper;
         }
 
-        public async Task<ServiceResult<PagedList<AuditLogView>>> Search(FilteryRequest request)
+        public async Task<ServiceResult<PagedList<AuditLogView>>> SearchAsync(FilteryRequest request)
         {
             var filteryResponse = await _auditLogRepository.Find(p => true).AsNoTracking().BuildFilteryAsync(new AuditLogFilteryMapping(), request);
            

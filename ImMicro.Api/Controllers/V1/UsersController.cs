@@ -94,7 +94,7 @@ namespace ImMicro.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult> Search([FromBody] FilteryRequest request)
         {
-            var result = await _userService.Search(request);
+            var result = await _userService.SearchAsync(request);
             return ApiResponse.CreateResult(result);
         }
     }

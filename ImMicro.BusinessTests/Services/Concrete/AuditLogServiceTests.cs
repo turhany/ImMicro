@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Autofac;
+using Filtery.Exceptions;
+using Filtery.Models;
+using Filtery.Models.Order;
 using ImMicro.Business.Audit.Abstract;
 using ImMicro.Common.BaseModels.Service;
 using ImMicro.Common.Data.Abstract;
@@ -42,5 +46,51 @@ public class AuditLogServiceTests : TestBase
 
         //assert 
         Assert.AreEqual(ResultStatus.Successful, response.Status);
+    }
+    
+    [TestMethod]
+    public async Task SearchAsync_OK()
+    {
+        //arrange
+        var auditLog = new Model.AuditLog.AuditLog { Id = Guid.NewGuid(), EntityName = "TestEntity"};
+        await _auditLogRepository.InsertAsync(auditLog);
+        
+        //act
+        var response = await _auditLogService.SearchAsync(new FilteryRequest()
+        {
+            PageNumber = 1,
+            PageSize = 10
+        });
+
+        //assert 
+        Assert.AreEqual(ResultStatus.Successful, response.Status);
+    }
+    
+    [TestMethod]
+    public async Task SearchAsync_NOK()
+    {
+        //INFO: I can not use "Assert.ThrowsExceptionAsync" because it's not catch base exception type
+        
+        //arrange - act - assert 
+        try
+        {
+            await _auditLogService.SearchAsync(new FilteryRequest
+            {
+                OrderOperations = new Dictionary<string, OrderOperation>()
+                {
+                    {"errorkey", OrderOperation.Ascending}
+                },
+                PageNumber = 1,
+                PageSize = 10
+            });
+        }
+        catch (FilteryBaseException)
+        {
+            Assert.IsTrue(true);
+        }
+        catch(Exception)
+        {
+            Assert.IsTrue(false);
+        }
     }
 }

@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using ImMicro.Business.Product.Abstract;
 using ImMicro.Common.Data.Abstract;
 using Autofac;
+using Filtery.Exceptions;
+using Filtery.Models;
+using Filtery.Models.Order;
 using ImMicro.Common.BaseModels.Service;
 using ImMicro.Contract.Service.Product;
 using ImMicro.Model.Category;
@@ -131,7 +135,6 @@ public class ProductServiceTests : TestBase
         Assert.AreEqual(ResultStatus.ResourceNotFound, response.Status);
     }
     
-    
     [TestMethod]
     public async Task UpdateAsync_CATEGORY_NOT_FOUND()
     {
@@ -159,5 +162,118 @@ public class ProductServiceTests : TestBase
 
         //assert 
         Assert.AreEqual(ResultStatus.ResourceNotFound, response.Status);
+    }
+    
+    [TestMethod]
+    public async Task UpdateAsync_OK()
+    {
+        //arrange
+        var category = await _categoryRepository.InsertAsync(new Category() {Id = Guid.NewGuid(), Name = "Category"});
+        var product = new Product
+        {
+            Id = Guid.NewGuid(),
+            Title = "Product Name",
+            Description = "Description",
+            CategoryId = category.Id
+        };
+        await _productRepository.InsertAsync(product);
+        
+        var productForUpdate = new UpdateProductRequestServiceRequest
+        {
+            Id = product.Id,
+            Title = product.Title,
+            Description = product.Description,
+            CategoryId = product.CategoryId
+        };
+        
+        //act
+        var response = await _productService.UpdateAsync(productForUpdate);
+
+        //assert 
+        Assert.AreEqual(ResultStatus.Successful, response.Status);
+    }
+    
+    [TestMethod]
+    public async Task DeleteAsync_PRODUCT_NOT_FOUND()
+    {
+        //arrange - act
+        var response = await _productService.DeleteAsync(Guid.NewGuid());
+
+        //assert 
+        Assert.AreEqual(ResultStatus.ResourceNotFound, response.Status);
+    }
+    
+    [TestMethod]
+    public async Task DeleteAsync_OK()
+    {
+        //arrange
+        var category = await _categoryRepository.InsertAsync(new Category() {Id = Guid.NewGuid(), Name = "Category"});
+        var product = new Product
+        {
+            Id = Guid.NewGuid(),
+            Title = "Product Name",
+            Description = "Description",
+            CategoryId = category.Id
+        };
+        await _productRepository.InsertAsync(product);
+        
+        //act
+        var response = await _productService.DeleteAsync(product.Id);
+
+        //assert 
+        Assert.AreEqual(ResultStatus.Successful, response.Status);
+    }
+    
+    [TestMethod]
+    public async Task SearchAsync_OK()
+    {
+        //arrange
+        var category = await _categoryRepository.InsertAsync(new Category() {Id = Guid.NewGuid(), Name = "Category"});
+        var product = new Product
+        {
+            Id = Guid.NewGuid(),
+            Title = "Product Name",
+            Description = "Description",
+            CategoryId = category.Id
+        };
+        await _productRepository.InsertAsync(product);
+        
+        //act
+        var response = await _productService.SearchAsync(new FilteryRequest()
+        {
+            PageNumber = 1,
+            PageSize = 10
+        });
+
+        //assert 
+        Assert.AreEqual(ResultStatus.Successful, response.Status);
+    }
+    
+    [TestMethod]
+    public async Task SearchAsync_NOK()
+    {
+        //INFO: I can not use "Assert.ThrowsExceptionAsync" because it's not catch base exception type
+        
+        //arrange - act - assert 
+        try
+        {
+            await _productService.SearchAsync(new FilteryRequest
+            {
+                OrderOperations = new Dictionary<string, OrderOperation>()
+                {
+                    {"errorkey", OrderOperation.Ascending}
+                },
+                PageNumber = 1,
+                PageSize = 10
+            });
+        }
+        catch (FilteryBaseException)
+        {
+           Assert.IsTrue(true);
+        }
+        catch(Exception)
+        {
+            Assert.IsTrue(false);
+        }
     }
 }
