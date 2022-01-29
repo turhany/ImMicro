@@ -47,8 +47,7 @@ namespace ImMicro.Business.User.Concrete
         {
             var cacheKey = string.Format(CacheKeyConstants.UserCacheKey, id);
 
-            var user = await _cacheService.GetOrSetObjectAsync(cacheKey,
-                async () => await _userRepository.FindOneAsync(p => p.Id == id && p.IsDeleted == false));
+            var user = await _cacheService.GetOrSetObjectAsync(cacheKey, async () => await _userRepository.FindOneAsync(p => p.Id == id && p.IsDeleted == false));
 
             if (user == null)
             {
@@ -194,6 +193,7 @@ namespace ImMicro.Business.User.Concrete
                     Message = ServiceResponseMessage.CANNOT_DELETE_ACTIVE_USER
                 };
             }
+            
             var lockKey = string.Format(LockKeyConstants.UserLockKey, entity.Id);
             var cacheKey = string.Format(CacheKeyConstants.UserCacheKey, entity.Id);
             
