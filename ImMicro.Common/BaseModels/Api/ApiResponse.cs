@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ImMicro.Common.BaseModels.Api
 {
-    public class ApiResponse
+    public static class ApiResponse
     {
          public static BaseResponse BuildBaseResponse(string status, string message = "")
         {

@@ -1,6 +1,6 @@
 ﻿namespace ImMicro.Common.Constans
 {
-    public class SwaggerConstants
+    public static class SwaggerConstants
     {
         /// <summary>
         /// Gets swagger api route prefix

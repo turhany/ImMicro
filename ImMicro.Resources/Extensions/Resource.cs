@@ -3,7 +3,7 @@
 
 namespace ImMicro.Resources.Extensions
 {
-    public class Resource
+    public static class Resource
     {
         public static string Created(string entity)
         {

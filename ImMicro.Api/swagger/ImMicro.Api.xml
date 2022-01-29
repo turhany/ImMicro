@@ -144,7 +144,7 @@
             <summary>
             Apply
             </summary>
-            <param name="model"></param>
+            <param name="schema"></param>
             <param name="context"></param>
         </member>
         <member name="T:ImMicro.Api.Configurations.Swagger.SwaggerDefaultValues">

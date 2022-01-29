@@ -14,16 +14,16 @@ namespace ImMicro.Api.Configurations.Swagger
         /// <summary>
         /// Apply
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="schema"></param>
         /// <param name="context"></param>
-        public void Apply(OpenApiSchema model, SchemaFilterContext context)
+        public void Apply(OpenApiSchema schema, SchemaFilterContext context)
         {
             if (context.Type.IsEnum)
             {
-                model.Enum.Clear();
+                schema.Enum.Clear();
                 Enum.GetNames(context.Type)
                     .ToList()
-                    .ForEach(n => model.Enum.Add(new OpenApiString(n)));
+                    .ForEach(n => schema.Enum.Add(new OpenApiString(n)));
             }
         }
     }
