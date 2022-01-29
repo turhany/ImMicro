@@ -25,6 +25,17 @@ namespace ImMicro.Consumer.Configurations
 
             services.AddMassTransit(x =>
             {
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host(new Uri(rabbitMqConfig.RabbitMqUri), hst =>
+                    {
+                        hst.Username(rabbitMqConfig.UserName);
+                        hst.Password(rabbitMqConfig.Password);
+                    });
+
+                    cfg.ConfigureEndpoints(context);
+                });
+                
                 x.AddConsumer<SampleConsumer>(opts =>
                 {
                     opts.UseConcurrencyLimit(1);
@@ -36,19 +47,7 @@ namespace ImMicro.Consumer.Configurations
                         cb.ResetInterval = TimeSpan.FromMinutes(5);
                     });
                 }).Endpoint(endpoint => { endpoint.Name = rabbitMqConfig.SampleQueue; });
-                
-                x.UsingRabbitMq((context, cfg) =>
-                {
-                    cfg.Host(new Uri(rabbitMqConfig.RabbitMqUri), hst =>
-                    {
-                        hst.Username(rabbitMqConfig.UserName);
-                        hst.Password(rabbitMqConfig.Password);
-                    });
-
-                    cfg.ConfigureEndpoints(context);
-                });
             });
-
 
             return services;
         }

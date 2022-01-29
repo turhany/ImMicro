@@ -244,6 +244,16 @@
             </summary>
             <returns>Returns user jwt refresh token.</returns>
         </member>
+        <member name="T:ImMicro.Api.Controllers.V1.MQSampleController">
+            <summary>
+            MQTest Controller
+            </summary>
+        </member>
+        <member name="M:ImMicro.Api.Controllers.V1.MQSampleController.Test">
+            <summary>
+            Get Product
+            </summary>
+        </member>
         <member name="T:ImMicro.Api.Controllers.V1.ProductsController">
             <summary>
             Products Controller

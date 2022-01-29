@@ -7,8 +7,7 @@ public class SampleConsumer : IConsumer<SampleConsumerCommand>
 {
     public Task Consume(ConsumeContext<SampleConsumerCommand> context)
     {
-        //Sample consumer
-        Console.WriteLine($"Sample Consumer {DateTime.UtcNow}");
+        Console.WriteLine($"Sample Consumer - RequestTime {context.Message.RequestTime}");
 
         return Task.CompletedTask;
     }

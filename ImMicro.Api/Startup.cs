@@ -50,6 +50,7 @@ namespace ImMicro.Api
             services.AddApiVersioningConfigurations();
             services.AddSwaggerConfiguration();
             services.AddHttpContextAccessor();
+            services.AddMassTransitConfiguration(Configuration);
             services.AddHealthCheckConfiguration(Configuration);
             services.AddAutoMapper(typeof(UserMapping));
         }
