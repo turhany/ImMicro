@@ -34,8 +34,6 @@ namespace ImMicro.Consumer
                     services.AddMassTransitConfigurationForConsumer(hostingContext.Configuration);
                     services.AddAutoMapper(typeof(UserMapping));
                     services.AddHostedService<QueueWorker>();
-                    
-                    ApplicationContext.ConfigureWorkerServiceProvider(services.BuildServiceProvider());
                 })
                 .ConfigureContainer<ContainerBuilder>(ConfigureContainer)
                 .ConfigureAppConfiguration((hostingContext, config) =>

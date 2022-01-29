@@ -249,6 +249,13 @@
             MQTest Controller
             </summary>
         </member>
+        <member name="M:ImMicro.Api.Controllers.V1.MQSampleController.#ctor(MassTransit.ISendEndpointProvider,Microsoft.Extensions.Options.IOptions{ImMicro.Common.Options.RabbitMqOption})">
+            <summary>
+            MQSample Controller
+            </summary>
+            <param name="sendEndpointProvider"></param>
+            <param name="rabbitMqOptions"></param>
+        </member>
         <member name="M:ImMicro.Api.Controllers.V1.MQSampleController.Test">
             <summary>
             Get Product

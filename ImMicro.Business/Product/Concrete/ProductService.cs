@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Filtery.Extensions;
 using Filtery.Models;
 using ImMicro.Business.Product.Abstract;
 using ImMicro.Business.Product.Validator;
-using ImMicro.Common.Application;
 using ImMicro.Common.BaseModels.Service;
 using ImMicro.Common.Cache.Abstract;
 using ImMicro.Common.Constans;
 using ImMicro.Common.Data.Abstract;
 using ImMicro.Common.Lock.Abstract;
 using ImMicro.Common.Pager;
-using ImMicro.Common.Service;
+using ImMicro.Common.Validation.Abstract;
 using ImMicro.Contract.App.Product;
 using ImMicro.Contract.Mappings.Filtery;
 using ImMicro.Contract.Service.Product;
@@ -24,23 +24,29 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ImMicro.Business.Product.Concrete;
 
-public class ProductService : BaseApplicationService, IProductService
+public class ProductService : IProductService
 {
     private readonly IGenericRepository<Model.Product.Product> _productRepository; 
     private readonly IGenericRepository<Model.Category.Category> _categoryRepository; 
     private readonly ICacheService _cacheService;
     private readonly ILockService _lockService;
+    private readonly IMapper _mapper;
+    private readonly IValidationService _validationService;
     
     public ProductService(
         IGenericRepository<Model.Product.Product> productRepository,
         IGenericRepository<Model.Category.Category> categoryRepository,
         ICacheService cacheService, 
-        ILockService lockService)
+        ILockService lockService, 
+        IMapper mapper, 
+        IValidationService validationService)
     {
         _productRepository = productRepository;
         _categoryRepository = categoryRepository;
         _cacheService = cacheService;
         _lockService = lockService;
+        _mapper = mapper;
+        _validationService = validationService;
     }
 
     public async Task<ServiceResult<ProductView>> GetAsync(Guid id)
@@ -62,13 +68,13 @@ public class ProductService : BaseApplicationService, IProductService
         {
             Status = ResultStatus.Successful,
             Message = Resource.Retrieved(),
-            Data = Mapper.Map<ProductView>(product)
+            Data = _mapper.Map<ProductView>(product)
         };
     }
 
     public async Task<ServiceResult<ExpandoObject>> CreateAsync(CreateProductRequestServiceRequest request)
     {
-        var validationResponse = ValidationService.Validate(typeof(CreateProductRequestValidator), request);
+        var validationResponse = _validationService.Validate(typeof(CreateProductRequestValidator), request);
 
         if (!validationResponse.IsValid)
         {
@@ -114,7 +120,7 @@ public class ProductService : BaseApplicationService, IProductService
 
     public async Task<ServiceResult<ExpandoObject>> UpdateAsync(UpdateProductRequestServiceRequest request)
     {
-        var validationResponse = ValidationService.Validate(typeof(UpdateProductRequestValidator), request);
+        var validationResponse = _validationService.Validate(typeof(UpdateProductRequestValidator), request);
 
             if (!validationResponse.IsValid)
             {
@@ -215,7 +221,7 @@ public class ProductService : BaseApplicationService, IProductService
 
         var response = new PagedList<ProductView>
         {
-            Data = Mapper.Map<List<ProductView>>(filteryResponse.Data),
+            Data = _mapper.Map<List<ProductView>>(filteryResponse.Data),
             PageInfo = new Page
             {
                 PageNumber = filteryResponse.PageNumber,

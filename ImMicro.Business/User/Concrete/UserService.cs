@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Filtery.Extensions;
 using Filtery.Models;
 using ImMicro.Business.User.Abstract;
@@ -15,7 +16,8 @@ using ImMicro.Common.Constans;
 using ImMicro.Common.Data.Abstract;
 using ImMicro.Common.Lock.Abstract;
 using ImMicro.Common.Pager;
-using ImMicro.Common.Service;
+using ImMicro.Common.Validation.Abstract;
+using ImMicro.Common.Validation.Concrete;
 using ImMicro.Contract.App.User;
 using ImMicro.Contract.Mappings.Filtery;
 using ImMicro.Contract.Service.User;
@@ -25,20 +27,26 @@ using ImMicro.Resources.Service;
 
 namespace ImMicro.Business.User.Concrete
 {
-    public class UserService : BaseApplicationService, IUserService
+    public class UserService : IUserService
     {
         private readonly IGenericRepository<Model.User.User> _userRepository; 
         private readonly ICacheService _cacheService;
         private readonly ILockService _lockService;
+        private readonly IMapper _mapper;
+        private readonly IValidationService _validationService;
 
         public UserService(
             IGenericRepository<Model.User.User> userRepository,
             ICacheService cacheService, 
-            ILockService lockService)
+            ILockService lockService, 
+            IMapper mapper, 
+            IValidationService validationService)
         {
             _userRepository = userRepository; 
             _cacheService = cacheService;
             _lockService = lockService;
+            _mapper = mapper;
+            _validationService = validationService;
         }
 
         #region CRUD Operations
@@ -62,13 +70,13 @@ namespace ImMicro.Business.User.Concrete
             {
                 Status = ResultStatus.Successful,
                 Message = Resource.Retrieved(),
-                Data = Mapper.Map<UserView>(user)
+                Data = _mapper.Map<UserView>(user)
             };
         }
  
         public async Task<ServiceResult<ExpandoObject>> CreateAsync(CreateUserRequestServiceRequest request)
         {
-            var validationResponse = ValidationService.Validate(typeof(CreateUserRequestValidator), request);
+            var validationResponse = _validationService.Validate(typeof(CreateUserRequestValidator), request);
 
             if (!validationResponse.IsValid)
             {
@@ -113,7 +121,7 @@ namespace ImMicro.Business.User.Concrete
 
         public async Task<ServiceResult<ExpandoObject>> UpdateAsync(UpdateUserRequestServiceRequest request)
         {
-            var validationResponse = ValidationService.Validate(typeof(UpdateUserRequestValidator), request);
+            var validationResponse = _validationService.Validate(typeof(UpdateUserRequestValidator), request);
 
             if (!validationResponse.IsValid)
             {
@@ -217,7 +225,7 @@ namespace ImMicro.Business.User.Concrete
 
             var response = new PagedList<UserView>
             {
-                Data = Mapper.Map<List<UserView>>(filteryResponse.Data),
+                Data = _mapper.Map<List<UserView>>(filteryResponse.Data),
                 PageInfo = new Page
                 {
                     PageNumber = filteryResponse.PageNumber,
@@ -240,7 +248,7 @@ namespace ImMicro.Business.User.Concrete
 
         public async Task<ServiceResult<AccessTokenContract>> GetTokenAsync(GetTokenContractServiceRequest request)
         {
-            var validationResponse = ValidationService.Validate(typeof(GetTokenContractServiceRequestValidator), request);
+            var validationResponse = _validationService.Validate(typeof(GetTokenContractServiceRequestValidator), request);
 
             if (!validationResponse.IsValid)
             {
@@ -295,7 +303,7 @@ namespace ImMicro.Business.User.Concrete
 
         public async Task<ServiceResult<AccessTokenContract>> RefreshTokenAsync(RefreshTokenContractServiceRequest request)
         {
-            var validationResponse = ValidationService.Validate(typeof(RefreshTokenContractServiceRequestValidator), request);
+            var validationResponse = _validationService.Validate(typeof(RefreshTokenContractServiceRequestValidator), request);
 
             if (!validationResponse.IsValid)
             {

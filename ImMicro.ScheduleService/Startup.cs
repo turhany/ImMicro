@@ -36,8 +36,6 @@ namespace ImMicro.ScheduleService
             services.AddHttpContextAccessor();
             services.AddMassTransitConfiguration(Configuration);
             services.AddAutoMapper(typeof(UserMapping));
-            
-            ApplicationContext.ConfigureWorkerServiceProvider(services.BuildServiceProvider());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

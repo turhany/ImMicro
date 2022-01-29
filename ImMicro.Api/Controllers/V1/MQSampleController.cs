@@ -19,6 +19,11 @@ public class MQSampleController : BaseController
     private readonly ISendEndpointProvider _sendEndpointProvider;
     private readonly RabbitMqOption _rabbitMqOptions;
 
+    /// <summary>
+    /// MQSample Controller
+    /// </summary>
+    /// <param name="sendEndpointProvider"></param>
+    /// <param name="rabbitMqOptions"></param>
     public MQSampleController(ISendEndpointProvider sendEndpointProvider, IOptions<RabbitMqOption> rabbitMqOptions)
     {
         _rabbitMqOptions = rabbitMqOptions.Value;

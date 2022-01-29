@@ -11,20 +11,16 @@ namespace ImMicro.Common.Application
     {
         private static ApplicationContext _instance;
         public static ApplicationContext Instance => _instance ??= new ApplicationContext();
+        
+        public static IHttpContextAccessor Context { get; set; }
+        
         private static CurrentUser WorkerServiceCurrentUser;
-        public static IServiceProvider WorkerServiceProvider { get; set; }
-        public static IHttpContextAccessor Context { get; set; } 
-        private static bool IsWorkerService = false;
+        private static bool IsWorkerService;
         
-
-        public string RequestIpAddress { get; }
-        public string RequestUrl { get; }
         
- 
         private ApplicationContext()
         {
-            RequestIpAddress = Context?.HttpContext?.Connection?.RemoteIpAddress?.ToString();
-            RequestUrl = Context?.HttpContext?.Request?.Path.Value;
+            
         }
         
         public static void Configure(IHttpContextAccessor httpContextAccessor)
@@ -40,11 +36,6 @@ namespace ImMicro.Common.Application
             {
                 Id = userId
             };
-        }
-        
-        public static void ConfigureWorkerServiceProvider(IServiceProvider serviceProvider)
-        {
-            WorkerServiceProvider = serviceProvider;
         }
         
         public static void ConfigureThreadPool(IConfiguration configuration)

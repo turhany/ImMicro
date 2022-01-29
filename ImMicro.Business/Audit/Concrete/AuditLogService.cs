@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Filtery.Extensions;
 using Filtery.Models;
 using ImMicro.Business.Audit.Abstract;
@@ -9,7 +10,6 @@ using ImMicro.Common.Cache.Abstract;
 using ImMicro.Common.Constans;
 using ImMicro.Common.Data.Abstract;
 using ImMicro.Common.Pager;
-using ImMicro.Common.Service;
 using ImMicro.Contract.Audit;
 using ImMicro.Contract.Mappings.Filtery;
 using ImMicro.Model.AuditLog;
@@ -19,15 +19,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ImMicro.Business.Audit.Concrete
 {
-    public class AuditLogService : BaseApplicationService, IAuditLogService
+    public class AuditLogService : IAuditLogService
     {
         private readonly IGenericRepository<Model.AuditLog.AuditLog> _auditLogRepository;
         private readonly ICacheService _cacheService;
+        private readonly IMapper _mapper;
 
-        public AuditLogService(IGenericRepository<AuditLog> auditLogRepository, ICacheService cacheService)
+        public AuditLogService(
+            IGenericRepository<AuditLog> auditLogRepository, 
+            ICacheService cacheService, 
+            IMapper mapper)
         {
             _auditLogRepository = auditLogRepository;
             _cacheService = cacheService;
+            _mapper = mapper;
         }
 
         public async Task<ServiceResult<PagedList<AuditLogView>>> Search(FilteryRequest request)
@@ -36,7 +41,7 @@ namespace ImMicro.Business.Audit.Concrete
            
             var response = new PagedList<AuditLogView>
             {
-                Data = Mapper.Map<List<AuditLogView>>(filteryResponse.Data),
+                Data = _mapper.Map<List<AuditLogView>>(filteryResponse.Data),
                 PageInfo = new Page
                 {
                     PageNumber = filteryResponse.PageNumber,
@@ -71,7 +76,7 @@ namespace ImMicro.Business.Audit.Concrete
             {
                 Status = ResultStatus.Successful,
                 Message = Resource.Retrieved(),
-                Data = Mapper.Map<AuditLogView>(auditLog)
+                Data = _mapper.Map<AuditLogView>(auditLog)
             };
         }
     }
