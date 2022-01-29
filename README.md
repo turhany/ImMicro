@@ -57,7 +57,7 @@ This is a simple/reusable micro/macro service template/playgorund project.
         * HostAddress
         * UserName
         * Password
-        * Also need to add your queue names here like "SampleQueue" and in C# "RedLockOption" class for option mapping
+        * Also need to add your queue names here like "SampleQueue" and in C# "RabbitMqOption" class for option mapping
 * Also project has ready to run **Docker support**
     * **docker-compose file store in solution directory**
     * All connection string stores in appsettings.DockerCompose.json environment file
