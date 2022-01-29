@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 using RedLockNet;
 using RedLockNet.SERedis;
 using RedLockNet.SERedis.Configuration;
-using ImMicro.Common.Constans;
 using ImMicro.Common.Lock.Abstract;
 using ImMicro.Common.Options;
 using Microsoft.Extensions.Options;

@@ -244,6 +244,46 @@
             </summary>
             <returns>Returns user jwt refresh token.</returns>
         </member>
+        <member name="T:ImMicro.Api.Controllers.V1.ProductsController">
+            <summary>
+            Products Controller
+            </summary>
+        </member>
+        <member name="M:ImMicro.Api.Controllers.V1.ProductsController.#ctor(ImMicro.Business.Product.Abstract.IProductService)">
+            <summary>
+            Products Controller
+            </summary>
+            <param name="productService"></param>
+        </member>
+        <member name="M:ImMicro.Api.Controllers.V1.ProductsController.Get(System.Guid)">
+            <summary>
+            Get Product
+            </summary>
+        </member>
+        <member name="M:ImMicro.Api.Controllers.V1.ProductsController.CreateProduct(ImMicro.Contract.App.Product.CreateProductRequest)">
+            <summary>
+            Create Product
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ImMicro.Api.Controllers.V1.ProductsController.UpdateProduct(ImMicro.Contract.App.Product.UpdateProductRequest,System.Guid)">
+            <summary>
+            Update Product
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ImMicro.Api.Controllers.V1.ProductsController.DeleteProduct(System.Guid)">
+            <summary>
+            Delete Product
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ImMicro.Api.Controllers.V1.ProductsController.Search(Filtery.Models.FilteryRequest)">
+            <summary>
+            Product Search
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:ImMicro.Api.Controllers.V1.UsersController">
             <summary>
             Users Controller

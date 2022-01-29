@@ -1,5 +1,4 @@
-﻿using System;
-using ImMicro.Common.Constans;
+﻿using ImMicro.Common.Constans;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;

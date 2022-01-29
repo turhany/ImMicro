@@ -126,4 +126,10 @@
   <data name="RequestLog" xml:space="preserve">
     <value>RequestLog</value>
   </data>
+  <data name="Product" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
 </root>

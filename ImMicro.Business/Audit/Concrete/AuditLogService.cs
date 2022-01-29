@@ -15,6 +15,7 @@ using ImMicro.Contract.Mappings.Filtery;
 using ImMicro.Model.AuditLog;
 using ImMicro.Resources.Extensions;
 using ImMicro.Resources.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace ImMicro.Business.Audit.Concrete
 {
@@ -31,7 +32,7 @@ namespace ImMicro.Business.Audit.Concrete
 
         public async Task<ServiceResult<PagedList<AuditLogView>>> Search(FilteryRequest request)
         {
-            var filteryResponse = await _auditLogRepository.Find(p => true).BuildFilteryAsync(new AuditLogFilteryMapping(), request);
+            var filteryResponse = await _auditLogRepository.Find(p => true).AsNoTracking().BuildFilteryAsync(new AuditLogFilteryMapping(), request);
            
             var response = new PagedList<AuditLogView>
             {
@@ -55,7 +56,7 @@ namespace ImMicro.Business.Audit.Concrete
         {
             var cacheKey = string.Format(CacheKeyConstants.AuditLogCacheKey, id);
             
-            var auditLog = await _cacheService.GetOrSetObjectAsync(cacheKey,  async () => await _auditLogRepository.FindOneAsync(p => p.Id == id && p.IsDeleted == false));
+            var auditLog = await _cacheService.GetOrSetObjectAsync(cacheKey,  async () => await _auditLogRepository.FindOneWithAsNoTrackingAsync(p => p.Id == id && p.IsDeleted == false));
 
             if (auditLog == null)
             {

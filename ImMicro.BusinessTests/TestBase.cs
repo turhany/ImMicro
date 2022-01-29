@@ -1,6 +1,6 @@
 ﻿using System.Threading;
-using System.Threading.Tasks;
-using Autofac;
+using Autofac; 
+using ImMicro.Common.Cache.Abstract;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Moq;
@@ -36,7 +36,7 @@ namespace ImMicro.BusinessTests
             
             var mockLock = new Mock<ILockService>();
             builder.RegisterInstance(mockLock.Object).As<ILockService>();
-            
+             
             Container = builder.Build();
         }
     }

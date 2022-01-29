@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ImMicro.Model;
 using ImMicro.Model.RequestLog;
 
 namespace ImMicro.Data.Configurations
@@ -9,7 +8,11 @@ namespace ImMicro.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<RequestLog> builder)
         {
+            builder.ToTable(nameof(RequestLog));
+
             builder.HasKey(o => o.Id);
+
+            builder.Property(x => x.Id).ValueGeneratedOnAdd();
         }
     }
 }

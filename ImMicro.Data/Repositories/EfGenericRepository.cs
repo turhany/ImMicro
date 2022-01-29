@@ -171,7 +171,7 @@ namespace ImMicro.Data.Repositories
         {
             entity.SetPropertyValue(IsDeletedFieldName, true);
             entity.SetPropertyValue(DeletedOnFieldName, DateTime.UtcNow);
-            entity.SetPropertyValue(DeletedByFieldName, ApplicationContext.Instance.CurrentUser);
+            entity.SetPropertyValue(DeletedByFieldName, ApplicationContext.Instance.CurrentUser.Id);
         }
 
         private async Task SaveAuditLogsAsync()

@@ -4,8 +4,9 @@ This is a simple/reusable microservice template/playgorund project.
 
 #### Features
 - Simple Login flow
-- Full User CRUD flow
-- Full AuditLog List,Get flow
+- User CRUD flow
+- AuditLog List,Get flow
+- Product CRUD flow
 
 #### Structure
 - **API:** Endpoint project for client usage  

@@ -19,7 +19,6 @@ using ImMicro.Common.Service;
 using ImMicro.Contract.App.User;
 using ImMicro.Contract.Mappings.Filtery;
 using ImMicro.Contract.Service.User;
-using ImMicro.Resources.App;
 using ImMicro.Resources.Extensions;
 using ImMicro.Resources.Model;
 using ImMicro.Resources.Service;

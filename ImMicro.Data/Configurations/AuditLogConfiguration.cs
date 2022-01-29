@@ -8,14 +8,11 @@ namespace ImMicro.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<AuditLog> builder)
         {
-            // Table Name
             builder.ToTable(nameof(AuditLog));
 
-            // Primary Key
             builder.HasKey(o => o.Id);
 
-            builder.Property(x => x.Id)
-                .ValueGeneratedOnAdd();
+            builder.Property(x => x.Id).ValueGeneratedOnAdd();
         }
     }
 }

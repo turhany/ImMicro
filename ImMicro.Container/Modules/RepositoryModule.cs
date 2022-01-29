@@ -3,7 +3,6 @@ using Autofac;
 using ImMicro.Common.Data.Abstract;
 using ImMicro.Data.Repositories;
 using ImMicro.Data.Repositories.Abstract;
-using ImMicro.Data.Repositories.Concrete;
 using Module = Autofac.Module;
 
 namespace ImMicro.Container.Modules
