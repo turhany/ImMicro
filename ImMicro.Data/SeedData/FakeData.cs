@@ -19,7 +19,6 @@ public static class FakeData
             Password = BCrypt.Net.BCrypt.HashPassword("123456789.tY"),
             Type = UserType.Root,
             CreatedOn = DateTime.UtcNow,
-            IsActive = true,
             RefreshTokenExpireDate = DateTime.UtcNow
         }
     };

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ImMicro.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220129075901_InitialCreate")]
+    [Migration("20220129220418_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -115,7 +115,7 @@ namespace ImMicro.Data.Migrations
                         new
                         {
                             Id = new Guid("471c4da0-35c3-4938-b068-b1ad568118a1"),
-                            CreatedOn = new DateTime(2022, 1, 29, 7, 59, 0, 747, DateTimeKind.Utc).AddTicks(9627),
+                            CreatedOn = new DateTime(2022, 1, 29, 22, 4, 17, 550, DateTimeKind.Utc).AddTicks(5544),
                             IsDeleted = false,
                             MinStockQuantity = 10,
                             Name = "Computer"
@@ -123,7 +123,7 @@ namespace ImMicro.Data.Migrations
                         new
                         {
                             Id = new Guid("24f5064f-346e-4a1c-a32f-785c0e870d87"),
-                            CreatedOn = new DateTime(2022, 1, 29, 7, 59, 0, 747, DateTimeKind.Utc).AddTicks(9638),
+                            CreatedOn = new DateTime(2022, 1, 29, 22, 4, 17, 550, DateTimeKind.Utc).AddTicks(5560),
                             IsDeleted = false,
                             MinStockQuantity = 2,
                             Name = "Car"
@@ -131,7 +131,7 @@ namespace ImMicro.Data.Migrations
                         new
                         {
                             Id = new Guid("30ae4b48-5ac1-43c5-b6eb-c08e733b0e46"),
-                            CreatedOn = new DateTime(2022, 1, 29, 7, 59, 0, 747, DateTimeKind.Utc).AddTicks(9640),
+                            CreatedOn = new DateTime(2022, 1, 29, 22, 4, 17, 550, DateTimeKind.Utc).AddTicks(5562),
                             IsDeleted = false,
                             MinStockQuantity = 20,
                             Name = "Flower"
@@ -191,7 +191,7 @@ namespace ImMicro.Data.Migrations
                         {
                             Id = new Guid("dcc545de-5afe-4bcd-9883-6b7167af5647"),
                             CategoryId = new Guid("471c4da0-35c3-4938-b068-b1ad568118a1"),
-                            CreatedOn = new DateTime(2022, 1, 29, 7, 59, 0, 748, DateTimeKind.Utc).AddTicks(525),
+                            CreatedOn = new DateTime(2022, 1, 29, 22, 4, 17, 550, DateTimeKind.Utc).AddTicks(6411),
                             Description = "Macbook Pro 16 description.",
                             IsActive = true,
                             IsDeleted = false,
@@ -202,7 +202,7 @@ namespace ImMicro.Data.Migrations
                         {
                             Id = new Guid("d5350cec-78c1-40ac-bc7e-8bc14b09cf64"),
                             CategoryId = new Guid("471c4da0-35c3-4938-b068-b1ad568118a1"),
-                            CreatedOn = new DateTime(2022, 1, 29, 7, 59, 0, 748, DateTimeKind.Utc).AddTicks(539),
+                            CreatedOn = new DateTime(2022, 1, 29, 22, 4, 17, 550, DateTimeKind.Utc).AddTicks(6426),
                             Description = "Macbook Pro 14 description.",
                             IsActive = false,
                             IsDeleted = false,
@@ -213,7 +213,7 @@ namespace ImMicro.Data.Migrations
                         {
                             Id = new Guid("e7ce4ae6-13da-4d8b-834c-7d7a806fc761"),
                             CategoryId = new Guid("24f5064f-346e-4a1c-a32f-785c0e870d87"),
-                            CreatedOn = new DateTime(2022, 1, 29, 7, 59, 0, 748, DateTimeKind.Utc).AddTicks(545),
+                            CreatedOn = new DateTime(2022, 1, 29, 22, 4, 17, 550, DateTimeKind.Utc).AddTicks(6428),
                             Description = "Porche 911 description.",
                             IsActive = true,
                             IsDeleted = false,
@@ -224,7 +224,7 @@ namespace ImMicro.Data.Migrations
                         {
                             Id = new Guid("d76632d5-556d-4da6-ae67-2ebfc1b092f3"),
                             CategoryId = new Guid("24f5064f-346e-4a1c-a32f-785c0e870d87"),
-                            CreatedOn = new DateTime(2022, 1, 29, 7, 59, 0, 748, DateTimeKind.Utc).AddTicks(547),
+                            CreatedOn = new DateTime(2022, 1, 29, 22, 4, 17, 550, DateTimeKind.Utc).AddTicks(6431),
                             Description = "Porche 911 Turbo S description.",
                             IsActive = false,
                             IsDeleted = false,
@@ -235,7 +235,7 @@ namespace ImMicro.Data.Migrations
                         {
                             Id = new Guid("3884bb77-e0d5-4af9-acd2-a4626a875110"),
                             CategoryId = new Guid("30ae4b48-5ac1-43c5-b6eb-c08e733b0e46"),
-                            CreatedOn = new DateTime(2022, 1, 29, 7, 59, 0, 748, DateTimeKind.Utc).AddTicks(549),
+                            CreatedOn = new DateTime(2022, 1, 29, 22, 4, 17, 550, DateTimeKind.Utc).AddTicks(6436),
                             Description = "Rose flower description.",
                             IsActive = true,
                             IsDeleted = false,
@@ -246,7 +246,7 @@ namespace ImMicro.Data.Migrations
                         {
                             Id = new Guid("e11d815e-de72-41c3-920e-7f1ca0205aee"),
                             CategoryId = new Guid("30ae4b48-5ac1-43c5-b6eb-c08e733b0e46"),
-                            CreatedOn = new DateTime(2022, 1, 29, 7, 59, 0, 748, DateTimeKind.Utc).AddTicks(557),
+                            CreatedOn = new DateTime(2022, 1, 29, 22, 4, 17, 550, DateTimeKind.Utc).AddTicks(6447),
                             Description = "Blue Rose flower description.",
                             IsActive = false,
                             IsDeleted = false,
@@ -314,9 +314,6 @@ namespace ImMicro.Data.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
@@ -349,14 +346,13 @@ namespace ImMicro.Data.Migrations
                         new
                         {
                             Id = new Guid("4d7043bf-e857-4d21-9d5e-8926be7e36aa"),
-                            CreatedOn = new DateTime(2022, 1, 29, 7, 59, 0, 747, DateTimeKind.Utc).AddTicks(8369),
+                            CreatedOn = new DateTime(2022, 1, 29, 22, 4, 17, 550, DateTimeKind.Utc).AddTicks(4447),
                             Email = "user@immicro.com",
                             FirstName = "User",
-                            IsActive = true,
                             IsDeleted = false,
                             LastName = "ImMicro",
-                            Password = "$2a$11$1m6jXZOiglvCh4s5LkIv/uevaYGQPuBvTrzIZVL5qvrkPUvHzPZKm",
-                            RefreshTokenExpireDate = new DateTime(2022, 1, 29, 7, 59, 0, 747, DateTimeKind.Utc).AddTicks(8758),
+                            Password = "$2a$11$8FdieqBtwfeRxM7XR.t39e6DJotDXEPOnUQ52QoiGJRq4tFW7XJTq",
+                            RefreshTokenExpireDate = new DateTime(2022, 1, 29, 22, 4, 17, 550, DateTimeKind.Utc).AddTicks(4686),
                             Type = 1
                         });
                 });
