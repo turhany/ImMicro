@@ -1,6 +1,6 @@
 #   **ImMicro**
     
-This is a simple/reusable microservice template/playgorund project.  
+This is a simple/reusable micro/macro service template/playgorund project.  
 
 #### Features
 - Simple Login flow
