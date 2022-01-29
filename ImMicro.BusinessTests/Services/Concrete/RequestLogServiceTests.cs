@@ -7,7 +7,7 @@ using ImMicro.BusinessTests;
 
 namespace ImMicro.Business.Services.Concrete.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class RequestLogServiceTests : TestBase
     {
         private readonly IRequestLogService _requestLogService;
@@ -17,7 +17,7 @@ namespace ImMicro.Business.Services.Concrete.Tests
             _requestLogService = Container.Resolve<IRequestLogService>();
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void SaveTest()
         {
             //arrange

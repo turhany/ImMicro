@@ -1,11 +1,16 @@
-﻿using System.Threading;
-using Autofac; 
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+using Autofac;
+using AutoMapper;
+using ImMicro.Common.Application;
 using ImMicro.Common.Cache.Abstract;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Moq;
 using ImMicro.Common.Lock.Abstract;
 using ImMicro.Container.Modules;
+using ImMicro.Contract.Mappings.AutoMapper;
 using ImMicro.Data;
 
 namespace ImMicro.BusinessTests
@@ -37,7 +42,20 @@ namespace ImMicro.BusinessTests
             var mockLock = new Mock<ILockService>();
             builder.RegisterInstance(mockLock.Object).As<ILockService>();
              
+            builder.Register<IMapper>(c =>
+            {
+                var config = new MapperConfiguration(cfg =>
+                {
+                    cfg.AddProfile(new UserMapping());
+                    cfg.AddProfile(new ProductMapping());
+                    cfg.AddProfile(new AuditLogMapping());
+                });
+                return config.CreateMapper();
+            }).SingleInstance();
+            
             Container = builder.Build();
+            
+            ApplicationContext.ConfigureWorkerServiceUser(Guid.NewGuid());
         }
     }
 }
