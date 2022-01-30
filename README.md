@@ -8,6 +8,7 @@ This is a simple/reusable micro/macro service template/playgorund project.
 - AuditLog List,Get flow
 - Product CRUD flow
 - MessageQueue sample flow
+- Multi Language support
 
 #### Structure
 - **API:** Endpoint project for client usage  
