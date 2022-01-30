@@ -21,6 +21,7 @@ This is a simple/reusable micro/macro service template/playgorund project.
 - **Resources:** Language resx files project   
 - **Messaging/Consumer:** Message service(RabbitMQ) implementation project
 - **ScheduleService:** Schedule tasks project   
+- **Tests:** Unit and Benchmark test projects   
 ![alt tag](Files/solutiondiagram.jpg)  
 
 #### Technologies
@@ -41,6 +42,7 @@ This is a simple/reusable micro/macro service template/playgorund project.
 * RedLock  
 * AutoMapper  
 * Docker
+* BenchmarkDotNet
 * HelpersToolbox (https://github.com/turhany/HelpersToolbox)
 * Filtery (https://github.com/turhany/Filtery)
 * Audity (https://github.com/turhany/Audity)
