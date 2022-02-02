@@ -4,9 +4,9 @@ This is a simple/reusable micro/macro service template/playgorund project.
 
 #### Features
 - Simple Login flow
-- User CRUD flow
-- AuditLog List,Get flow
-- Product CRUD flow
+- User List(Search), CRUD flow
+- AuditLog List(Search), Get flow
+- Product List(Search), CRUD flow
 - MessageQueue sample flow
 - Multi Language support
 
