@@ -16,7 +16,7 @@ This is a simple/reusable micro/macro service template/playgorund project.
 - **Common:** Cross cutting consern items (like cache, lock...)   
 - **Container:** DI configuration project   
 - **Contract:** Dtos, layer transfer and api response - request objects   
-- **Data:** Database layer files (EfCore implementations and repositories)    
+- **Data:** Database layer files (Ef(Core) implementations and repositories)    
 - **Model:** Database entity models   
 - **Resources:** Language resx files project   
 - **Messaging/Consumer:** Message service(RabbitMQ) implementation project
