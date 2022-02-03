@@ -5,7 +5,7 @@ This is a simple/reusable micro/macro service template/playgorund project.
 #### Features
 - Simple Login flow
 - User List(Search), CRUD flow
-- AuditLog List(Search), Get flow
+- AuditLog List(Search), Export, Get flow
 - Product List(Search), CRUD flow
 - MessageQueue sample flow
 - Multi Language support
@@ -46,6 +46,7 @@ This is a simple/reusable micro/macro service template/playgorund project.
 * HelpersToolbox (https://github.com/turhany/HelpersToolbox)
 * Filtery (https://github.com/turhany/Filtery)
 * Audity (https://github.com/turhany/Audity)
+* Exporty (https://github.com/turhany/Exporty)
 
 #### Before Usage
 * If you want to use local environment, you need to update Redis and PostgreSql connection strings in API project  (appsettings.json)    

@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Exporty.Abstract;
 using ImMicro.Common.Cache.Abstract;
 using ImMicro.Common.Cache.Concrete;
 using ImMicro.Common.Lock.Abstract;
@@ -15,6 +16,7 @@ namespace ImMicro.Container.Modules
             builder.RegisterType<RedisCacheService>().As<ICacheService>().InstancePerLifetimeScope();
             builder.RegisterType<RedisLockService>().As<ILockService>().InstancePerLifetimeScope(); 
             builder.RegisterType<ValidationService>().As<IValidationService>().InstancePerLifetimeScope(); 
+            builder.RegisterType<Exporty.Concrete.Exporty>().As<IExporty>().InstancePerLifetimeScope();
             
             base.Load(builder);
         }

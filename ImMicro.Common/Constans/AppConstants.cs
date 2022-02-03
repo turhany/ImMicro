@@ -20,5 +20,7 @@
         public const string SymmetricKey = "!#_ImMicro_Symmetric_Key_2022_!#";
         public const double AccessTokenExpireMinute = 6 * 60;//6 hour
         public const double RefreshTokenExpireMinute = 7 * 60; //7 hour
+        
+        public const string ExportDirectory = "ExportDirectory";
     }
 }

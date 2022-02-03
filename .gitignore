@@ -351,3 +351,5 @@ MigrationBackup/
 
 .idea/
 .sonarqube/
+
+ExportedFiles/

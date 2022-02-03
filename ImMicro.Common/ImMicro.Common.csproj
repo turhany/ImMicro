@@ -12,6 +12,7 @@
       <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.2" />
       <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="6.0.2" />
       <PackageReference Include="AutoMapper" Version="11.0.0" />
+      <PackageReference Include="Exporty" Version="1.0.0" />
       <PackageReference Include="Filtery" Version="1.0.8" />
       <PackageReference Include="FluentValidation" Version="10.3.6" />
       <PackageReference Include="HelpersToolbox" Version="1.1.8" />

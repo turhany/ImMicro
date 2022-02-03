@@ -216,6 +216,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:ImMicro.Api.Controllers.V1.AuditLogController.Export(ImMicro.Contract.App.ExportRequest)">
+            <summary>
+            Export Audit Log
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:ImMicro.Api.Controllers.V1.AuditLogController.Get(System.Guid)">
             <summary>
             Get Audit Log

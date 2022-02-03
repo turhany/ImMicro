@@ -3,7 +3,10 @@ using System.Threading.Tasks;
 using Filtery.Models;
 using ImMicro.Business.Audit.Abstract;
 using ImMicro.Common.BaseModels.Api;
+using ImMicro.Common.BaseModels.Service;
+using ImMicro.Common.Helpers;
 using ImMicro.Common.Pager;
+using ImMicro.Contract.App;
 using ImMicro.Contract.Audit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -37,6 +40,25 @@ namespace ImMicro.Api.Controllers.V1
         public async Task<ActionResult> Search([FromBody] FilteryRequest request)
         {
             var result = await _auditLogService.SearchAsync(request);
+            return ApiResponse.CreateResult(result);
+        }
+        
+        /// <summary>
+        /// Export Audit Log
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("search/export")]
+        [Authorize(Roles = "Root")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult> Export([FromBody]ExportRequest exportRequest )
+        {
+            var result = await _auditLogService.ExportAsync(exportRequest);
+
+            if (result.Status == ResultStatus.Successful)
+            {
+                return PhysicalFile(result.Data,  MimeTypeMapper.GetMimeType(result.Data));
+            }
+            
             return ApiResponse.CreateResult(result);
         }
         
