@@ -1,6 +1,7 @@
 #   **ImMicro**
     
 This is a simple/reusable micro/macro service template/playgorund project.  
+(https://img.shields.io/badge/Business%20Level%20Test%20Coverage-99%25-green)
 
 #### Features
 - Simple Login flow
