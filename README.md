@@ -1,7 +1,7 @@
 #   **ImMicro**
-    
-This is a simple/reusable micro/macro service template/playgorund project.  
 ![alt tag](https://img.shields.io/badge/Business%20Level%20Test%20Coverage-99%25-green)  ![alt tag](https://img.shields.io/badge/quality%20gate-passed-success)
+
+This is a simple/reusable micro/macro service template/playgorund project.  
 
 #### Features
 - Simple Login flow
