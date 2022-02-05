@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Autofac;
+using Exporty.Models;
 using Filtery.Exceptions;
 using Filtery.Models;
 using Filtery.Models.Order;
 using ImMicro.Business.Audit.Abstract;
 using ImMicro.Common.BaseModels.Service;
 using ImMicro.Common.Data.Abstract;
+using ImMicro.Contract.App;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ImMicro.BusinessTests.Services.Concrete;
@@ -92,5 +94,27 @@ public class AuditLogServiceTests : TestBase
         {
             Assert.IsTrue(false);
         }
+    }
+    
+    [TestMethod]
+    public async Task ExportAsync_OK()
+    {
+        //arrange
+        var auditLog = new Model.AuditLog.AuditLog { Id = Guid.NewGuid(), EntityName = "TestEntity"};
+        await _auditLogRepository.InsertAsync(auditLog);
+        
+        //act
+        var response = await _auditLogService.ExportAsync(new ExportRequest
+        {
+            SearchRequest = new FilteryRequest
+            {
+                PageNumber = 1,
+                PageSize = 10
+            },
+            ExportType = ExportType.Excel
+        });
+
+        //assert 
+        Assert.AreEqual(ResultStatus.Successful, response.Status);
     }
 }

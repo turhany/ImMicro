@@ -12,6 +12,7 @@ using ImMicro.Common.Lock.Abstract;
 using ImMicro.Container.Modules;
 using ImMicro.Contract.Mappings.AutoMapper;
 using ImMicro.Data;
+using Microsoft.Extensions.Configuration;
 
 namespace ImMicro.BusinessTests
 {
@@ -41,6 +42,9 @@ namespace ImMicro.BusinessTests
             
             var mockLock = new Mock<ILockService>();
             builder.RegisterInstance(mockLock.Object).As<ILockService>();
+            
+            var confLock = new Mock<IConfiguration>();
+            builder.RegisterInstance(confLock.Object).As<IConfiguration>();
              
             builder.Register<IMapper>(c =>
             {
