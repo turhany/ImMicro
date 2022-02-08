@@ -16,8 +16,7 @@ services:
       context: .
       dockerfile: ImMicro.Api/Dockerfile
     ports:
-      - "5000:5000"
-      - "5001:5001"
+      - "5010:5010"
     environment:
       ASPNETCORE_ENVIRONMENT: "DockerCompose"
     networks:

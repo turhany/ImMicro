@@ -106,14 +106,14 @@ This is a simple/reusable micro/macro service template/playgorund project.
 * When you get token from **login/token** Endpoint **"accessToken"** field can set swagger **"Authorize"** area with **"Bearer {accessToken}"** syntax
 
 #### Swagger Endpoint   
-* http://localhost:5000/swagger/index.html
+* http://localhost:5010/swagger/index.html
 
 #### Schedule Service Hangfire Endpoint   
 * http://localhost:5001/hangfire
 
 #### Healt Check Endpoints   
-* http://localhost:5000/health-check    > json response endpoint for health information
-* http://localhost:5000/health-check-ui > Dashboard for see application services health (Redis, NpgSql)    
+* http://localhost:5010/health-check    > json response endpoint for health information
+* http://localhost:5010/health-check-ui > Dashboard for see application services health (Redis, NpgSql)    
 
 #### Code Coverage
 ![alt tag](Files/testcovarage.jpg)  
