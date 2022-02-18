@@ -15,16 +15,16 @@
       <PackageReference Include="Exporty" Version="1.0.0" />
       <PackageReference Include="Filtery" Version="1.0.8" />
       <PackageReference Include="FluentValidation" Version="10.3.6" />
-      <PackageReference Include="HelpersToolbox" Version="1.1.9" />
+      <PackageReference Include="HelpersToolbox" Version="1.2.0" />
       <PackageReference Include="MassTransit" Version="7.3.1" />
       <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="7.3.1" />
       <PackageReference Include="MassTransit.RabbitMQ" Version="7.3.1" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.1" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.1">
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.2" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.2">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.1" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.2" />
       <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="6.0.0" />
       <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
@@ -33,7 +33,7 @@
       <PackageReference Include="NWebsec.AspNetCore.Core" Version="3.0.1" />
       <PackageReference Include="NWebsec.AspNetCore.Middleware" Version="3.0.0" />
       <PackageReference Include="RedLock.net" Version="2.3.1" />
-      <PackageReference Include="RestSharp" Version="107.2.1" />
+      <PackageReference Include="RestSharp" Version="107.3.0" />
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.15.1" />
     </ItemGroup>
 
