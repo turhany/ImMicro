@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ImMicro.Common.Constans;
+using ImMicro.Common.Dapper;
 using ImMicro.Data;
 // ReSharper disable PossibleNullReferenceException
 
@@ -35,6 +36,10 @@ namespace ImMicro.Api.Configurations.Startup
                     dataBaseService.Database.Migrate();
                 }
             }
+            
+            services.AddSingleton(
+                new DapperContext(configuration.GetConnectionString(AppConstants.PostgreSqlConnectionString), 
+                    DapperContext.ConnectionType.PostgreSql));
 
             return services;
         }

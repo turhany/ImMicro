@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Threading.Tasks; 
+using System.Threading.Tasks;
 using Filtery.Models;
 using ImMicro.Business.Product.Abstract;
 using ImMicro.Common.BaseModels.Api;
 using ImMicro.Contract.App.Product; 
-using ImMicro.Contract.Service.Product; 
+using ImMicro.Contract.Service.Product;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +17,7 @@ namespace ImMicro.Api.Controllers.V1;
 [ApiVersion("1.0")]
 public class ProductsController : BaseController
 {
-    private readonly IProductService _productService;
+    private readonly IProductService _productService; 
 
     /// <summary>
     /// Products Controller
@@ -25,7 +25,7 @@ public class ProductsController : BaseController
     /// <param name="productService"></param>
     public ProductsController(IProductService productService)
     {
-        _productService = productService;
+        _productService = productService; 
     }
 
     /// <summary>
@@ -98,6 +98,18 @@ public class ProductsController : BaseController
     public async Task<ActionResult> Search([FromBody] FilteryRequest request)
     {
         var result = await _productService.SearchAsync(request);
+        return ApiResponse.CreateResult(result);
+    }
+    
+    /// <summary>
+    /// Get Product
+    /// </summary>
+    [HttpGet("GetWithDapper/{id:guid}")]
+    [Authorize(Roles = "Root")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductView))]
+    public async Task<ActionResult> GetWithDapper(Guid id)
+    {
+        var result = await _productService.GetWithDapperAsync(id);
         return ApiResponse.CreateResult(result);
     }
 }
