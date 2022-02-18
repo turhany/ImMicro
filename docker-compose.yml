@@ -62,7 +62,7 @@ services:
     environment:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "123456789.tY"
-      POSTGRES_DB: "TYDB"
+      POSTGRES_DB: "ImMicroDB"
     networks:
       - bridge-network
 
