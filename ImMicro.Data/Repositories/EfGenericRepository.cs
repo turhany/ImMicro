@@ -5,13 +5,14 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Audity.Extensions;
 using Audity.Model;
-using HelpersToolbox.Extensions;
 using ImMicro.Common.Application;
+using ImMicro.Common.Data;
 using Microsoft.EntityFrameworkCore;
 using ImMicro.Common.Data.Abstract;
 using ImMicro.Model.AuditLog;
 using Newtonsoft.Json;
 using Npgsql.Bulk;
+// ReSharper disable NotResolvedInText
 
 namespace ImMicro.Data.Repositories
 {
@@ -20,10 +21,6 @@ namespace ImMicro.Data.Repositories
         private readonly DataContext _context;
         private readonly DbSet<TEntity> _entities;
         private readonly DbSet<AuditLog> _auditLog;
-
-        private const string IsDeletedFieldName = "IsDeleted";
-        private const string DeletedOnFieldName = "DeletedOn";
-        private const string DeletedByFieldName = "DeletedBy";
 
         public EfGenericRepository(DataContext dbContext)
         {
@@ -93,9 +90,9 @@ namespace ImMicro.Data.Repositories
             ThrowIfNull(entity);
 
             
-            if (entity.HasProperty(IsDeletedFieldName))
+            if (entity is SoftDeleteEntity softDeleteEntity)
             {
-                SetDeleteFields(entity); 
+                SetDeleteFields(softDeleteEntity); 
                 await UpdateAsync(entity);
             }
             else
@@ -110,11 +107,11 @@ namespace ImMicro.Data.Repositories
         {
             ThrowIfAnyOneNull(entityList);
 
-            if (entityList.First().HasProperty(IsDeletedFieldName))
+            if (entityList.First() is SoftDeleteEntity)
             {
                 foreach (var entity in entityList)
                 {
-                    SetDeleteFields(entity);
+                    SetDeleteFields(entity as SoftDeleteEntity);
                 }
 
                 await UpdateManyAsync(entityList);
@@ -179,11 +176,11 @@ namespace ImMicro.Data.Repositories
             if (entities.Any(p => p == null)) throw new ArgumentNullException("entities has null item(s).");
         }
 
-        private void SetDeleteFields(TEntity entity)
+        private void SetDeleteFields(SoftDeleteEntity entity)
         {
-            entity.SetPropertyValue(IsDeletedFieldName, true);
-            entity.SetPropertyValue(DeletedOnFieldName, DateTime.UtcNow);
-            entity.SetPropertyValue(DeletedByFieldName, ApplicationContext.Instance.CurrentUser.Id);
+            entity.IsDeleted = true;
+            entity.DeletedOn = DateTime.UtcNow;
+            entity.DeletedBy = ApplicationContext.Instance.CurrentUser.Id;
         }
 
         private async Task SaveAuditLogsAsync()
