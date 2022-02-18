@@ -153,7 +153,19 @@ namespace ImMicro.Data.Repositories
             var bulkUploader = new NpgsqlBulkUploader(_context);
             bulkUploader.Insert(entities);
         }
-        
+
+        public async Task BulkUpdateAsync(IEnumerable<TEntity> entities)
+        {
+            var bulkUploader = new NpgsqlBulkUploader(_context);
+            await bulkUploader.UpdateAsync(entities);
+        }
+
+        public void BulkUpdate(IEnumerable<TEntity> entities)
+        {
+            var bulkUploader = new NpgsqlBulkUploader(_context);
+            bulkUploader.Update(entities);
+        }
+
         #region Private Methods
 
         private void ThrowIfNull(TEntity entity)

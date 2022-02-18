@@ -28,5 +28,7 @@ namespace ImMicro.Common.Data.Abstract
         
         Task BulkInsertAsync(IEnumerable<TEntity> entities);
         void BulkInsert(IEnumerable<TEntity> entities); 
+        Task BulkUpdateAsync(IEnumerable<TEntity> entities);
+        void BulkUpdate(IEnumerable<TEntity> entities); 
     }
 }
