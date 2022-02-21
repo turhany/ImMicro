@@ -31,6 +31,7 @@ This is a simple/reusable micro/macro service template/playgorund project.
 * Asp .Net Health Check  
 * EF Core 6.0  
 * Postgres Sql  
+* Dapper
 * Redis 
 * RabbitMQ
 * MassTransit
