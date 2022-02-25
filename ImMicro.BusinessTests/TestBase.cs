@@ -5,6 +5,7 @@ using Autofac;
 using AutoMapper;
 using ImMicro.Common.Application;
 using ImMicro.Common.Cache.Abstract;
+using ImMicro.Common.Dapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Moq;
@@ -34,6 +35,12 @@ namespace ImMicro.BusinessTests
             {
                 var opt = new DbContextOptionsBuilder<DataContext>().UseInMemoryDatabase("ImMicro_unit_testdb").Options;
                 return new DataContext(opt);
+            }).InstancePerLifetimeScope();
+             
+            //TODO: need to find solution for run Dapper to InMemory DB
+            builder.Register(c =>
+            {
+               return new DapperContext("", DapperContext.ConnectionType.PostgreSql);
             }).InstancePerLifetimeScope();
             
             builder.RegisterModule(new ApplicationModule());
