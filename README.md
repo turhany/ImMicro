@@ -45,6 +45,7 @@ This is a simple/reusable micro/macro service template/playground project.
 * AutoMapper (https://automapper.org/)  
 * Docker (https://www.docker.com/)
 * BenchmarkDotNet (https://benchmarkdotnet.org/)
+* Throw (https://github.com/mantinband/throw)
 * HelpersToolbox (https://github.com/turhany/HelpersToolbox)
 * Filtery (https://github.com/turhany/Filtery)
 * Audity (https://github.com/turhany/Audity)

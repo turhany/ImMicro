@@ -12,6 +12,8 @@ using ImMicro.Common.Data.Abstract;
 using ImMicro.Model.AuditLog;
 using Newtonsoft.Json;
 using Npgsql.Bulk;
+using Throw;
+
 // ReSharper disable NotResolvedInText
 
 namespace ImMicro.Data.Repositories
@@ -31,7 +33,7 @@ namespace ImMicro.Data.Repositories
 
         public async Task<TEntity> InsertAsync(TEntity entity)
         {
-            ThrowIfNull(entity);
+            entity.ThrowIfNull();
             
             await _entities.AddAsync(entity);
             await SaveAuditLogsAsync();
@@ -43,8 +45,9 @@ namespace ImMicro.Data.Repositories
 
         public async Task<List<TEntity>> InsertManyAsync(List<TEntity> entityList)
         {
-            ThrowIfAnyOneNull(entityList);
-
+            entityList.ThrowIfNull();
+            entityList.Throw().IfEmpty();
+             
             await _entities.AddRangeAsync(entityList);
             await SaveAuditLogsAsync();
             await _context.SaveEntitiesAsync();
@@ -59,8 +62,8 @@ namespace ImMicro.Data.Repositories
 
         public async Task<TEntity> UpdateAsync(TEntity entity)
         {
-            ThrowIfNull(entity);
-
+            entity.ThrowIfNull();
+            
             await SaveAuditLogsAsync();
             _context.Set<TEntity>().Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;
@@ -72,7 +75,8 @@ namespace ImMicro.Data.Repositories
 
         public async Task<List<TEntity>> UpdateManyAsync(List<TEntity> entityList)
         {
-            ThrowIfAnyOneNull(entityList);
+            entityList.ThrowIfNull();
+            entityList.Throw().IfEmpty();
 
             await SaveAuditLogsAsync();
             _entities.UpdateRange(entityList);
@@ -87,8 +91,7 @@ namespace ImMicro.Data.Repositories
 
         public async Task DeleteAsync(TEntity entity)
         {
-            ThrowIfNull(entity);
-
+            entity.ThrowIfNull();
             
             if (entity is SoftDeleteEntity softDeleteEntity)
             {
@@ -105,7 +108,8 @@ namespace ImMicro.Data.Repositories
 
         public async Task DeleteManyAsync(List<TEntity> entityList)
         {
-            ThrowIfAnyOneNull(entityList);
+            entityList.ThrowIfNull();
+            entityList.Throw().IfEmpty();
 
             if (entityList.First() is SoftDeleteEntity)
             {
@@ -164,17 +168,6 @@ namespace ImMicro.Data.Repositories
         }
 
         #region Private Methods
-
-        private void ThrowIfNull(TEntity entity)
-        {
-            if (entity == null) throw new ArgumentNullException("entity");
-        }
-
-        private void ThrowIfAnyOneNull(List<TEntity> entities)
-        {
-            if (entities == null) throw new ArgumentNullException("entities");
-            if (entities.Any(p => p == null)) throw new ArgumentNullException("entities has null item(s).");
-        }
 
         private void SetDeleteFields(SoftDeleteEntity entity)
         {
