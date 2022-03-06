@@ -27,24 +27,24 @@ This is a simple/reusable micro/macro service template/playground project.
 
 #### Technologies
 
-* .Net 6.0 - C# 10.0
-* Asp .Net Health Check  
-* EF Core 6.0  
-* Postgres Sql  
-* Dapper
-* Redis 
-* RabbitMQ
-* MassTransit
-* Hangfire  
-* Serilog  
-* NWebSec  
-* Autofac  
-* FluentValidation  
-* Swagger  
-* RedLock  
-* AutoMapper  
-* Docker
-* BenchmarkDotNet
+* .Net 6.0 - C# 10.0(https://dotnet.microsoft.com/en-us/download/dotnet)
+* Asp .Net Health Check (https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks)  
+* EF Core 6.0  (https://docs.microsoft.com/en-us/ef/core/)
+* Postgres Sql (https://www.postgresql.org/)  
+* Dapper (https://github.com/DapperLib/Dapper)
+* Redis (https://redis.io/) 
+* RabbitMQ (https://www.rabbitmq.com/)
+* MassTransit (https://masstransit-project.com/)
+* Hangfire (https://www.hangfire.io/)  
+* Serilog (https://serilog.net/)  
+* NWebSec (https://www.nwebsec.com/)  
+* Autofac (https://autofac.org/)  
+* FluentValidation (https://fluentvalidation.net/)  
+* Swagger (https://github.com/domaindrivendev/Swashbuckle.AspNetCore)  
+* RedLock (https://github.com/samcook/RedLock.net)  
+* AutoMapper (https://automapper.org/)  
+* Docker (https://www.docker.com/)
+* BenchmarkDotNet (https://benchmarkdotnet.org/)
 * HelpersToolbox (https://github.com/turhany/HelpersToolbox)
 * Filtery (https://github.com/turhany/Filtery)
 * Audity (https://github.com/turhany/Audity)
