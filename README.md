@@ -99,6 +99,21 @@ This is a simple/reusable micro/macro service template/playground project.
 * update-database -context ImMicro.Data.DataContext
 * add-migration migrationName -context ImMicro.Data.DataContext
 
+#### Database Maintenance
+``` sql
+REINDEX TABLE "AuditLog";
+REINDEX TABLE "Category";
+REINDEX TABLE "Product";
+REINDEX TABLE "RequestLog";
+REINDEX TABLE "User" ;
+
+Vacuum full Verbose "AuditLog";
+Vacuum full Verbose "Category";
+Vacuum full Verbose "Product";
+Vacuum full Verbose "RequestLog";
+Vacuum full Verbose "User";
+```   
+
 #### Usages
 * Application has multi language support for demo pupose now TR and EN
 * Before request auth need endpoints like User and Product endpoints first need to Login over login/token enpoint
