@@ -76,7 +76,7 @@ This is a simple/reusable micro/macro service template/playground project.
     * Default username and password: guest
 
 #### GUI's
-* For DB > https://dbeaver.io
+* For PostgreSQL > https://dbeaver.io
 * For Redis > https://github.com/qishibo/AnotherRedisDesktopManager
 
 #### SonarQube Test Preperation
