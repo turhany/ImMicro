@@ -20,7 +20,6 @@ public class DapperContext
         {
             case ConnectionType.PostgreSql:
                 return new NpgsqlConnection(_connectionString);
-                break;
             default:
                 throw new ArgumentOutOfRangeException();
         }

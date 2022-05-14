@@ -72,7 +72,7 @@ This is a simple/reusable micro/macro service template/playground project.
 #### For local Development - Docker Run Codes
 * **PostgreSQL >**  docker run --name postgressqlcontainer -p 5432:5432 -e POSTGRES_PASSWORD=123456789.tY -d postgres
 * **Redis >** docker run --name redis -p 6379:6379 -d redis --requirepass 123456789.tY
-* **RabbitMQ >** docker run -d --hostname rabbitmq --name rabbitmq -p 15672:15672 -p 5672:5672 rabbitmq:3.8.3-management 
+* **RabbitMQ >** docker run -d --hostname rabbitmq --name rabbitmq -p 15672:15672 -p 5672:5672 rabbitmq:3.10.1-management 
     * Default username and password: guest
 
 #### GUI's

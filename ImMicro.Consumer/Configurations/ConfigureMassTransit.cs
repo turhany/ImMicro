@@ -1,5 +1,4 @@
-﻿using GreenPipes;
-using ImMicro.Common.Options;
+﻿using ImMicro.Common.Options;
 using ImMicro.Consumer.Consumers;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
