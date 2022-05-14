@@ -101,17 +101,28 @@ This is a simple/reusable micro/macro service template/playground project.
 
 #### Database Maintenance
 ``` sql
+--ReIndex
 REINDEX TABLE "AuditLog";
 REINDEX TABLE "Category";
 REINDEX TABLE "Product";
 REINDEX TABLE "RequestLog";
 REINDEX TABLE "User" ;
 
+--Vacuum
 Vacuum full Verbose "AuditLog";
 Vacuum full Verbose "Category";
 Vacuum full Verbose "Product";
 Vacuum full Verbose "RequestLog";
 Vacuum full Verbose "User";
+
+-- Find Expensive Queries
+SELECT queryid, calls, mean_time, substring(query for 100)
+FROM pg_stat_statements 
+ORDER BY total_time DESC LIMIT 3;
+
+--Analyze Expensive Query Sample
+--Online Suggestion Website > https://explain.depesz.com/
+EXPLAIN ANALYZE SELECT * FROM "User" WHERE "Email" = 'user@immicro.com';
 ```   
 
 #### Usages
