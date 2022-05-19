@@ -22,5 +22,7 @@
         public const double RefreshTokenExpireMinute = 7 * 60; //7 hour
         
         public const string ExportDirectory = "ExportDirectory";
+
+        public const string RouteListEndPoint = "/routes";
     }
 }

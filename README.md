@@ -143,6 +143,9 @@ EXPLAIN ANALYZE SELECT * FROM "User" WHERE "Email" = 'user@immicro.com';
 * http://localhost:5010/health-check    > json response endpoint for health information
 * http://localhost:5010/health-check-ui > Dashboard for see application services health (Redis, NpgSql)    
 
+#### All Routes List Endpoint   
+* http://localhost:5001/routes
+
 #### Code Coverage
 ![alt tag](Files/testcovarage.jpg)  
 

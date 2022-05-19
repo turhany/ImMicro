@@ -10,6 +10,7 @@ using ImMicro.Common.StartupConfigurations;
 using ImMicro.Container.Modules;
 using ImMicro.Contract.Mappings.AutoMapper;
 using Microsoft.AspNetCore.Http;
+using ImMicro.Common.Constans;
 
 // ReSharper disable MemberCanBePrivate.Global
 
@@ -46,7 +47,7 @@ namespace ImMicro.Api
             services.AddLocalizationsConfigurations();           
             services.AddDistributedCacheConfiguration(Configuration);
             services.AddCorsConfigurations();
-            services.AddCompressionConfiguration();
+            services.AddCompressionConfiguration();            
             services.AddControllers().AddNewtonsoftJson();
             services.AddApiVersioningConfigurations();
             services.AddSwaggerConfiguration();
@@ -74,9 +75,10 @@ namespace ImMicro.Api
             app.UseCorsConfiguration();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseMiddleware<ExceptionHandlerMiddleware>();
+            app.UseMiddleware<ExceptionHandlerMiddleware>();            
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
-            
+            app.UseRouteListConfiguration(AppConstants.RouteListEndPoint);
+
             ApplicationContext.Configure(app.ApplicationServices.GetRequiredService<IHttpContextAccessor>());
             ApplicationContext.ConfigureThreadPool(Configuration);
         }
