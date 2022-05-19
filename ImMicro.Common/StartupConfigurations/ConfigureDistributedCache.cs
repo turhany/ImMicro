@@ -23,6 +23,6 @@ namespace ImMicro.Common.StartupConfigurations
                 options.InstanceName = AppConstants.RedisCacheInstanceName;
             });
             return services;
-        }
+        } 
     }
 }

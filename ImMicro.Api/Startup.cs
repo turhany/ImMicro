@@ -43,9 +43,10 @@ namespace ImMicro.Api
             services.AddOptionConfiguration(Configuration);
             services.AddDatabaseContext(Configuration);
             services.AddIdentityConfigurations(Configuration);
-            services.AddLocalizationsConfigurations();
+            services.AddLocalizationsConfigurations();           
             services.AddDistributedCacheConfiguration(Configuration);
             services.AddCorsConfigurations();
+            services.AddCompressionConfiguration();
             services.AddControllers().AddNewtonsoftJson();
             services.AddApiVersioningConfigurations();
             services.AddSwaggerConfiguration();
@@ -66,8 +67,9 @@ namespace ImMicro.Api
             app.UseLocalizationConfiguration();
             app.UseSwaggerConfiguration();
             app.UseHealthCheckConfiguration();
-            app.UseSecuritySettings(); 
+            app.UseSecuritySettings();            
             app.UseRouting();
+            app.UseCompressionConfiguration();
             app.UseStaticFiles();
             app.UseCorsConfiguration();
             app.UseAuthentication();
