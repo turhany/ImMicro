@@ -69,7 +69,8 @@ namespace ImMicro.Consumer
         {
             builder.RegisterModule(new ApplicationModule());
             builder.RegisterModule(new RepositoryModule());
-            builder.RegisterModule(new ServiceModule()); 
+            builder.RegisterModule(new ServiceModule());
+            builder.RegisterModule(new AspectModule());
         }
     }
 }

@@ -8,6 +8,7 @@ using Filtery.Models;
 using ImMicro.Business.User.Abstract;
 using ImMicro.Business.User.Validator;
 using ImMicro.Common.Application;
+using ImMicro.Common.Aspects;
 using ImMicro.Common.Auth;
 using ImMicro.Common.Auth.Concrete;
 using ImMicro.Common.BaseModels.Service;
@@ -246,6 +247,7 @@ namespace ImMicro.Business.User.Concrete
 
         #region Login Operations
 
+        [PerformanceAspect(2)]
         public async Task<ServiceResult<AccessTokenContract>> GetTokenAsync(GetTokenContractServiceRequest request)
         {
             var validationResponse = _validationService.Validate(typeof(GetTokenContractServiceRequestValidator), request);
@@ -301,6 +303,7 @@ namespace ImMicro.Business.User.Concrete
             };
         }
 
+        [PerformanceAspect(2)]
         public async Task<ServiceResult<AccessTokenContract>> RefreshTokenAsync(RefreshTokenContractServiceRequest request)
         {
             var validationResponse = _validationService.Validate(typeof(RefreshTokenContractServiceRequestValidator), request);

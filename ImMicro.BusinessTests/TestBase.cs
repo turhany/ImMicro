@@ -46,7 +46,8 @@ namespace ImMicro.BusinessTests
             builder.RegisterModule(new ApplicationModule());
             builder.RegisterModule(new RepositoryModule());
             builder.RegisterModule(new ServiceModule());
-            
+            builder.RegisterModule(new AspectModule());
+
             var mockLock = new Mock<ILockService>();
             builder.RegisterInstance(mockLock.Object).As<ILockService>();
             

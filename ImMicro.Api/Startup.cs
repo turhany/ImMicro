@@ -11,6 +11,8 @@ using ImMicro.Container.Modules;
 using ImMicro.Contract.Mappings.AutoMapper;
 using Microsoft.AspNetCore.Http;
 using ImMicro.Common.Constans;
+using ImMicro.Common.IoC;
+using System.Diagnostics;
 
 // ReSharper disable MemberCanBePrivate.Global
 
@@ -55,6 +57,7 @@ namespace ImMicro.Api
             services.AddMassTransitConfiguration(Configuration);
             services.AddHealthCheckConfiguration(Configuration);
             services.AddAutoMapper(typeof(UserMapping));
+            services.AddSingleton<Stopwatch>();
         }
 
         /// <summary>
@@ -64,6 +67,8 @@ namespace ImMicro.Api
         /// <param name="env">Web Host Environment</param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            GlobalServiceProvider.ServiceProvider = app.ApplicationServices;
+
             app.UseMiddleware<RequestLogMiddleware>();
             app.UseLocalizationConfiguration();
             app.UseSwaggerConfiguration();
@@ -92,6 +97,7 @@ namespace ImMicro.Api
             builder.RegisterModule(new ApplicationModule());
             builder.RegisterModule(new RepositoryModule());
             builder.RegisterModule(new ServiceModule());
+            builder.RegisterModule(new AspectModule());
         }
     }
 }
