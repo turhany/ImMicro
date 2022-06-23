@@ -10,6 +10,7 @@ This is a simple/reusable micro/macro service template/playground project.
 - Product List(Search), CRUD flow
 - MessageQueue sample flow
 - Multi Language support
+- AOP Sample flow (PerformanceAspect)
 
 #### Structure
 - **API:** Endpoint project for client usage  
