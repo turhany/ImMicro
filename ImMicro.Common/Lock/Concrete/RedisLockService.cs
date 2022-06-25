@@ -16,20 +16,27 @@ using Microsoft.Extensions.Options;
 namespace ImMicro.Common.Lock.Concrete
 {
     public class RedisLockService : ILockService
-    { 
-        static readonly Object RedLockFactory = new();
+    {
+        private static readonly object RedLockFactory = new();
         private static RedLockEndPoint PasswordedServer { get; set; }
-        readonly TimeSpan _expiry = TimeSpan.FromSeconds(15);
         private static RedLockFactory _redisLockFactory { get; set; }
 
+        private static TimeSpan ExpiryTime;
+        private static TimeSpan WaitTime;
+        private static TimeSpan RetryTime;
+
         public RedisLockService(IOptions<RedLockOption> redLockConfig)
-        { 
+        {
             PasswordedServer = new RedLockEndPoint
             {
                 EndPoint = new DnsEndPoint(redLockConfig.Value.HostAddress, int.Parse(redLockConfig.Value.HostPort)),
                 Password = redLockConfig.Value.HostPassword,
-                Ssl =  redLockConfig.Value.HostSsl
+                Ssl = redLockConfig.Value.HostSsl
             };
+
+            ExpiryTime = TimeSpan.FromSeconds(redLockConfig.Value.ExpireTimeAsSecond);
+            WaitTime = TimeSpan.FromSeconds(redLockConfig.Value.WaitTimeAsSecond);
+            RetryTime = TimeSpan.FromSeconds(redLockConfig.Value.RetryTimeAsSecond);
         }
 
         static RedLockFactory RedisLockFactory
@@ -45,20 +52,25 @@ namespace ImMicro.Common.Lock.Concrete
 
         public async Task<IDisposable> CreateLockAsync(string key)
         {
-            int i = 0;
-            IRedLock locked = null;
-            while (i < 10)
+            IRedLock locked;
+            try
             {
-                i++;
-                var resource = key;
-
-                locked = await RedisLockFactory.CreateLockAsync(resource, _expiry);
+                locked = await RedisLockFactory.CreateLockAsync(key, ExpiryTime, WaitTime, RetryTime);
 
                 if (locked.IsAcquired)
                 {
                     return locked;
                 }
+                else
+                {
+                    new AcquireLockException("The lock wasn't acquired");
+                }
             }
+            catch
+            {
+                throw;
+            }
+
             return locked;
         }
     }

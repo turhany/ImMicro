@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using ImMicro.Common.Constans;  
 using ImMicro.Resources.App;
+using ImMicro.Common.Lock.Concrete;
 
 namespace ImMicro.Api.Middlewares
 {
@@ -42,6 +43,16 @@ namespace ImMicro.Api.Middlewares
                 await _next(httpContext);
             }
             catch (FilteryBaseException ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                response.Status = ServiceResponseStatus.FAILED;
+                response.Message = ex.Message;
+
+                httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                httpContext.Response.ContentType = AppConstants.JsonContentType;
+                await httpContext.Response.WriteAsync(JsonConvert.SerializeObject(response));
+            }
+            catch (AcquireLockException ex)
             {
                 _logger.LogError(ex, ex.Message);
                 response.Status = ServiceResponseStatus.FAILED;
