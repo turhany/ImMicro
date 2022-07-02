@@ -63,6 +63,11 @@ namespace ImMicro.Common.Application
                     return WorkerServiceCurrentUser;
                 }
 
+                if (Context?.HttpContext?.User == null)
+                {
+                    return null;
+                }
+
                 var user = Context.HttpContext.User;
 
                 return new CurrentUser

@@ -8,9 +8,14 @@ This is a simple/reusable micro/macro service template/playground project.
 - User List(Search), CRUD flow
 - AuditLog List(Search), Export, Get flow
 - Product List(Search), CRUD flow
-- MessageQueue sample flow
+- MessageQueue flow
+- AOP flow (PerformanceAspect)
 - Multi Language support
-- AOP Sample flow (PerformanceAspect)
+- Api Versionun 
+- Rate Limiting (InMemory mode)
+- Swagger implementation
+- Hangfire background task flow
+- Unit/Benchmark Test projects
 
 #### Structure
 - **API:** Endpoint project for client usage  
@@ -51,6 +56,7 @@ This is a simple/reusable micro/macro service template/playground project.
 * Filtery (https://github.com/turhany/Filtery)
 * Audity (https://github.com/turhany/Audity)
 * Exporty (https://github.com/turhany/Exporty)
+* AspNetCoreRateLimit (https://github.com/stefanprodan/AspNetCoreRateLimit)
 
 #### Before Usage
 * If you want to use local environment, you need to update Redis and PostgreSql connection strings in API project  (appsettings.json)    

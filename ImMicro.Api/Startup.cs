@@ -56,6 +56,7 @@ namespace ImMicro.Api
             services.AddHttpContextAccessor();
             services.AddMassTransitConfiguration(Configuration);
             services.AddHealthCheckConfiguration(Configuration);
+            services.AddRateLimitingConfiguration(Configuration);
             services.AddAutoMapper(typeof(UserMapping));
             services.AddSingleton<Stopwatch>();
         }
@@ -80,7 +81,8 @@ namespace ImMicro.Api
             app.UseCorsConfiguration();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseMiddleware<ExceptionHandlerMiddleware>();            
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
+            app.UseRateLimitingConfiguration(Configuration);
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
             app.UseRouteListConfiguration(AppConstants.RouteListEndPoint);
 

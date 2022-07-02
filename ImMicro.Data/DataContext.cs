@@ -49,7 +49,7 @@ namespace ImMicro.Data
             Guid? currentUserId = null;
             try
             {
-                currentUserId = ApplicationContext.Instance.CurrentUser.Id;
+                currentUserId = ApplicationContext.Instance.CurrentUser?.Id;
             }
             catch
             {

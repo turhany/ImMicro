@@ -15,7 +15,10 @@
          
         public const string RabbitMqSettingsOptionName = "RabbitMqSettings";
         public const string RedLockSettingsOptionName = "RedLockSettings";
-        
+        public const string IPRateLimitingOptionName = "RateLimiting:IpRateLimiting";
+        public const string RateLimitingModeOptionName = "RateLimiting:RateLimitingMode";
+               
+
         public const string ClaimTypesId = "Id";
         public const string SymmetricKey = "!#_ImMicro_Symmetric_Key_2022_!#";
         public const double AccessTokenExpireMinute = 6 * 60;//6 hour
