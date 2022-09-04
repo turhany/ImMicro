@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using Exporty.Models;
@@ -7,9 +8,9 @@ using Filtery.Exceptions;
 using Filtery.Models;
 using Filtery.Models.Order;
 using ImMicro.Business.Audit.Abstract;
-using ImMicro.Common.BaseModels.Service;
-using ImMicro.Common.Data.Abstract;
+using ImMicro.Common.BaseModels.Service; 
 using ImMicro.Contract.App;
+using ImMicro.Data.BaseRepositories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ImMicro.BusinessTests.Services.Concrete;
@@ -30,7 +31,7 @@ public class AuditLogServiceTests : TestBase
     public async Task GetAsyncTest_NO_DATA()
     {
         //arrange - act
-        var response = await _auditLogService.GetAsync(Guid.NewGuid());
+        var response = await _auditLogService.GetAsync(Guid.NewGuid(), CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.ResourceNotFound, response.Status);
@@ -41,10 +42,10 @@ public class AuditLogServiceTests : TestBase
     {
         //arrange
         var auditLog = new Model.AuditLog.AuditLog { Id = Guid.NewGuid(), EntityName = "TestEntity"};
-        await _auditLogRepository.InsertAsync(auditLog);
+        await _auditLogRepository.InsertAsync(auditLog, CancellationToken.None);
             
         //act
-        var response = await _auditLogService.GetAsync(auditLog.Id);
+        var response = await _auditLogService.GetAsync(auditLog.Id, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.Successful, response.Status);
@@ -55,14 +56,14 @@ public class AuditLogServiceTests : TestBase
     {
         //arrange
         var auditLog = new Model.AuditLog.AuditLog { Id = Guid.NewGuid(), EntityName = "TestEntity"};
-        await _auditLogRepository.InsertAsync(auditLog);
+        await _auditLogRepository.InsertAsync(auditLog, CancellationToken.None);
         
         //act
         var response = await _auditLogService.SearchAsync(new FilteryRequest()
         {
             PageNumber = 1,
             PageSize = 10
-        });
+        }, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.Successful, response.Status);
@@ -84,7 +85,7 @@ public class AuditLogServiceTests : TestBase
                 },
                 PageNumber = 1,
                 PageSize = 10
-            });
+            }, CancellationToken.None);
         }
         catch (FilteryBaseException)
         {
@@ -101,7 +102,7 @@ public class AuditLogServiceTests : TestBase
     {
         //arrange
         var auditLog = new Model.AuditLog.AuditLog { Id = Guid.NewGuid(), EntityName = "TestEntity"};
-        await _auditLogRepository.InsertAsync(auditLog);
+        await _auditLogRepository.InsertAsync(auditLog, CancellationToken.None);
         
         //act
         var response = await _auditLogService.ExportAsync(new ExportRequest
@@ -112,7 +113,7 @@ public class AuditLogServiceTests : TestBase
                 PageSize = 10
             },
             ExportType = ExportType.Excel
-        });
+        }, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.Successful, response.Status);

@@ -4,7 +4,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine AS base
 RUN apk add --no-cache icu-libs
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 WORKDIR /app
-EXPOSE 5010
+EXPOSE 80
 
 # Copy csproj and restore as distinct layers
 

@@ -8,40 +8,40 @@
     <ItemGroup>
       <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="6.0.2" />
       <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="6.0.4" />
-      <PackageReference Include="AspNetCore.HealthChecks.UI" Version="6.0.4" />
-      <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.4" />
-      <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="6.0.4" />
+      <PackageReference Include="AspNetCore.HealthChecks.UI" Version="6.0.5" />
+      <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.5" />
+      <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="6.0.5" />
       <PackageReference Include="AspNetCoreRateLimit" Version="4.0.2" />
       <PackageReference Include="AutoMapper" Version="11.0.1" />
-      <PackageReference Include="Castle.Core" Version="5.0.0" />
+      <PackageReference Include="Castle.Core" Version="5.1.0" />
       <PackageReference Include="Dapper" Version="2.0.123" />
       <PackageReference Include="Exporty" Version="1.0.0" />
-      <PackageReference Include="Filtery" Version="1.0.8" />
-      <PackageReference Include="FluentValidation" Version="11.1.0" />
+      <PackageReference Include="Filtery" Version="1.0.10" />
       <PackageReference Include="HelpersToolbox" Version="1.2.3" />
-      <PackageReference Include="MassTransit" Version="8.0.3" />
+      <PackageReference Include="MassTransit" Version="8.0.6" />
       <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="7.3.1" />
-      <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.3" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.6" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.6">
+      <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.6" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.8" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.8">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.6" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.8" />
       <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="6.0.0" />
       <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
-      <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.21.0" />
+      <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.22.1" />
+      <PackageReference Include="MongoDB.Bson" Version="2.17.1" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
       <PackageReference Include="NWebsec.AspNetCore.Core" Version="3.0.1" />
       <PackageReference Include="NWebsec.AspNetCore.Middleware" Version="3.0.0" />
-      <PackageReference Include="RedLock.net" Version="2.3.2" />
       <PackageReference Include="RestSharp" Version="108.0.1" />
-      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.21.0" />
+      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.22.1" />
       <PackageReference Include="Throw" Version="1.2.0" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\ImMicro.Lock.Redis\ImMicro.Lock.Redis.csproj" />
       <ProjectReference Include="..\ImMicro.Resources\ImMicro.Resources.csproj" />
     </ItemGroup>
 

@@ -352,6 +352,5 @@ MigrationBackup/
 .idea/
 .sonarqube/
 
-ExportedFiles/
-
-ImMicro.Api/Logs\
+**/ExportedFiles/
+**/Logs/

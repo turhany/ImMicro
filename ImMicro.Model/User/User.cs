@@ -1,5 +1,6 @@
 ﻿using System;
 using ImMicro.Common.Data;
+using ImMicro.Data.BaseModels;
 
 namespace ImMicro.Model.User
 {

@@ -7,6 +7,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ImMicro.Common\ImMicro.Common.csproj" />
+      <ProjectReference Include="..\ImMicro.Data\ImMicro.Data.csproj" />
       <ProjectReference Include="..\ImMicro.Resources\ImMicro.Resources.csproj" />
     </ItemGroup>
 

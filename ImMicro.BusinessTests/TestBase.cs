@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System; 
 using System.Threading;
 using Autofac;
 using AutoMapper;
-using ImMicro.Common.Application;
-using ImMicro.Common.Cache.Abstract;
+using ImMicro.Common.Application; 
 using ImMicro.Common.Dapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
-using Moq;
-using ImMicro.Common.Lock.Abstract;
+using Moq; 
 using ImMicro.Container.Modules;
 using ImMicro.Contract.Mappings.AutoMapper;
-using ImMicro.Data;
 using Microsoft.Extensions.Configuration;
+using ImMicro.Lock.Abstract;
+using ImMicro.Data.EntityFramework;
 
 namespace ImMicro.BusinessTests
 {

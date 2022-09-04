@@ -9,6 +9,7 @@ services:
     image: ${DOCKER_REGISTRY-}immicroapi
     restart : always
     depends_on:
+      - "database_mongo"
       - "database_postgres"
       - "database_redis"
       - "message_rabbitmq"
@@ -16,7 +17,7 @@ services:
       context: .
       dockerfile: ImMicro.Api/Dockerfile
     ports:
-      - "5010:5010"
+      - "5010:80"
     environment:
       ASPNETCORE_ENVIRONMENT: "DockerCompose"
     networks:
@@ -26,6 +27,7 @@ services:
     image: ${DOCKER_REGISTRY-}immicroscheduleservice
     restart: always
     depends_on:
+      - "database_mongo"
       - "database_postgres"
       - "database_redis"
       - "message_rabbitmq"
@@ -43,6 +45,7 @@ services:
     image: ${DOCKER_REGISTRY-}immicroconsumer
     restart: always
     depends_on:
+      - "database_mongo"  
       - "database_postgres"
       - "database_redis"
       - "message_rabbitmq"
@@ -65,6 +68,16 @@ services:
       POSTGRES_DB: "ImMicroDB"
     networks:
       - bridge-network
+
+  database_mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    restart: always
+    networks:
+      - bridge-network
+    environment:      
+      MONGO_INITDB_DATABASE: ImMicroDB
 
   database_redis:
     image: "redis:alpine"

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Filtery.Models;
 using ImMicro.Business.User.Abstract;
@@ -31,9 +32,9 @@ namespace ImMicro.Api.Controllers.V1
         [HttpGet("{id:guid}")]
         [Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserView))]
-        public async Task<ActionResult> Get(Guid id)
+        public async Task<ActionResult> Get(Guid id, CancellationToken cancellationToken)
         {
-            var result = await _userService.GetAsync(id);
+            var result = await _userService.GetAsync(id, cancellationToken);
             return ApiResponse.CreateResult(result);
         }
 
@@ -44,11 +45,11 @@ namespace ImMicro.Api.Controllers.V1
         [HttpPost]
         [Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> CreateUser([FromBody] CreateUserRequest request)
+        public async Task<ActionResult> CreateUser([FromBody] CreateUserRequest request, CancellationToken cancellationToken)
         {
             if (request == null) return ApiResponse.InvalidInputResult;
 
-            var result = await _userService.CreateAsync(Mapper.Map<CreateUserRequestServiceRequest>(request));
+            var result = await _userService.CreateAsync(Mapper.Map<CreateUserRequestServiceRequest>(request), cancellationToken);
             return ApiResponse.CreateResult(result);
         }
 
@@ -59,13 +60,13 @@ namespace ImMicro.Api.Controllers.V1
         [HttpPut("{id:guid}")]
         [Authorize(Roles = "Root")] 
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> UpdateUser([FromBody] UpdateUserRequest request, Guid id)
+        public async Task<ActionResult> UpdateUser([FromBody] UpdateUserRequest request, Guid id, CancellationToken cancellationToken)
         {
             if (request == null) return ApiResponse.InvalidInputResult;
             var model = Mapper.Map<UpdateUserRequestServiceRequest>(request);
             model.Id = id;
 
-            var result = await _userService.UpdateAsync(model);
+            var result = await _userService.UpdateAsync(model, cancellationToken);
             return ApiResponse.CreateResult(result);
         }
 
@@ -76,12 +77,12 @@ namespace ImMicro.Api.Controllers.V1
         [HttpDelete("{id:guid}")]
         [Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> DeleteUser(Guid id)
+        public async Task<ActionResult> DeleteUser(Guid id, CancellationToken cancellationToken)
         {
             if (id == Guid.Empty)
                 return ApiResponse.InvalidInputResult;
 
-            var result = await _userService.DeleteAsync(id);
+            var result = await _userService.DeleteAsync(id, cancellationToken);
             return ApiResponse.CreateResult(result);
         }
 
@@ -92,9 +93,9 @@ namespace ImMicro.Api.Controllers.V1
         [HttpPost("search")]
         [Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> Search([FromBody] FilteryRequest request)
+        public async Task<ActionResult> Search([FromBody] FilteryRequest request, CancellationToken cancellationToken)
         {
-            var result = await _userService.SearchAsync(request);
+            var result = await _userService.SearchAsync(request, cancellationToken);
             return ApiResponse.CreateResult(result);
         }
     }

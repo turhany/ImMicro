@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Autofac;
-using ImMicro.Common.Data.Abstract;
-using ImMicro.Data.Repositories;
+using ImMicro.Data.BaseRepositories;
+using ImMicro.Data.EntityFramework.Repositories;
 using ImMicro.Data.Repositories.Abstract;
 using Module = Autofac.Module;
 
@@ -9,6 +9,7 @@ namespace ImMicro.Container.Modules
 {
     public class RepositoryModule : Module
     {
+        //TODO: need to update here
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterGeneric(typeof(EfGenericRepository<>))

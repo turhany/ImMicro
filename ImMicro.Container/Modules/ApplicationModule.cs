@@ -1,11 +1,11 @@
 ﻿using Autofac;
 using Exporty.Abstract;
-using ImMicro.Common.Cache.Abstract;
-using ImMicro.Common.Cache.Concrete;
-using ImMicro.Common.Lock.Abstract;
-using ImMicro.Common.Lock.Concrete;
-using ImMicro.Common.Validation.Abstract;
-using ImMicro.Common.Validation.Concrete;
+using ImMicro.Cache.Abstract;
+using ImMicro.Cache.Redis.Concrete;
+using ImMicro.Lock.Abstract;
+using ImMicro.Lock.Redis.Concrete;
+using ImMicro.Validation.Abstract;
+using ImMicro.Validation.FluentValidation.Concrete;
 
 namespace ImMicro.Container.Modules
 {

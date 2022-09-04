@@ -1,10 +1,14 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Autofac; 
+using Autofac;
+using ImMicro.Cache.Redis.StartupConfigurations;
 using ImMicro.Common.Application;
+using ImMicro.Common.Constans;
 using ImMicro.Common.StartupConfigurations;
 using ImMicro.Container.Modules;
 using ImMicro.Contract.Mappings.AutoMapper;
+using ImMicro.Data.EntityFramework.StartupConfigurations;
+using ImMicro.Lock.Redis.StartupConfigurations;
 using ImMicro.ScheduleService.Configurations;
 using ImMicro.ScheduleService.Schedules;
 using Microsoft.AspNetCore.Builder;
@@ -15,7 +19,6 @@ using Microsoft.Extensions.Hosting;
 
 namespace ImMicro.ScheduleService
 {
-    [SuppressMessage("Design", "ASP0000:Do not call \'IServiceCollection.BuildServiceProvider\' in \'ConfigureServices\'")]
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -28,9 +31,9 @@ namespace ImMicro.ScheduleService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddOptionConfiguration(Configuration);
-            services.AddDatabaseContext(Configuration);
-            services.AddDistributedCacheConfiguration(Configuration);
+            services.AddEntityFrameworkConfiguration(Configuration.GetConnectionString(AppConstants.PostgreSqlConnectionString));
+            services.AddDistributedCacheConfiguration(Configuration.GetConnectionString(AppConstants.RedisConnectionString), AppConstants.RedisCacheInstanceName);
+            services.AddDistributedLockConfiguration(Configuration, AppConstants.RedLockSettingsOptionName);
             services.AddHangfireConfiguration(Configuration);
             services.AddControllers();
             services.AddHttpContextAccessor();

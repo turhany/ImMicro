@@ -8,6 +8,7 @@ using ImMicro.Business.RequestLog.Abstract;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection; 
 using ImMicro.Model.RequestLog;
+using System.Threading;
 
 namespace ImMicro.Api.Middlewares
 {
@@ -73,7 +74,7 @@ namespace ImMicro.Api.Middlewares
                 RequestPath = httpContext.Request.Path.Value
             };
  
-            _ = Task.Run(async () => await SaveRequestLogAsync(requestLog, _serviceScopeFactory));
+            _ = Task.Run(async () => await SaveRequestLogAsync(requestLog, _serviceScopeFactory, httpContext.RequestAborted));
 
             await responseBody.CopyToAsync(originalBodyStream);
         }
@@ -101,7 +102,7 @@ namespace ImMicro.Api.Middlewares
             return $"{response.StatusCode}: {text}";
         }
 
-        private async Task SaveRequestLogAsync(RequestLog requestLog, IServiceScopeFactory serviceScopeFactory)
+        private async Task SaveRequestLogAsync(RequestLog requestLog, IServiceScopeFactory serviceScopeFactory, CancellationToken cancelationToken)
         {
             if ( !string.IsNullOrWhiteSpace(requestLog.RequestPath) && _ignoreFileForLog.Any(p => requestLog.RequestPath.Contains(p, StringComparison.InvariantCultureIgnoreCase)))
             {
@@ -111,7 +112,7 @@ namespace ImMicro.Api.Middlewares
             using (var scope = serviceScopeFactory.CreateScope())
             {
                 var requestLogService = (IRequestLogService) scope.ServiceProvider.GetRequiredService(typeof(IRequestLogService));
-                await requestLogService.SaveAsync(requestLog);
+                await requestLogService.SaveAsync(requestLog, cancelationToken);
             }
         }
     }

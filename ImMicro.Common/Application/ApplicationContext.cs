@@ -70,6 +70,11 @@ namespace ImMicro.Common.Application
 
                 var user = Context.HttpContext.User;
 
+                if (user.Claims == null || !user.Claims.Any(p => p.Type == AppConstants.ClaimTypesId))
+                {
+                    return null;
+                }
+                  
                 return new CurrentUser
                 {
                     Id = Guid.Parse(user.Claims.FirstOrDefault(claim => claim.Type == AppConstants.ClaimTypesId)?.Value),

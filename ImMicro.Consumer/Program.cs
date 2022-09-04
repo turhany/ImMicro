@@ -9,7 +9,12 @@ using ImMicro.Common.StartupConfigurations;
 using ImMicro.Consumer.Configurations;
 using ImMicro.Container.Modules;
 using ImMicro.Contract.Mappings.AutoMapper;
-using Serilog;
+using Serilog; 
+using ImMicro.Cache.Redis.StartupConfigurations;
+using ImMicro.Common.Constans;
+using ImMicro.Lock.Redis.StartupConfigurations;
+using AngleSharp;
+using ImMicro.Data.EntityFramework.StartupConfigurations;
 
 namespace ImMicro.Consumer
 {
@@ -28,9 +33,9 @@ namespace ImMicro.Consumer
                 .UseSerilog((context, conf) => conf.ReadFrom.Configuration(context.Configuration))
                 .ConfigureServices((hostingContext, services) =>
                 {
-                    services.AddOptionConfiguration(hostingContext.Configuration);
-                    services.AddDatabaseContext(hostingContext.Configuration);
-                    services.AddDistributedCacheConfiguration(hostingContext.Configuration);
+                    services.AddEntityFrameworkConfiguration(hostingContext.Configuration.GetConnectionString(AppConstants.PostgreSqlConnectionString));
+                    services.AddDistributedCacheConfiguration(hostingContext.Configuration.GetConnectionString(AppConstants.RedisConnectionString), AppConstants.RedisCacheInstanceName);
+                    services.AddDistributedLockConfiguration(hostingContext.Configuration, AppConstants.RedLockSettingsOptionName);
                     services.AddMassTransitConfigurationForConsumer(hostingContext.Configuration);
                     services.AddAutoMapper(typeof(UserMapping));
                     services.AddHostedService<QueueWorker>();

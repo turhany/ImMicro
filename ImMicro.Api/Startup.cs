@@ -13,8 +13,9 @@ using Microsoft.AspNetCore.Http;
 using ImMicro.Common.Constans;
 using ImMicro.Common.IoC;
 using System.Diagnostics;
-
-// ReSharper disable MemberCanBePrivate.Global
+using ImMicro.Cache.Redis.StartupConfigurations;
+using ImMicro.Lock.Redis.StartupConfigurations;
+using ImMicro.Data.EntityFramework.StartupConfigurations;
 
 namespace ImMicro.Api
 {
@@ -43,11 +44,11 @@ namespace ImMicro.Api
         /// <param name="services">ServiceCollection</param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddOptionConfiguration(Configuration);
-            services.AddDatabaseContext(Configuration);
+            services.AddEntityFrameworkConfiguration(Configuration.GetConnectionString(AppConstants.PostgreSqlConnectionString));
             services.AddIdentityConfigurations(Configuration);
-            services.AddLocalizationsConfigurations();           
-            services.AddDistributedCacheConfiguration(Configuration);
+            services.AddLocalizationsConfigurations();
+            services.AddDistributedCacheConfiguration(Configuration.GetConnectionString(AppConstants.RedisConnectionString), AppConstants.RedisCacheInstanceName);
+            services.AddDistributedLockConfiguration(Configuration, AppConstants.RedLockSettingsOptionName);
             services.AddCorsConfigurations();
             services.AddCompressionConfiguration();            
             services.AddControllers().AddNewtonsoftJson();

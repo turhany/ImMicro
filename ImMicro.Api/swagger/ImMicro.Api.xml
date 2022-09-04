@@ -42,19 +42,6 @@
             <param name="app"></param>
             <returns></returns>
         </member>
-        <member name="T:ImMicro.Api.Configurations.Startup.ConfigureDbContext">
-            <summary>
-            Database configuration extension
-            </summary>
-        </member>
-        <member name="M:ImMicro.Api.Configurations.Startup.ConfigureDbContext.AddDatabaseContext(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
-            <summary>
-            Add DataBase configurations
-            </summary>
-            <param name="services">ServiceCollection</param>
-            <param name="configuration">Configuration</param>
-            <returns></returns>
-        </member>
         <member name="T:ImMicro.Api.Configurations.Startup.ConfigureIdentityServer">
             <summary>
             Configure Identity Server
@@ -210,19 +197,19 @@
             </summary>
             <param name="auditLogService"></param>
         </member>
-        <member name="M:ImMicro.Api.Controllers.V1.AuditLogController.Search(Filtery.Models.FilteryRequest)">
+        <member name="M:ImMicro.Api.Controllers.V1.AuditLogController.Search(Filtery.Models.FilteryRequest,System.Threading.CancellationToken)">
             <summary>
             Search Audit Log
             </summary>
             <returns></returns>
         </member>
-        <member name="M:ImMicro.Api.Controllers.V1.AuditLogController.Export(ImMicro.Contract.App.ExportRequest)">
+        <member name="M:ImMicro.Api.Controllers.V1.AuditLogController.Export(ImMicro.Contract.App.ExportRequest,System.Threading.CancellationToken)">
             <summary>
             Export Audit Log
             </summary>
             <returns></returns>
         </member>
-        <member name="M:ImMicro.Api.Controllers.V1.AuditLogController.Get(System.Guid)">
+        <member name="M:ImMicro.Api.Controllers.V1.AuditLogController.Get(System.Guid,System.Threading.CancellationToken)">
             <summary>
             Get Audit Log
             </summary>
@@ -238,13 +225,13 @@
             </summary>
             <param name="userService">The user service.</param>
         </member>
-        <member name="M:ImMicro.Api.Controllers.V1.LoginController.Token(ImMicro.Contract.App.User.GetTokenContract)">
+        <member name="M:ImMicro.Api.Controllers.V1.LoginController.Token(ImMicro.Contract.App.User.GetTokenContract,System.Threading.CancellationToken)">
             <summary>
             Get Token
             </summary>
             <returns>Returns user jwt token.</returns>
         </member>
-        <member name="M:ImMicro.Api.Controllers.V1.LoginController.RefreshToken(ImMicro.Contract.App.User.RefreshTokenContract)">
+        <member name="M:ImMicro.Api.Controllers.V1.LoginController.RefreshToken(ImMicro.Contract.App.User.RefreshTokenContract,System.Threading.CancellationToken)">
             <summary>
             Refresh Token
             </summary>
@@ -262,7 +249,7 @@
             <param name="sendEndpointProvider"></param>
             <param name="rabbitMqOptions"></param>
         </member>
-        <member name="M:ImMicro.Api.Controllers.V1.MQSampleController.Test">
+        <member name="M:ImMicro.Api.Controllers.V1.MQSampleController.Test(System.Threading.CancellationToken)">
             <summary>
             Get Product
             </summary>
@@ -278,36 +265,36 @@
             </summary>
             <param name="productService"></param>
         </member>
-        <member name="M:ImMicro.Api.Controllers.V1.ProductsController.Get(System.Guid)">
+        <member name="M:ImMicro.Api.Controllers.V1.ProductsController.Get(System.Guid,System.Threading.CancellationToken)">
             <summary>
             Get Product
             </summary>
         </member>
-        <member name="M:ImMicro.Api.Controllers.V1.ProductsController.CreateProduct(ImMicro.Contract.App.Product.CreateProductRequest)">
+        <member name="M:ImMicro.Api.Controllers.V1.ProductsController.CreateProduct(ImMicro.Contract.App.Product.CreateProductRequest,System.Threading.CancellationToken)">
             <summary>
             Create Product
             </summary>
             <returns></returns>
         </member>
-        <member name="M:ImMicro.Api.Controllers.V1.ProductsController.UpdateProduct(ImMicro.Contract.App.Product.UpdateProductRequest,System.Guid)">
+        <member name="M:ImMicro.Api.Controllers.V1.ProductsController.UpdateProduct(ImMicro.Contract.App.Product.UpdateProductRequest,System.Guid,System.Threading.CancellationToken)">
             <summary>
             Update Product
             </summary>
             <returns></returns>
         </member>
-        <member name="M:ImMicro.Api.Controllers.V1.ProductsController.DeleteProduct(System.Guid)">
+        <member name="M:ImMicro.Api.Controllers.V1.ProductsController.DeleteProduct(System.Guid,System.Threading.CancellationToken)">
             <summary>
             Delete Product
             </summary>
             <returns></returns>
         </member>
-        <member name="M:ImMicro.Api.Controllers.V1.ProductsController.Search(Filtery.Models.FilteryRequest)">
+        <member name="M:ImMicro.Api.Controllers.V1.ProductsController.Search(Filtery.Models.FilteryRequest,System.Threading.CancellationToken)">
             <summary>
             Product Search
             </summary>
             <returns></returns>
         </member>
-        <member name="M:ImMicro.Api.Controllers.V1.ProductsController.GetWithDapper(System.Guid)">
+        <member name="M:ImMicro.Api.Controllers.V1.ProductsController.GetWithDapper(System.Guid,System.Threading.CancellationToken)">
             <summary>
             Get Product
             </summary>
@@ -323,30 +310,30 @@
             </summary>
             <param name="userService"></param>
         </member>
-        <member name="M:ImMicro.Api.Controllers.V1.UsersController.Get(System.Guid)">
+        <member name="M:ImMicro.Api.Controllers.V1.UsersController.Get(System.Guid,System.Threading.CancellationToken)">
             <summary>
             Get User
             </summary>
         </member>
-        <member name="M:ImMicro.Api.Controllers.V1.UsersController.CreateUser(ImMicro.Contract.App.User.CreateUserRequest)">
+        <member name="M:ImMicro.Api.Controllers.V1.UsersController.CreateUser(ImMicro.Contract.App.User.CreateUserRequest,System.Threading.CancellationToken)">
             <summary>
             Create User
             </summary>
             <returns></returns>
         </member>
-        <member name="M:ImMicro.Api.Controllers.V1.UsersController.UpdateUser(ImMicro.Contract.App.User.UpdateUserRequest,System.Guid)">
+        <member name="M:ImMicro.Api.Controllers.V1.UsersController.UpdateUser(ImMicro.Contract.App.User.UpdateUserRequest,System.Guid,System.Threading.CancellationToken)">
             <summary>
             Update User
             </summary>
             <returns></returns>
         </member>
-        <member name="M:ImMicro.Api.Controllers.V1.UsersController.DeleteUser(System.Guid)">
+        <member name="M:ImMicro.Api.Controllers.V1.UsersController.DeleteUser(System.Guid,System.Threading.CancellationToken)">
             <summary>
             Delete User
             </summary>
             <returns></returns>
         </member>
-        <member name="M:ImMicro.Api.Controllers.V1.UsersController.Search(Filtery.Models.FilteryRequest)">
+        <member name="M:ImMicro.Api.Controllers.V1.UsersController.Search(Filtery.Models.FilteryRequest,System.Threading.CancellationToken)">
             <summary>
             User Search
             </summary>

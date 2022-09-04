@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using ImMicro.Common.Constans;  
 using ImMicro.Resources.App;
-using ImMicro.Common.Lock.Concrete;
+using ImMicro.Lock.Exceptions;
 
 namespace ImMicro.Api.Middlewares
 {

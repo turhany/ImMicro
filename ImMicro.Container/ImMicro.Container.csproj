@@ -12,7 +12,9 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ImMicro.Business\ImMicro.Business.csproj" />
+      <ProjectReference Include="..\ImMicro.Cache.Redis\ImMicro.Cache.Redis.csproj" />
       <ProjectReference Include="..\ImMicro.Common\ImMicro.Common.csproj" />
+      <ProjectReference Include="..\ImMicro.Data.EntityFramework\ImMicro.Data.EntityFramework.csproj" />
       <ProjectReference Include="..\ImMicro.Data\ImMicro.Data.csproj" />
     </ItemGroup>
 

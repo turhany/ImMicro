@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Filtery.Models;
 using ImMicro.Business.Audit.Abstract;
@@ -37,9 +38,9 @@ namespace ImMicro.Api.Controllers.V1
         [HttpPost("search")]
         [Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedList<AuditLogView>))]
-        public async Task<ActionResult> Search([FromBody] FilteryRequest request)
+        public async Task<ActionResult> Search([FromBody] FilteryRequest request, CancellationToken cancellationToken)
         {
-            var result = await _auditLogService.SearchAsync(request);
+            var result = await _auditLogService.SearchAsync(request, cancellationToken);
             return ApiResponse.CreateResult(result);
         }
         
@@ -50,9 +51,9 @@ namespace ImMicro.Api.Controllers.V1
         [HttpPost("search/export")]
         [Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> Export([FromBody]ExportRequest exportRequest )
+        public async Task<ActionResult> Export([FromBody]ExportRequest exportRequest, CancellationToken cancellationToken)
         {
-            var result = await _auditLogService.ExportAsync(exportRequest);
+            var result = await _auditLogService.ExportAsync(exportRequest, cancellationToken);
 
             if (result.Status == ResultStatus.Successful)
             {
@@ -68,9 +69,9 @@ namespace ImMicro.Api.Controllers.V1
         [HttpGet("{id:guid}")]
         [Authorize(Roles = "Root")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AuditLogView))]
-        public async Task<ActionResult> Get(Guid id)
+        public async Task<ActionResult> Get(Guid id, CancellationToken cancellationToken)
         {
-            var result = await _auditLogService.GetAsync(id);
+            var result = await _auditLogService.GetAsync(id, cancellationToken);
             return ApiResponse.CreateResult(result);
         }
     }
