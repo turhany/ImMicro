@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
+using System.Collections.Generic; 
 using System.Dynamic;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
-using Dapper;
+using AutoMapper; 
 using Filtery.Extensions;
 using Filtery.Models;
 using ImMicro.Business.Product.Abstract;
@@ -14,7 +12,6 @@ using ImMicro.Cache.Abstract;
 using ImMicro.Cache.Constants;
 using ImMicro.Common.BaseModels.Service; 
 using ImMicro.Common.Constans;
-using ImMicro.Common.Dapper; 
 using ImMicro.Common.Pager;
 using ImMicro.Contract.App.Product;
 using ImMicro.Contract.Mappings.Filtery;
@@ -37,7 +34,6 @@ public class ProductService : IProductService
     private readonly ILockService _lockService;
     private readonly IMapper _mapper;
     private readonly IValidationService _validationService;
-    private readonly DapperContext _dapperContext;
     
     public ProductService(
         IGenericRepository<Model.Product.Product> productRepository,
@@ -45,8 +41,7 @@ public class ProductService : IProductService
         ICacheService cacheService, 
         ILockService lockService, 
         IMapper mapper, 
-        IValidationService validationService, 
-        DapperContext dapperContext)
+        IValidationService validationService)
     {
         _productRepository = productRepository;
         _categoryRepository = categoryRepository;
@@ -54,7 +49,6 @@ public class ProductService : IProductService
         _lockService = lockService;
         _mapper = mapper;
         _validationService = validationService;
-        _dapperContext = dapperContext;
     }
 
     public async Task<ServiceResult<ProductView>> GetAsync(Guid id, CancellationToken cancellationToken)
@@ -82,44 +76,7 @@ public class ProductService : IProductService
             Data = _mapper.Map<ProductView>(product)
         };
     }
-    
-    public async Task<ServiceResult<ProductView>> GetWithDapperAsync(Guid id, CancellationToken cancellationToken)
-    {
-        ProductView product;
-        using (var connection = _dapperContext.CreateConnection())
-        {
-            product = await connection.QuerySingleOrDefaultAsync<ProductView>(
-                @"SELECT
-                       p.""Id"",
-                       p.""Title"",
-                       p.""Description"",
-                       p.""StockQuantity"",
-                       c.""Id"" CategoryId,
-                       c.""Name"" CategoryName
-                    FROM ""Product"" p 
-                    INNER JOIN ""Category"" c ON c.""Id"" = p.""CategoryId"" 
-                    WHERE p.""Id"" = @Id AND p.""IsDeleted"" = false", 
-                new {Id = id}, 
-                commandType:CommandType.Text);
-        }
-        
-        if (product == null)
-        {
-            return new ServiceResult<ProductView>
-            {
-                Status = ResultStatus.ResourceNotFound,
-                Message = Resource.NotFound(Entities.Product)
-            };
-        }
-            
-        return new ServiceResult<ProductView>
-        {
-            Status = ResultStatus.Successful,
-            Message = Resource.Retrieved(),
-            Data = product
-        };
-    }
-
+  
     public async Task<ServiceResult<ExpandoObject>> CreateAsync(CreateProductRequestServiceRequest request, CancellationToken cancellationToken)
     {
         var validationResponse = _validationService.Validate(typeof(CreateProductRequestValidator), request);

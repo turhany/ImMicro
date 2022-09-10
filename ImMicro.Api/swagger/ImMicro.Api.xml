@@ -294,11 +294,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:ImMicro.Api.Controllers.V1.ProductsController.GetWithDapper(System.Guid,System.Threading.CancellationToken)">
-            <summary>
-            Get Product
-            </summary>
-        </member>
         <member name="T:ImMicro.Api.Controllers.V1.UsersController">
             <summary>
             Users Controller

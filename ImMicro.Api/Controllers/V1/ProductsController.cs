@@ -100,17 +100,5 @@ public class ProductsController : BaseController
     {
         var result = await _productService.SearchAsync(request, cancellationToken);
         return ApiResponse.CreateResult(result);
-    }
-    
-    /// <summary>
-    /// Get Product
-    /// </summary>
-    [HttpGet("GetWithDapper/{id:guid}")]
-    [Authorize(Roles = "Root")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductView))]
-    public async Task<ActionResult> GetWithDapper(Guid id, CancellationToken cancellationToken)
-    {
-        var result = await _productService.GetWithDapperAsync(id, cancellationToken);
-        return ApiResponse.CreateResult(result);
-    }
+    }    
 }

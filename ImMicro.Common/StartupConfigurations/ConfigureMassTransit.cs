@@ -23,7 +23,7 @@ namespace ImMicro.Common.StartupConfigurations
             services.Configure<RabbitMqOption>(configuration.GetSection(AppConstants.RabbitMqSettingsOptionName));
 
             var rabbitMqConfig = new RabbitMqOption();
-            configuration.GetSection("RabbitMqSettings").Bind(rabbitMqConfig);
+            configuration.GetSection(AppConstants.RabbitMqSettingsOptionName).Bind(rabbitMqConfig);
             
             services.AddMassTransit(x =>
             {
