@@ -2,12 +2,13 @@
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using ImMicro.Common.Application; 
+using ImMicro.Common.Application;
 using ImMicro.Data.MongoDB.Options;
 using System.Linq.Expressions;
 using Throw;
 using ImMicro.Data.BaseRepositories;
 using ImMicro.Data.BaseModels;
+using ImMicro.Resources.Model;
 
 namespace ImMicro.Data.MongoDB.Repositories
 {
@@ -29,7 +30,8 @@ namespace ImMicro.Data.MongoDB.Repositories
 
             SetAuditFields(entity, OperationFlow.Insert);
 
-            await Collection.InsertOneAsync(entity, new InsertOneOptions() ,cancellationToken);
+            var options = new InsertOneOptions { BypassDocumentValidation = false };
+            await Collection.InsertOneAsync(entity, options, cancellationToken);
             return entity;
         }
         public async Task<List<TEntity>> InsertManyAsync(List<TEntity> entityList, CancellationToken cancellationToken)
@@ -68,6 +70,8 @@ namespace ImMicro.Data.MongoDB.Repositories
 
         public async Task DeleteAsync(TEntity entity, CancellationToken cancellationToken)
         {
+            //TODO: prepare list and use deletemany and updatemany method 
+
             entity.ThrowIfNull();
 
             if (entity is SoftDeleteEntity softDeleteEntity)
@@ -100,6 +104,11 @@ namespace ImMicro.Data.MongoDB.Repositories
         {
             return Collection.AsQueryable().Where(predicate);
         }
+        public virtual List<TEntity> FilterBy(
+        Expression<Func<TEntity, bool>> filterExpression)
+        {
+            return Collection.Find(filterExpression).ToList();
+        }
 
         public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken)
         {
@@ -126,6 +135,10 @@ namespace ImMicro.Data.MongoDB.Repositories
         }
         public void BulkInsert(List<TEntity> entityList)
         {
+            //TODO: check this bulk code
+            //var options = new BulkWriteOptions { IsOrdered = false, BypassDocumentValidation = false };
+            //await _collection.BulkWriteAsync((IEnumerable<WriteModel<T>>)entities, options);
+
             entityList.ThrowIfNull();
             entityList.Throw().IfEmpty();
 
@@ -192,7 +205,7 @@ namespace ImMicro.Data.MongoDB.Repositories
         {
             throw new NotImplementedException();
         }
-         
+
         private enum OperationFlow
         {
             Insert,

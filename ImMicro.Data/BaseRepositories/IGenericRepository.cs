@@ -23,6 +23,7 @@ namespace ImMicro.Data.BaseRepositories
         Task<TEntity> FindOneWithAsNoTrackingAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken);
 
         IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
+        List<TEntity> FilterBy(Expression<Func<TEntity, bool>> filterExpression);
 
         Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken);
         Task<long> CountAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken);

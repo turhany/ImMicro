@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ImMicro.Resources.App {
+namespace ImMicro.Resources.Service {
     using System;
     
     
@@ -29,7 +29,7 @@ namespace ImMicro.Resources.App {
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        public ServiceResponseStatus() {
+        internal ServiceResponseStatus() {
         }
         
         /// <summary>
