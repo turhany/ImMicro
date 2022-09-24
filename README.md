@@ -37,6 +37,7 @@ This is a simple/reusable micro/macro service template/playground project.
 * Asp .Net Health Check (https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks)  
 * EF Core 6.0  (https://docs.microsoft.com/en-us/ef/core/)
 * Postgres Sql (https://www.postgresql.org/)  
+* MongoDB (https://www.mongodb.com/)  
 * Dapper (https://github.com/DapperLib/Dapper)
 * Redis (https://redis.io/) 
 * RabbitMQ (https://www.rabbitmq.com/)
