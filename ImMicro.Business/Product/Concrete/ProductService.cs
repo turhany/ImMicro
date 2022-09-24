@@ -1,29 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
+using System.Collections.Generic; 
 using System.Dynamic;
+using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
-using Dapper;
+using AutoMapper; 
 using Filtery.Extensions;
 using Filtery.Models;
 using ImMicro.Business.Product.Abstract;
 using ImMicro.Business.Product.Validator;
-using ImMicro.Common.BaseModels.Service;
-using ImMicro.Common.Cache.Abstract;
+using ImMicro.Cache.Abstract;
+using ImMicro.Cache.Constants;
+using ImMicro.Common.BaseModels.Service; 
 using ImMicro.Common.Constans;
-using ImMicro.Common.Dapper;
-using ImMicro.Common.Data.Abstract;
-using ImMicro.Common.Lock.Abstract;
 using ImMicro.Common.Pager;
-using ImMicro.Common.Validation.Abstract;
 using ImMicro.Contract.App.Product;
 using ImMicro.Contract.Mappings.Filtery;
 using ImMicro.Contract.Service.Product;
-using ImMicro.Model.Category;
+using ImMicro.Data.BaseRepositories;
+using ImMicro.Lock.Abstract; 
 using ImMicro.Resources.Extensions;
 using ImMicro.Resources.Model;
 using ImMicro.Resources.Service;
+using ImMicro.Validation.Abstract;
 using Microsoft.EntityFrameworkCore;
 
 namespace ImMicro.Business.Product.Concrete;
@@ -36,7 +34,6 @@ public class ProductService : IProductService
     private readonly ILockService _lockService;
     private readonly IMapper _mapper;
     private readonly IValidationService _validationService;
-    private readonly DapperContext _dapperContext;
     
     public ProductService(
         IGenericRepository<Model.Product.Product> productRepository,
@@ -44,8 +41,7 @@ public class ProductService : IProductService
         ICacheService cacheService, 
         ILockService lockService, 
         IMapper mapper, 
-        IValidationService validationService, 
-        DapperContext dapperContext)
+        IValidationService validationService)
     {
         _productRepository = productRepository;
         _categoryRepository = categoryRepository;
@@ -53,14 +49,16 @@ public class ProductService : IProductService
         _lockService = lockService;
         _mapper = mapper;
         _validationService = validationService;
-        _dapperContext = dapperContext;
     }
 
-    public async Task<ServiceResult<ProductView>> GetAsync(Guid id)
+    public async Task<ServiceResult<ProductView>> GetAsync(Guid id, CancellationToken cancellationToken)
     {
         var cacheKey = string.Format(CacheKeyConstants.ProductCacheKey, id);
 
-        var product = await _cacheService.GetOrSetObjectAsync(cacheKey, async () => await _productRepository.FindOneAsync(p => p.Id == id && p.IsDeleted == false));
+        var product = await _cacheService.GetOrSetObjectAsync(cacheKey, async () => 
+        await _productRepository.FindOneAsync(p => p.Id == id && p.IsDeleted == false, cancellationToken),
+        CacheConstants.DefaultCacheDuration,
+        cancellationToken);
 
         if (product == null)
         {
@@ -78,45 +76,8 @@ public class ProductService : IProductService
             Data = _mapper.Map<ProductView>(product)
         };
     }
-    
-    public async Task<ServiceResult<ProductView>> GetWithDapperAsync(Guid id)
-    {
-        ProductView product;
-        using (var connection = _dapperContext.CreateConnection())
-        {
-            product = await connection.QuerySingleOrDefaultAsync<ProductView>(
-                @"SELECT
-                       p.""Id"",
-                       p.""Title"",
-                       p.""Description"",
-                       p.""StockQuantity"",
-                       c.""Id"" CategoryId,
-                       c.""Name"" CategoryName
-                    FROM ""Product"" p 
-                    INNER JOIN ""Category"" c ON c.""Id"" = p.""CategoryId"" 
-                    WHERE p.""Id"" = @Id AND p.""IsDeleted"" = false", 
-                new {Id = id}, 
-                commandType:CommandType.Text);
-        }
-        
-        if (product == null)
-        {
-            return new ServiceResult<ProductView>
-            {
-                Status = ResultStatus.ResourceNotFound,
-                Message = Resource.NotFound(Entities.Product)
-            };
-        }
-            
-        return new ServiceResult<ProductView>
-        {
-            Status = ResultStatus.Successful,
-            Message = Resource.Retrieved(),
-            Data = product
-        };
-    }
-
-    public async Task<ServiceResult<ExpandoObject>> CreateAsync(CreateProductRequestServiceRequest request)
+  
+    public async Task<ServiceResult<ExpandoObject>> CreateAsync(CreateProductRequestServiceRequest request, CancellationToken cancellationToken)
     {
         var validationResponse = _validationService.Validate(typeof(CreateProductRequestValidator), request);
 
@@ -130,7 +91,7 @@ public class ProductService : IProductService
             };
         }
 
-        var category = await _categoryRepository.FindOneWithAsNoTrackingAsync(p => p.Id == request.CategoryId && p.IsDeleted == false);
+        var category = await _categoryRepository.FindOneWithAsNoTrackingAsync(p => p.Id == request.CategoryId && p.IsDeleted == false, cancellationToken);
         if (category == null)
         {
             return new ServiceResult<ExpandoObject>
@@ -149,7 +110,7 @@ public class ProductService : IProductService
             CategoryId = request.CategoryId
         };
 
-        entity = await _productRepository.InsertAsync(entity);
+        entity = await _productRepository.InsertAsync(entity, cancellationToken);
 
         dynamic productWrapper = new ExpandoObject();
         productWrapper.Id = entity.Id;
@@ -162,7 +123,7 @@ public class ProductService : IProductService
         };
     }
 
-    public async Task<ServiceResult<ExpandoObject>> UpdateAsync(UpdateProductRequestServiceRequest request)
+    public async Task<ServiceResult<ExpandoObject>> UpdateAsync(UpdateProductRequestServiceRequest request, CancellationToken cancellationToken)
     {
         var validationResponse = _validationService.Validate(typeof(UpdateProductRequestValidator), request);
 
@@ -176,7 +137,7 @@ public class ProductService : IProductService
                 };
             }
 
-            var entity = await _productRepository.FindOneAsync(p => p.Id == request.Id && p.IsDeleted == false);
+            var entity = await _productRepository.FindOneAsync(p => p.Id == request.Id && p.IsDeleted == false, cancellationToken);
 
             if (entity == null)
             {
@@ -187,7 +148,7 @@ public class ProductService : IProductService
                 };
             }
 
-            var category = await _categoryRepository.FindOneWithAsNoTrackingAsync(p => p.Id == request.CategoryId && p.IsDeleted == false);
+            var category = await _categoryRepository.FindOneWithAsNoTrackingAsync(p => p.Id == request.CategoryId && p.IsDeleted == false, cancellationToken);
             if (category == null)
             {
                 return new ServiceResult<ExpandoObject>
@@ -200,7 +161,7 @@ public class ProductService : IProductService
             var lockKey = string.Format(LockKeyConstants.ProductLockKey, entity.Id);
             var cacheKey = string.Format(CacheKeyConstants.ProductCacheKey, entity.Id);
             
-            using (await _lockService.CreateLockAsync(lockKey))
+            using (await _lockService.CreateLockAsync(lockKey, cancellationToken))
             {
                 entity.Title = request.Title.Trim();
                 entity.Description = request.Description?.Trim();
@@ -208,9 +169,9 @@ public class ProductService : IProductService
                 entity.IsActive = request.StockQuantity > category.MinStockQuantity;
                 entity.CategoryId = request.CategoryId;
 
-                entity = await _productRepository.UpdateAsync(entity);
+                entity = await _productRepository.UpdateAsync(entity, cancellationToken);
 
-                await _cacheService.RemoveAsync(cacheKey);
+                await _cacheService.RemoveAsync(cacheKey, cancellationToken);
             }
             
 
@@ -225,9 +186,9 @@ public class ProductService : IProductService
             };
     }
 
-    public async Task<ServiceResult<ExpandoObject>> DeleteAsync(Guid id)
+    public async Task<ServiceResult<ExpandoObject>> DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        var entity = await _productRepository.FindOneAsync(p => p.Id == id && p.IsDeleted == false);
+        var entity = await _productRepository.FindOneAsync(p => p.Id == id && p.IsDeleted == false, cancellationToken);
 
         if (entity == null)
         {
@@ -241,11 +202,11 @@ public class ProductService : IProductService
         var lockKey = string.Format(LockKeyConstants.ProductLockKey, entity.Id);
         var cacheKey = string.Format(CacheKeyConstants.ProductCacheKey, entity.Id);
             
-        using (await _lockService.CreateLockAsync(lockKey))
+        using (await _lockService.CreateLockAsync(lockKey, cancellationToken))
         {
-            await _productRepository.DeleteAsync(entity); 
+            await _productRepository.DeleteAsync(entity, cancellationToken); 
                 
-            await _cacheService.RemoveAsync(cacheKey);   
+            await _cacheService.RemoveAsync(cacheKey, cancellationToken);   
         }
 
         return new ServiceResult<ExpandoObject>
@@ -255,10 +216,10 @@ public class ProductService : IProductService
         };
     }
     
-    public async Task<ServiceResult<PagedList<ProductView>>> SearchAsync(FilteryRequest request)
+    public async Task<ServiceResult<PagedList<ProductView>>> SearchAsync(FilteryRequest request, CancellationToken cancellationToken)
     {
         var filteryResponse = await _productRepository
-            .Find(p => p.IsActive == true)
+            .AsQueryable(p => p.IsActive == true)
             .Include(p => p.Category)
             .AsNoTracking()
             .BuildFilteryAsync(new ProductFilteryMapping(), request);

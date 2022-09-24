@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Filtery.Models;
 using ImMicro.Business.Product.Abstract;
@@ -34,9 +35,9 @@ public class ProductsController : BaseController
     [HttpGet("{id:guid}")]
     [Authorize(Roles = "Root")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductView))]
-    public async Task<ActionResult> Get(Guid id)
+    public async Task<ActionResult> Get(Guid id, CancellationToken cancellationToken)
     {
-        var result = await _productService.GetAsync(id);
+        var result = await _productService.GetAsync(id, cancellationToken);
         return ApiResponse.CreateResult(result);
     }
 
@@ -47,11 +48,11 @@ public class ProductsController : BaseController
     [HttpPost]
     [Authorize(Roles = "Root")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult> CreateProduct([FromBody] CreateProductRequest request)
+    public async Task<ActionResult> CreateProduct([FromBody] CreateProductRequest request, CancellationToken cancellationToken)
     {
         if (request == null) return ApiResponse.InvalidInputResult;
 
-        var result = await _productService.CreateAsync(Mapper.Map<CreateProductRequestServiceRequest>(request));
+        var result = await _productService.CreateAsync(Mapper.Map<CreateProductRequestServiceRequest>(request), cancellationToken);
         return ApiResponse.CreateResult(result);
     }
 
@@ -62,13 +63,13 @@ public class ProductsController : BaseController
     [HttpPut("{id:guid}")]
     [Authorize(Roles = "Root")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult> UpdateProduct([FromBody] UpdateProductRequest request, Guid id)
+    public async Task<ActionResult> UpdateProduct([FromBody] UpdateProductRequest request, Guid id, CancellationToken cancellationToken)
     {
         if (request == null) return ApiResponse.InvalidInputResult;
         var model = Mapper.Map<UpdateProductRequestServiceRequest>(request);
         model.Id = id;
 
-        var result = await _productService.UpdateAsync(model);
+        var result = await _productService.UpdateAsync(model, cancellationToken);
         return ApiResponse.CreateResult(result);
     }
 
@@ -79,12 +80,12 @@ public class ProductsController : BaseController
     [HttpDelete("{id:guid}")]
     [Authorize(Roles = "Root")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult> DeleteProduct(Guid id)
+    public async Task<ActionResult> DeleteProduct(Guid id, CancellationToken cancellationToken)
     {
         if (id == Guid.Empty)
             return ApiResponse.InvalidInputResult;
 
-        var result = await _productService.DeleteAsync(id);
+        var result = await _productService.DeleteAsync(id, cancellationToken);
         return ApiResponse.CreateResult(result);
     }
 
@@ -95,21 +96,9 @@ public class ProductsController : BaseController
     [HttpPost("search")]
     [Authorize(Roles = "Root")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult> Search([FromBody] FilteryRequest request)
+    public async Task<ActionResult> Search([FromBody] FilteryRequest request, CancellationToken cancellationToken)
     {
-        var result = await _productService.SearchAsync(request);
+        var result = await _productService.SearchAsync(request, cancellationToken);
         return ApiResponse.CreateResult(result);
-    }
-    
-    /// <summary>
-    /// Get Product
-    /// </summary>
-    [HttpGet("GetWithDapper/{id:guid}")]
-    [Authorize(Roles = "Root")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductView))]
-    public async Task<ActionResult> GetWithDapper(Guid id)
-    {
-        var result = await _productService.GetWithDapperAsync(id);
-        return ApiResponse.CreateResult(result);
-    }
+    }    
 }

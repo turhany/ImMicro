@@ -1,30 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Filtery.Extensions;
 using Filtery.Models;
 using ImMicro.Business.User.Abstract;
 using ImMicro.Business.User.Validator;
+using ImMicro.Cache.Abstract;
+using ImMicro.Cache.Constants;
 using ImMicro.Common.Application;
 using ImMicro.Common.Aspects;
 using ImMicro.Common.Auth;
 using ImMicro.Common.Auth.Concrete;
-using ImMicro.Common.BaseModels.Service;
-using ImMicro.Common.Cache.Abstract;
-using ImMicro.Common.Constans;
-using ImMicro.Common.Data.Abstract;
-using ImMicro.Common.Lock.Abstract;
+using ImMicro.Common.BaseModels.Service; 
+using ImMicro.Common.Constans; 
 using ImMicro.Common.Pager;
-using ImMicro.Common.Validation.Abstract;
-using ImMicro.Common.Validation.Concrete;
 using ImMicro.Contract.App.User;
 using ImMicro.Contract.Mappings.Filtery;
 using ImMicro.Contract.Service.User;
+using ImMicro.Data.BaseRepositories;
+using ImMicro.Lock.Abstract;
 using ImMicro.Resources.Extensions;
 using ImMicro.Resources.Model;
 using ImMicro.Resources.Service;
+using ImMicro.Validation.Abstract;
 
 namespace ImMicro.Business.User.Concrete
 {
@@ -52,11 +53,14 @@ namespace ImMicro.Business.User.Concrete
 
         #region CRUD Operations
 
-        public async Task<ServiceResult<UserView>> GetAsync(Guid id)
+        public async Task<ServiceResult<UserView>> GetAsync(Guid id, CancellationToken cancellationToken)
         {
             var cacheKey = string.Format(CacheKeyConstants.UserCacheKey, id);
 
-            var user = await _cacheService.GetOrSetObjectAsync(cacheKey, async () => await _userRepository.FindOneAsync(p => p.Id == id && p.IsDeleted == false));
+            var user = await _cacheService.GetOrSetObjectAsync(cacheKey, 
+                async () => await _userRepository.FindOneAsync(p => p.Id == id && p.IsDeleted == false, cancellationToken),
+                CacheConstants.DefaultCacheDuration,
+                cancellationToken);
 
             if (user == null)
             {
@@ -75,7 +79,7 @@ namespace ImMicro.Business.User.Concrete
             };
         }
  
-        public async Task<ServiceResult<ExpandoObject>> CreateAsync(CreateUserRequestServiceRequest request)
+        public async Task<ServiceResult<ExpandoObject>> CreateAsync(CreateUserRequestServiceRequest request, CancellationToken cancellationToken)
         {
             var validationResponse = _validationService.Validate(typeof(CreateUserRequestValidator), request);
 
@@ -89,7 +93,7 @@ namespace ImMicro.Business.User.Concrete
                 };
             }
 
-            if (await _userRepository.AnyAsync(p => p.Email.ToLower().Equals(request.Email.ToLower()) && p.IsDeleted == false))
+            if (await _userRepository.AnyAsync(p => p.Email.ToLower().Equals(request.Email.ToLower()) && p.IsDeleted == false, cancellationToken))
             {
                 return new ServiceResult<ExpandoObject>
                 {
@@ -107,7 +111,7 @@ namespace ImMicro.Business.User.Concrete
                 Type = Model.User.UserType.Root //TODO: this need to be change as your logic
             };
 
-            entity = await _userRepository.InsertAsync(entity);
+            entity = await _userRepository.InsertAsync(entity, cancellationToken);
 
             dynamic userWrapper = new ExpandoObject();
             userWrapper.Id = entity.Id;
@@ -120,7 +124,7 @@ namespace ImMicro.Business.User.Concrete
             };
         }
 
-        public async Task<ServiceResult<ExpandoObject>> UpdateAsync(UpdateUserRequestServiceRequest request)
+        public async Task<ServiceResult<ExpandoObject>> UpdateAsync(UpdateUserRequestServiceRequest request, CancellationToken cancellationToken)
         {
             var validationResponse = _validationService.Validate(typeof(UpdateUserRequestValidator), request);
 
@@ -134,7 +138,7 @@ namespace ImMicro.Business.User.Concrete
                 };
             }
 
-            var entity = await _userRepository.FindOneAsync(p => p.Id == request.Id && p.IsDeleted == false);
+            var entity = await _userRepository.FindOneAsync(p => p.Id == request.Id && p.IsDeleted == false, cancellationToken);
 
             if (entity == null)
             {
@@ -145,7 +149,7 @@ namespace ImMicro.Business.User.Concrete
                 };
             }
 
-            if (await _userRepository.AnyAsync(p => p.Id != request.Id && p.Email.ToLower().Equals(request.Email.ToLower()) && p.IsDeleted == false))
+            if (await _userRepository.AnyAsync(p => p.Id != request.Id && p.Email.ToLower().Equals(request.Email.ToLower()) && p.IsDeleted == false, cancellationToken))
             {
                 return new ServiceResult<ExpandoObject>
                 {
@@ -157,16 +161,16 @@ namespace ImMicro.Business.User.Concrete
             var lockKey = string.Format(LockKeyConstants.UserLockKey, entity.Id);
             var cacheKey = string.Format(CacheKeyConstants.UserCacheKey, entity.Id);
             
-            using (await _lockService.CreateLockAsync(lockKey))
+            using (await _lockService.CreateLockAsync(lockKey, cancellationToken))
             {
                 entity.FirstName = request.FirstName.Trim();
                 entity.LastName = request.LastName.Trim();
                 entity.Email = request.Email.Trim().ToLower();
                 entity.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
-                entity = await _userRepository.UpdateAsync(entity);
+                entity = await _userRepository.UpdateAsync(entity, cancellationToken);
 
-                await _cacheService.RemoveAsync(cacheKey);
+                await _cacheService.RemoveAsync(cacheKey, cancellationToken);
             }
             
 
@@ -181,9 +185,9 @@ namespace ImMicro.Business.User.Concrete
             };
         }
 
-        public async Task<ServiceResult<ExpandoObject>> DeleteAsync(Guid id)
+        public async Task<ServiceResult<ExpandoObject>> DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
-            var entity = await _userRepository.FindOneAsync(p => p.Id == id && p.IsDeleted == false);
+            var entity = await _userRepository.FindOneAsync(p => p.Id == id && p.IsDeleted == false, cancellationToken);
 
             if (entity == null)
             {
@@ -206,11 +210,11 @@ namespace ImMicro.Business.User.Concrete
             var lockKey = string.Format(LockKeyConstants.UserLockKey, entity.Id);
             var cacheKey = string.Format(CacheKeyConstants.UserCacheKey, entity.Id);
             
-            using (await _lockService.CreateLockAsync(lockKey))
+            using (await _lockService.CreateLockAsync(lockKey, cancellationToken))
             {
-                await _userRepository.DeleteAsync(entity); 
+                await _userRepository.DeleteAsync(entity, cancellationToken); 
                 
-                await _cacheService.RemoveAsync(cacheKey);   
+                await _cacheService.RemoveAsync(cacheKey, cancellationToken);   
             }
 
             return new ServiceResult<ExpandoObject>
@@ -220,9 +224,9 @@ namespace ImMicro.Business.User.Concrete
             };
         }
 
-        public async Task<ServiceResult<PagedList<UserView>>> SearchAsync(FilteryRequest request)
+        public async Task<ServiceResult<PagedList<UserView>>> SearchAsync(FilteryRequest request, CancellationToken cancellationToken)
         {
-            var filteryResponse = await _userRepository.Find(p => true).BuildFilteryAsync(new UserFilteryMapping(), request);
+            var filteryResponse = await _userRepository.AsQueryable(p => true).BuildFilteryAsync(new UserFilteryMapping(), request);
 
             var response = new PagedList<UserView>
             {
@@ -248,7 +252,7 @@ namespace ImMicro.Business.User.Concrete
         #region Login Operations
 
         [PerformanceAspect(2)]
-        public async Task<ServiceResult<AccessTokenContract>> GetTokenAsync(GetTokenContractServiceRequest request)
+        public async Task<ServiceResult<AccessTokenContract>> GetTokenAsync(GetTokenContractServiceRequest request, CancellationToken cancellationToken)
         {
             var validationResponse = _validationService.Validate(typeof(GetTokenContractServiceRequestValidator), request);
 
@@ -262,7 +266,7 @@ namespace ImMicro.Business.User.Concrete
                 };
             }
 
-            var entity = await _userRepository.FindOneAsync(p => p.Email.ToLower().Equals(request.Email.ToLower()) && p.IsDeleted == false);
+            var entity = await _userRepository.FindOneAsync(p => p.Email.ToLower().Equals(request.Email.ToLower()) && p.IsDeleted == false, cancellationToken);
 
             if (entity == null)
             {
@@ -293,7 +297,7 @@ namespace ImMicro.Business.User.Concrete
             entity.RefreshToken = token.RefreshToken;
             entity.RefreshTokenExpireDate = token.RefreshTokenExpireDate;
 
-            await _userRepository.UpdateAsync(entity);
+            await _userRepository.UpdateAsync(entity, cancellationToken);
 
             return new ServiceResult<AccessTokenContract>
             {
@@ -304,7 +308,7 @@ namespace ImMicro.Business.User.Concrete
         }
 
         [PerformanceAspect(2)]
-        public async Task<ServiceResult<AccessTokenContract>> RefreshTokenAsync(RefreshTokenContractServiceRequest request)
+        public async Task<ServiceResult<AccessTokenContract>> RefreshTokenAsync(RefreshTokenContractServiceRequest request, CancellationToken cancellationToken)
         {
             var validationResponse = _validationService.Validate(typeof(RefreshTokenContractServiceRequestValidator), request);
 
@@ -321,7 +325,8 @@ namespace ImMicro.Business.User.Concrete
             var entity = await _userRepository.FindOneAsync(p =>
                 p.RefreshToken == request.Token &&
                 p.RefreshTokenExpireDate > DateTime.UtcNow &&
-                p.IsDeleted == false);
+                p.IsDeleted == false,
+                cancellationToken);
 
             if (entity == null)
             {
@@ -343,7 +348,7 @@ namespace ImMicro.Business.User.Concrete
             entity.RefreshToken = token.RefreshToken;
             entity.RefreshTokenExpireDate = token.RefreshTokenExpireDate;
 
-            await _userRepository.UpdateAsync(entity);
+            await _userRepository.UpdateAsync(entity, cancellationToken);
 
             return new ServiceResult<AccessTokenContract>
             {

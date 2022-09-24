@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Autofac;
-using ImMicro.Common.Data.Abstract;
-using ImMicro.Data.Repositories;
+using ImMicro.Data.BaseRepositories;
+using ImMicro.Data.EntityFramework.Repositories;
 using ImMicro.Data.Repositories.Abstract;
 using Module = Autofac.Module;
 

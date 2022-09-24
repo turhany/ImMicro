@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using ImMicro.Common.Options;
 using ImMicro.Contract.Consumer;
@@ -35,10 +36,10 @@ public class MQSampleController : BaseController
     /// </summary>
     [HttpGet("test")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult> Test()
+    public async Task<ActionResult> Test(CancellationToken cancellationToken)
     {
         var endpoint = await _sendEndpointProvider.GetSendEndpoint(new Uri($"{_rabbitMqOptions.RabbitMqUri}/{_rabbitMqOptions.SampleQueue}"));
-        await endpoint.Send(new SampleConsumerCommand {RequestTime = DateTime.UtcNow});
+        await endpoint.Send(new SampleConsumerCommand {RequestTime = DateTime.UtcNow}, cancellationToken);
 
         return Ok();
     }

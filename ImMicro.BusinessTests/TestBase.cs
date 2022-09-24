@@ -1,19 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System; 
 using System.Threading;
 using Autofac;
 using AutoMapper;
-using ImMicro.Common.Application;
-using ImMicro.Common.Cache.Abstract;
-using ImMicro.Common.Dapper;
+using ImMicro.Common.Application;  
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
-using Moq;
-using ImMicro.Common.Lock.Abstract;
+using Moq; 
 using ImMicro.Container.Modules;
 using ImMicro.Contract.Mappings.AutoMapper;
-using ImMicro.Data;
 using Microsoft.Extensions.Configuration;
+using ImMicro.Lock.Abstract;
+using ImMicro.Data.EntityFramework;
+using System.Diagnostics;
+using ImMicro.Common.IoC;
+using Microsoft.Extensions.DependencyInjection;
+using ImMicro.Model.User;
 
 namespace ImMicro.BusinessTests
 {
@@ -38,10 +39,10 @@ namespace ImMicro.BusinessTests
             }).InstancePerLifetimeScope();
              
             //TODO: need to find solution for run Dapper to InMemory DB
-            builder.Register(c =>
-            {
-               return new DapperContext("", DapperContext.ConnectionType.PostgreSql);
-            }).InstancePerLifetimeScope();
+            //builder.Register(c =>
+            //{
+            //   return new DapperContext("", DapperContext.ConnectionType.PostgreSql);
+            //}).InstancePerLifetimeScope();
             
             builder.RegisterModule(new ApplicationModule());
             builder.RegisterModule(new RepositoryModule());
@@ -64,9 +65,21 @@ namespace ImMicro.BusinessTests
                 });
                 return config.CreateMapper();
             }).SingleInstance();
-            
+
+            builder.Register(c =>
+            {
+                return new Stopwatch();
+            }).SingleInstance();
+
             Container = builder.Build();
-            
+
+            IServiceCollection services = new ServiceCollection();
+            services.AddSingleton<Stopwatch>();
+
+            IServiceProvider serviceProvider = services.BuildServiceProvider();
+             
+            GlobalServiceProvider.ServiceProvider = serviceProvider;
+
             ApplicationContext.ConfigureWorkerServiceUser(Guid.NewGuid());
         }
     }

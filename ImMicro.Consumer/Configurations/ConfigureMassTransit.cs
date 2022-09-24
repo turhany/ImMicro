@@ -1,4 +1,5 @@
-﻿using ImMicro.Common.Options;
+﻿using ImMicro.Common.Constans;
+using ImMicro.Common.Options;
 using ImMicro.Consumer.Consumers;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
@@ -20,7 +21,7 @@ namespace ImMicro.Consumer.Configurations
         public static IServiceCollection AddMassTransitConfigurationForConsumer(this IServiceCollection services, IConfiguration configuration)
         {
             var rabbitMqConfig = new RabbitMqOption();
-            configuration.GetSection("RabbitMqSettings").Bind(rabbitMqConfig);
+            configuration.GetSection(AppConstants.RabbitMqSettingsOptionName).Bind(rabbitMqConfig);
 
             services.AddMassTransit(x =>
             {

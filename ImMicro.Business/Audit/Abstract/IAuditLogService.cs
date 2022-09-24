@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Filtery.Models;
 using ImMicro.Common.BaseModels.Service;
@@ -11,8 +12,8 @@ namespace ImMicro.Business.Audit.Abstract
 {
     public interface IAuditLogService : IService
     {
-        Task<ServiceResult<PagedList<AuditLogView>>> SearchAsync(FilteryRequest request);
-        Task<ServiceResult<string>> ExportAsync(ExportRequest exportRequest);
-        Task<ServiceResult<AuditLogView>> GetAsync(Guid id);
+        Task<ServiceResult<PagedList<AuditLogView>>> SearchAsync(FilteryRequest request, CancellationToken cancellationToken);
+        Task<ServiceResult<string>> ExportAsync(ExportRequest exportRequest, CancellationToken cancellationToken);
+        Task<ServiceResult<AuditLogView>> GetAsync(Guid id, CancellationToken cancellationToken);
     }
 }

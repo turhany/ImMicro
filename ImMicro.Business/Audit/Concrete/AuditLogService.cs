@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq.Dynamic.Core;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Exporty.Abstract;
@@ -8,14 +10,15 @@ using Exporty.Extensions;
 using Filtery.Extensions;
 using Filtery.Models;
 using ImMicro.Business.Audit.Abstract;
+using ImMicro.Cache.Abstract;
+using ImMicro.Cache.Constants;
 using ImMicro.Common.BaseModels.Service;
-using ImMicro.Common.Cache.Abstract;
-using ImMicro.Common.Constans;
-using ImMicro.Common.Data.Abstract;
+using ImMicro.Common.Constans; 
 using ImMicro.Common.Pager;
 using ImMicro.Contract.App;
 using ImMicro.Contract.Audit;
 using ImMicro.Contract.Mappings.Filtery;
+using ImMicro.Data.BaseRepositories;
 using ImMicro.Model.AuditLog;
 using ImMicro.Resources.Extensions;
 using ImMicro.Resources.Model;
@@ -46,9 +49,9 @@ namespace ImMicro.Business.Audit.Concrete
             _configuration = configuration;
         }
 
-        public async Task<ServiceResult<PagedList<AuditLogView>>> SearchAsync(FilteryRequest request)
+        public async Task<ServiceResult<PagedList<AuditLogView>>> SearchAsync(FilteryRequest request, CancellationToken cancellationToken)
         {
-            var filteryResponse = await _auditLogRepository.Find(p => true).AsNoTracking().BuildFilteryAsync(new AuditLogFilteryMapping(), request);
+            var filteryResponse = await _auditLogRepository.AsQueryable(p => true).AsNoTracking().BuildFilteryAsync(new AuditLogFilteryMapping(), request);
            
             var response = new PagedList<AuditLogView>
             {
@@ -68,9 +71,9 @@ namespace ImMicro.Business.Audit.Concrete
             };
         }
         
-        public async Task<ServiceResult<string>> ExportAsync(ExportRequest exportRequest)
+        public async Task<ServiceResult<string>> ExportAsync(ExportRequest exportRequest, CancellationToken cancellationToken)
         {
-            var filteryResponse = await _auditLogRepository.Find(p => true).BuildFilteryAsync(new AuditLogFilteryMapping(), exportRequest.SearchRequest);
+            var filteryResponse = await _auditLogRepository.AsQueryable(p => true).BuildFilteryAsync(new AuditLogFilteryMapping(), exportRequest.SearchRequest);
 
             var response = _mapper.Map<List<AuditLogView>>(filteryResponse.Data);
             
@@ -85,11 +88,14 @@ namespace ImMicro.Business.Audit.Concrete
         }
 
         
-        public async Task<ServiceResult<AuditLogView>> GetAsync(Guid id)
+        public async Task<ServiceResult<AuditLogView>> GetAsync(Guid id, CancellationToken cancellationToken)
         {
             var cacheKey = string.Format(CacheKeyConstants.AuditLogCacheKey, id);
             
-            var auditLog = await _cacheService.GetOrSetObjectAsync(cacheKey,  async () => await _auditLogRepository.FindOneWithAsNoTrackingAsync(p => p.Id == id && p.IsDeleted == false));
+            var auditLog = await _cacheService.GetOrSetObjectAsync(cacheKey,  
+                async () => await _auditLogRepository.FindOneWithAsNoTrackingAsync(p => p.Id == id && p.IsDeleted == false, cancellationToken),
+                CacheConstants.DefaultCacheDuration,
+                cancellationToken);
 
             if (auditLog == null)
             {

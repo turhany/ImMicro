@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ImMicro.Business.Product.Abstract;
-using ImMicro.Common.Data.Abstract;
+using ImMicro.Business.Product.Abstract; 
 using Autofac;
 using Filtery.Exceptions;
 using Filtery.Models;
@@ -12,6 +11,8 @@ using ImMicro.Contract.Service.Product;
 using ImMicro.Model.Category;
 using ImMicro.Model.Product;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Threading;
+using ImMicro.Data.BaseRepositories;
 
 namespace ImMicro.BusinessTests.Services.Concrete;
 
@@ -33,7 +34,7 @@ public class ProductServiceTests : TestBase
     public async Task GetAsync_NO_DATA()
     {
         //arrange - act
-        var response = await _productService.GetAsync(Guid.NewGuid());
+        var response = await _productService.GetAsync(Guid.NewGuid(), CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.ResourceNotFound, response.Status);
@@ -44,10 +45,10 @@ public class ProductServiceTests : TestBase
     {
         //arrange
         var product = new Model.Product.Product { Id = Guid.NewGuid(), Title = "Product Name"};
-        await _productRepository.InsertAsync(product);
+        await _productRepository.InsertAsync(product, CancellationToken.None);
             
         //act
-        var response = await _productService.GetAsync(product.Id);
+        var response = await _productService.GetAsync(product.Id, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.Successful, response.Status);
@@ -60,7 +61,7 @@ public class ProductServiceTests : TestBase
         var product = new CreateProductRequestServiceRequest { Title = "Product Name"}; 
             
         //act
-        var response = await _productService.CreateAsync(product);
+        var response = await _productService.CreateAsync(product, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.InvalidInput, response.Status);
@@ -78,7 +79,7 @@ public class ProductServiceTests : TestBase
         }; 
             
         //act
-        var response = await _productService.CreateAsync(product);
+        var response = await _productService.CreateAsync(product, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.ResourceNotFound, response.Status);
@@ -88,7 +89,7 @@ public class ProductServiceTests : TestBase
     public async Task CreateAsync_OK()
     {
         //arrange
-        var category = await _categoryRepository.InsertAsync(new Category() {Id = Guid.NewGuid(), Name = "Category"});
+        var category = await _categoryRepository.InsertAsync(new Category() {Id = Guid.NewGuid(), Name = "Category"}, CancellationToken.None);
         var product = new CreateProductRequestServiceRequest
         {
             Title = "Product Name",
@@ -97,7 +98,7 @@ public class ProductServiceTests : TestBase
         }; 
             
         //act
-        var response = await _productService.CreateAsync(product);
+        var response = await _productService.CreateAsync(product, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.Successful, response.Status);
@@ -110,7 +111,7 @@ public class ProductServiceTests : TestBase
         var product = new UpdateProductRequestServiceRequest { Title = "Product Name"}; 
             
         //act
-        var response = await _productService.UpdateAsync(product);
+        var response = await _productService.UpdateAsync(product, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.InvalidInput, response.Status);
@@ -129,7 +130,7 @@ public class ProductServiceTests : TestBase
         }; 
             
         //act
-        var response = await _productService.UpdateAsync(product);
+        var response = await _productService.UpdateAsync(product, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.ResourceNotFound, response.Status);
@@ -139,7 +140,7 @@ public class ProductServiceTests : TestBase
     public async Task UpdateAsync_CATEGORY_NOT_FOUND()
     {
         //arrange
-        var category = await _categoryRepository.InsertAsync(new Category() {Id = Guid.NewGuid(), Name = "Category"});
+        var category = await _categoryRepository.InsertAsync(new Category() {Id = Guid.NewGuid(), Name = "Category"}, CancellationToken.None);
         var product = new Product
         {
             Id = Guid.NewGuid(),
@@ -147,7 +148,7 @@ public class ProductServiceTests : TestBase
             Description = "Description",
             CategoryId = category.Id
         };
-        await _productRepository.InsertAsync(product);
+        await _productRepository.InsertAsync(product, CancellationToken.None);
         
         var productForUpdate = new UpdateProductRequestServiceRequest
         {
@@ -158,7 +159,7 @@ public class ProductServiceTests : TestBase
         };
         
         //act
-        var response = await _productService.UpdateAsync(productForUpdate);
+        var response = await _productService.UpdateAsync(productForUpdate, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.ResourceNotFound, response.Status);
@@ -168,7 +169,7 @@ public class ProductServiceTests : TestBase
     public async Task UpdateAsync_OK()
     {
         //arrange
-        var category = await _categoryRepository.InsertAsync(new Category() {Id = Guid.NewGuid(), Name = "Category"});
+        var category = await _categoryRepository.InsertAsync(new Category() {Id = Guid.NewGuid(), Name = "Category"}, CancellationToken.None);
         var product = new Product
         {
             Id = Guid.NewGuid(),
@@ -176,7 +177,7 @@ public class ProductServiceTests : TestBase
             Description = "Description",
             CategoryId = category.Id
         };
-        await _productRepository.InsertAsync(product);
+        await _productRepository.InsertAsync(product, CancellationToken.None);
         
         var productForUpdate = new UpdateProductRequestServiceRequest
         {
@@ -187,7 +188,7 @@ public class ProductServiceTests : TestBase
         };
         
         //act
-        var response = await _productService.UpdateAsync(productForUpdate);
+        var response = await _productService.UpdateAsync(productForUpdate, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.Successful, response.Status);
@@ -197,7 +198,7 @@ public class ProductServiceTests : TestBase
     public async Task DeleteAsync_PRODUCT_NOT_FOUND()
     {
         //arrange - act
-        var response = await _productService.DeleteAsync(Guid.NewGuid());
+        var response = await _productService.DeleteAsync(Guid.NewGuid(), CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.ResourceNotFound, response.Status);
@@ -207,7 +208,7 @@ public class ProductServiceTests : TestBase
     public async Task DeleteAsync_OK()
     {
         //arrange
-        var category = await _categoryRepository.InsertAsync(new Category() {Id = Guid.NewGuid(), Name = "Category"});
+        var category = await _categoryRepository.InsertAsync(new Category() {Id = Guid.NewGuid(), Name = "Category"}, CancellationToken.None);
         var product = new Product
         {
             Id = Guid.NewGuid(),
@@ -215,10 +216,10 @@ public class ProductServiceTests : TestBase
             Description = "Description",
             CategoryId = category.Id
         };
-        await _productRepository.InsertAsync(product);
+        await _productRepository.InsertAsync(product, CancellationToken.None);
         
         //act
-        var response = await _productService.DeleteAsync(product.Id);
+        var response = await _productService.DeleteAsync(product.Id, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.Successful, response.Status);
@@ -228,7 +229,7 @@ public class ProductServiceTests : TestBase
     public async Task SearchAsync_OK()
     {
         //arrange
-        var category = await _categoryRepository.InsertAsync(new Category() {Id = Guid.NewGuid(), Name = "Category"});
+        var category = await _categoryRepository.InsertAsync(new Category() {Id = Guid.NewGuid(), Name = "Category"}, CancellationToken.None);
         var product = new Product
         {
             Id = Guid.NewGuid(),
@@ -236,14 +237,14 @@ public class ProductServiceTests : TestBase
             Description = "Description",
             CategoryId = category.Id
         };
-        await _productRepository.InsertAsync(product);
+        await _productRepository.InsertAsync(product, CancellationToken.None);
         
         //act
         var response = await _productService.SearchAsync(new FilteryRequest()
         {
             PageNumber = 1,
             PageSize = 10
-        });
+        }, CancellationToken.None);
 
         //assert 
         Assert.AreEqual(ResultStatus.Successful, response.Status);
@@ -265,7 +266,7 @@ public class ProductServiceTests : TestBase
                 },
                 PageNumber = 1,
                 PageSize = 10
-            });
+            }, CancellationToken.None);
         }
         catch (FilteryBaseException)
         {

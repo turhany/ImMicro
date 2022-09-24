@@ -2,6 +2,7 @@
 using ImMicro.Business.RequestLog.Abstract;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ImMicro.BusinessTests;
+using System.Threading;
 
 // ReSharper disable CheckNamespace
 
@@ -28,9 +29,9 @@ namespace ImMicro.Business.Services.Concrete.Tests
                 StatusCode = "200",
                 RequestPath = "www.unittest.com"
             };
-            
+
             //act
-            var response = _requestLogService.SaveAsync(entity).Result;
+            var response = _requestLogService.SaveAsync(entity, CancellationToken.None).Result;
 
             //assert
             Assert.IsTrue(response);
