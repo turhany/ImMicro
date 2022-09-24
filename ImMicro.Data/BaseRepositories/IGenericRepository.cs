@@ -22,15 +22,13 @@ namespace ImMicro.Data.BaseRepositories
         Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken);
         Task<TEntity> FindOneWithAsNoTrackingAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken);
 
-        IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
-        List<TEntity> FilterBy(Expression<Func<TEntity, bool>> filterExpression);
+        IQueryable<TEntity> AsQueryable(Expression<Func<TEntity, bool>> predicate);
+        Task<List<TEntity>> FilterByAsync(Expression<Func<TEntity, bool>> filterExpression, CancellationToken cancellationToken);
 
         Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken);
         Task<long> CountAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken);
 
         Task BulkInsertAsync(List<TEntity> entities, CancellationToken cancellationToken);
-        void BulkInsert(List<TEntity> entities);
         Task BulkUpdateAsync(List<TEntity> entities, CancellationToken cancellationToken);
-        void BulkUpdate(List<TEntity> entities);
     }
 }

@@ -70,8 +70,6 @@ namespace ImMicro.Data.MongoDB.Repositories
 
         public async Task DeleteAsync(TEntity entity, CancellationToken cancellationToken)
         {
-            //TODO: prepare list and use deletemany and updatemany method 
-
             entity.ThrowIfNull();
 
             if (entity is SoftDeleteEntity softDeleteEntity)
@@ -100,14 +98,17 @@ namespace ImMicro.Data.MongoDB.Repositories
         {
             return await Collection.Find(predicate).FirstOrDefaultAsync(cancellationToken);
         }
-        public IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+        public async Task<TEntity> FindOneWithAsNoTrackingAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken)
+        {
+            return await FindOneAsync(predicate, cancellationToken);
+        }
+        public IQueryable<TEntity> AsQueryable(Expression<Func<TEntity, bool>> predicate)
         {
             return Collection.AsQueryable().Where(predicate);
         }
-        public virtual List<TEntity> FilterBy(
-        Expression<Func<TEntity, bool>> filterExpression)
+        public async Task<List<TEntity>> FilterByAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken)
         {
-            return Collection.Find(filterExpression).ToList();
+            return await Collection.Find(predicate).ToListAsync(cancellationToken);
         }
 
         public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken)
@@ -131,35 +132,15 @@ namespace ImMicro.Data.MongoDB.Repositories
                 insertList.Add(new InsertOneModel<TEntity>(entity));
             }
 
-            await Collection.BulkWriteAsync(insertList, new BulkWriteOptions(), cancellationToken);
+            var options = new BulkWriteOptions { IsOrdered = false, BypassDocumentValidation = false };
+            await Collection.BulkWriteAsync(insertList, options, cancellationToken);
         }
-        public void BulkInsert(List<TEntity> entityList)
+        public async Task BulkUpdateAsync(List<TEntity> entities, CancellationToken cancellationToken)
         {
-            //TODO: check this bulk code
-            //var options = new BulkWriteOptions { IsOrdered = false, BypassDocumentValidation = false };
-            //await _collection.BulkWriteAsync((IEnumerable<WriteModel<T>>)entities, options);
-
-            entityList.ThrowIfNull();
-            entityList.Throw().IfEmpty();
-
-            var insertList = new List<WriteModel<TEntity>>();
-
-            foreach (var entity in entityList)
-            {
-                insertList.Add(new InsertOneModel<TEntity>(entity));
-            }
-
-            Collection.BulkWrite(insertList);
-        }
-        public Task BulkUpdateAsync(List<TEntity> entities, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
+            await UpdateManyAsync(entities, cancellationToken);
         }
 
-        public void BulkUpdate(List<TEntity> entities)
-        {
-            throw new NotImplementedException();
-        }
+        #region Private Methods
 
         private void SetAuditFields(TEntity entity, OperationFlow operationFlow)
         {
@@ -201,15 +182,12 @@ namespace ImMicro.Data.MongoDB.Repositories
             entity.DeletedBy = ApplicationContext.Instance.CurrentUser.Id;
         }
 
-        public Task<TEntity> FindOneWithAsNoTrackingAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
         private enum OperationFlow
         {
             Insert,
             Update
         }
+
+        #endregion
     }
 }

@@ -9,7 +9,6 @@ namespace ImMicro.Container.Modules
 {
     public class RepositoryModule : Module
     {
-        //TODO: need to update here
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterGeneric(typeof(EfGenericRepository<>))

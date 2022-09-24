@@ -226,7 +226,7 @@ namespace ImMicro.Business.User.Concrete
 
         public async Task<ServiceResult<PagedList<UserView>>> SearchAsync(FilteryRequest request, CancellationToken cancellationToken)
         {
-            var filteryResponse = await _userRepository.Find(p => true).BuildFilteryAsync(new UserFilteryMapping(), request);
+            var filteryResponse = await _userRepository.AsQueryable(p => true).BuildFilteryAsync(new UserFilteryMapping(), request);
 
             var response = new PagedList<UserView>
             {

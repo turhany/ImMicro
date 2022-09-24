@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using ImMicro.Common.Constans;  
 using ImMicro.Resources.App;
 using ImMicro.Lock.Exceptions;
+using ImMicro.Resources.Service;
 
 namespace ImMicro.Api.Middlewares
 {

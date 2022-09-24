@@ -219,7 +219,7 @@ public class ProductService : IProductService
     public async Task<ServiceResult<PagedList<ProductView>>> SearchAsync(FilteryRequest request, CancellationToken cancellationToken)
     {
         var filteryResponse = await _productRepository
-            .Find(p => p.IsActive == true)
+            .AsQueryable(p => p.IsActive == true)
             .Include(p => p.Category)
             .AsNoTracking()
             .BuildFilteryAsync(new ProductFilteryMapping(), request);

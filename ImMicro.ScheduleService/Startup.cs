@@ -1,5 +1,4 @@
-using System;
-using System.Diagnostics.CodeAnalysis;
+using System; 
 using Autofac;
 using ImMicro.Cache.Redis.StartupConfigurations;
 using ImMicro.Common.Application;

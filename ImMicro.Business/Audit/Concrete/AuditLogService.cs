@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq.Dynamic.Core;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -50,7 +51,7 @@ namespace ImMicro.Business.Audit.Concrete
 
         public async Task<ServiceResult<PagedList<AuditLogView>>> SearchAsync(FilteryRequest request, CancellationToken cancellationToken)
         {
-            var filteryResponse = await _auditLogRepository.Find(p => true).AsNoTracking().BuildFilteryAsync(new AuditLogFilteryMapping(), request);
+            var filteryResponse = await _auditLogRepository.AsQueryable(p => true).AsNoTracking().BuildFilteryAsync(new AuditLogFilteryMapping(), request);
            
             var response = new PagedList<AuditLogView>
             {
@@ -72,7 +73,7 @@ namespace ImMicro.Business.Audit.Concrete
         
         public async Task<ServiceResult<string>> ExportAsync(ExportRequest exportRequest, CancellationToken cancellationToken)
         {
-            var filteryResponse = await _auditLogRepository.Find(p => true).BuildFilteryAsync(new AuditLogFilteryMapping(), exportRequest.SearchRequest);
+            var filteryResponse = await _auditLogRepository.AsQueryable(p => true).BuildFilteryAsync(new AuditLogFilteryMapping(), exportRequest.SearchRequest);
 
             var response = _mapper.Map<List<AuditLogView>>(filteryResponse.Data);
             

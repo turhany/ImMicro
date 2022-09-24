@@ -9,6 +9,8 @@ using Npgsql.Bulk;
 using Throw;
 using ImMicro.Data.BaseRepositories;
 using ImMicro.Data.BaseModels;
+using System.Threading;
+using System;
 
 namespace ImMicro.Data.EntityFramework.Repositories
 {
@@ -128,8 +130,11 @@ namespace ImMicro.Data.EntityFramework.Repositories
         public async Task<TEntity> FindOneWithAsNoTrackingAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken) 
             => await _entities.AsNoTracking().FirstOrDefaultAsync(predicate, cancellationToken);
 
-        public IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate) 
+        public IQueryable<TEntity> AsQueryable(Expression<Func<TEntity, bool>> predicate) 
             => _entities.Where(predicate);
+
+        public async Task<List<TEntity>> FilterByAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken)
+        => await _entities.Where(predicate).ToListAsync(cancellationToken);
 
         public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken) 
             => await _entities.AnyAsync(predicate, cancellationToken);
@@ -143,22 +148,10 @@ namespace ImMicro.Data.EntityFramework.Repositories
             await bulkUploader.InsertAsync(entities);
         }
         
-        public void BulkInsert(List<TEntity> entities)
-        {
-            var bulkUploader = new NpgsqlBulkUploader(_context);
-            bulkUploader.Insert(entities);
-        }
-
         public async Task BulkUpdateAsync(List<TEntity> entities, CancellationToken cancellationToken)
         {
             var bulkUploader = new NpgsqlBulkUploader(_context);
             await bulkUploader.UpdateAsync(entities);
-        }
-
-        public void BulkUpdate(List<TEntity> entities)
-        {
-            var bulkUploader = new NpgsqlBulkUploader(_context);
-            bulkUploader.Update(entities);
         }
 
         #region Private Methods

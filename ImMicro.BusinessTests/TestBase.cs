@@ -11,6 +11,10 @@ using ImMicro.Contract.Mappings.AutoMapper;
 using Microsoft.Extensions.Configuration;
 using ImMicro.Lock.Abstract;
 using ImMicro.Data.EntityFramework;
+using System.Diagnostics;
+using ImMicro.Common.IoC;
+using Microsoft.Extensions.DependencyInjection;
+using ImMicro.Model.User;
 
 namespace ImMicro.BusinessTests
 {
@@ -61,9 +65,21 @@ namespace ImMicro.BusinessTests
                 });
                 return config.CreateMapper();
             }).SingleInstance();
-            
+
+            builder.Register(c =>
+            {
+                return new Stopwatch();
+            }).SingleInstance();
+
             Container = builder.Build();
-            
+
+            IServiceCollection services = new ServiceCollection();
+            services.AddSingleton<Stopwatch>();
+
+            IServiceProvider serviceProvider = services.BuildServiceProvider();
+             
+            GlobalServiceProvider.ServiceProvider = serviceProvider;
+
             ApplicationContext.ConfigureWorkerServiceUser(Guid.NewGuid());
         }
     }
