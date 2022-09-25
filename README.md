@@ -36,7 +36,7 @@ This is a simple/reusable micro/macro service template/playground project.
 * .Net 6.0 - C# 10.0(https://dotnet.microsoft.com/en-us/download/dotnet)
 * Asp .Net Health Check (https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks)  
 * EF Core 6.0  (https://docs.microsoft.com/en-us/ef/core/)
-* Postgres Sql (https://www.postgresql.org/)  
+* PostgreSql (https://www.postgresql.org/)  
 * MongoDB (https://www.mongodb.com/)  
 * Dapper (https://github.com/DapperLib/Dapper)
 * Redis (https://redis.io/) 
@@ -107,7 +107,7 @@ This is a simple/reusable micro/macro service template/playground project.
 * update-database -context ImMicro.Data.DataContext
 * add-migration migrationName -context ImMicro.Data.DataContext
 
-#### Database Maintenance
+#### Database Maintenance (PostgreSql)
 ``` sql
 --ReIndex
 REINDEX TABLE "AuditLog";
