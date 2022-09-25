@@ -10,8 +10,7 @@ namespace ImMicro.Cache.Redis.StartupConfigurations
         /// <summary>
         /// Add Distributed cache configuration
         /// </summary>
-        /// <param name="services">ServiceCollection</param>
-        /// <param name="configuration">Configuration</param>
+        /// <param name="services">ServiceCollection</param> 
         /// <returns></returns>
         public static IServiceCollection AddDistributedCacheConfiguration(this IServiceCollection services, string connectionString, string instanceName)
         {

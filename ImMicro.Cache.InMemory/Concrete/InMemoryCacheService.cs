@@ -1,16 +1,15 @@
-﻿using ImMicro.Cache.Abstract; 
-using Microsoft.Extensions.Caching.Distributed;
-using Newtonsoft.Json; 
+﻿using ImMicro.Cache.Abstract;
+using Microsoft.Extensions.Caching.Memory;
 
-namespace ImMicro.Cache.Redis.Concrete
+namespace ImMicro.Cache.InMemory.Concrete
 {
-    public class RedisCacheService : ICacheService
+    public class InMemoryCacheService : ICacheService
     {
-        private readonly IDistributedCache _distributedCache;
+        private IMemoryCache _memoryCache;
 
-        public RedisCacheService(IDistributedCache distributedCache)
+        public InMemoryCacheService(IMemoryCache memoryCache)
         {
-            _distributedCache = distributedCache;
+            _memoryCache = memoryCache;
         }
 
         public async Task<T> GetOrSetObjectAsync<T>(string key, Func<T> code, int durationAsMinute, CancellationToken cancellationToken)
@@ -42,17 +41,15 @@ namespace ImMicro.Cache.Redis.Concrete
         public async Task SetObjectAsync<T>(string key, T value, int durationAsMinute, CancellationToken cancellationToken)
         {
             key = $"{key}_{Thread.CurrentThread.CurrentUICulture.Name}";
-            await _distributedCache.SetStringAsync(key, JsonConvert.SerializeObject(value), new DistributedCacheEntryOptions
-            {
-                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(durationAsMinute)
-            }, cancellationToken);
+            var options = new MemoryCacheEntryOptions() { AbsoluteExpiration = DateTime.UtcNow.AddMinutes(durationAsMinute) };
+            await Task.Run(() => { _memoryCache.Set(key, value, options); }, cancellationToken);
         }
 
         public async Task<T> GetObjectAsync<T>(string key, CancellationToken cancellationToken)
         {
             key = $"{key}_{Thread.CurrentThread.CurrentUICulture.Name}";
-            var value = await _distributedCache.GetStringAsync(key, cancellationToken);
-            return value == null ? default(T) : JsonConvert.DeserializeObject<T>(value);
+            var value = await Task.Run(() => { return _memoryCache.Get<T>(key); }, cancellationToken);
+            return value == null ? default(T) : value;
         }
 
         public async Task<bool> ExistObjectAsync<T>(string key, CancellationToken cancellationToken)
@@ -64,7 +61,7 @@ namespace ImMicro.Cache.Redis.Concrete
         public async Task RemoveAsync(string key, CancellationToken cancellationToken)
         {
             key = $"{key}_{Thread.CurrentThread.CurrentUICulture.Name}";
-            await _distributedCache.RemoveAsync(key, cancellationToken);
-        }
+            await Task.Run(() => { _memoryCache.Remove(key); }, cancellationToken);
+        } 
     }
 }
