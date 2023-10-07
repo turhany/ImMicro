@@ -24,7 +24,7 @@ namespace ImMicro.Api.Controllers
         public BaseController()
         {
             var services = ApplicationContext.Context.HttpContext.RequestServices;
-            Mapper = (IMapper)services.GetService(typeof(IMapper));          
+            Mapper = (IMapper)services.GetService(typeof(IMapper));              
         }
     }
 }
